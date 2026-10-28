@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 480" width="1150" height="480">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#000000" />
+    </marker>
+    <style>
+      text {
+        font-family: "Times New Roman", Times, "Liberation Serif", serif;
+        font-weight: bold;
+        fill: #000000;
+      }
+      .banner-title { font-size: 20px; font-weight: bold; }
+      .banner-sub { font-size: 13.5px; fill: #444444; font-style: italic; }
+      .group-title { font-size: 18px; text-anchor: middle; }
+      .card-title { font-size: 14.5px; text-anchor: middle; }
+      .pill-text { font-size: 12.5px; text-anchor: middle; }
+      .box-title { font-size: 14.5px; text-anchor: middle; }
+      .box-sub { font-size: 12px; text-anchor: middle; fill: #444444; }
+      .flow-arrow {
+        stroke: #000000;
+        stroke-width: 1.6;
+        stroke-dasharray: 6 5;
+        fill: none;
+        animation: flowAnimation 1s linear infinite;
+      }
+      @keyframes flowAnimation {
+        from { stroke-dashoffset: 22; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Outer Border -->
+  <rect x="15" y="15" width="1120" height="450" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
+
+  <!-- Header Banner -->
+  <text x="38" y="45" class="banner-title">Complete API Layer Integration Architecture</text>
+  <text x="38" y="66" class="banner-sub">Nginx Ingress Gateway • Express OpenAPI Validation • Redis 7 Distributed Locks &amp; Caching</text>
+  <line x1="38" y1="78" x2="1105" y2="78" stroke="#dddddd" stroke-width="1.5" />
+
+  <!-- 1. CLIENT (Stick Figure) -->
+  <g id="client" transform="translate(55, 230)">
+    <circle cx="25" cy="-15" r="14" fill="#000000" />
+    <line x1="25" y1="-1" x2="25" y2="38" stroke="#000000" stroke-width="2.5" />
+    <line x1="5" y1="14" x2="45" y2="14" stroke="#000000" stroke-width="2.5" />
+    <line x1="25" y1="38" x2="8" y2="70" stroke="#000000" stroke-width="2.5" />
+    <line x1="25" y1="38" x2="42" y2="70" stroke="#000000" stroke-width="2.5" />
+    <text x="25" y="92" class="box-title">HTTP Client</text>
+    <text x="25" y="108" class="box-sub">cURL / Test Suite</text>
+  </g>
+
+  <!-- Arrow: Client -> Poridhi LB -->
+  <path d="M 110 250 L 175 250" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 2. PORIDHI LOAD BALANCER -->
+  <g id="lb" transform="translate(180, 210)">
+    <ellipse cx="55" cy="40" rx="55" ry="30" fill="#d0d7fe" stroke="#000000" stroke-width="1.8" />
+    <text x="55" y="37" class="box-title">Poridhi LB</text>
+    <text x="55" y="53" class="box-sub">Port 8080</text>
+  </g>
+
+  <!-- Branching Arrows from LB to Web App Cards -->
+  <path d="M 290 250 C 315 220, 315 175, 342 175" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 290 250 L 342 250" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 290 250 C 315 280, 315 325, 342 325" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 3. WEB APPLICATION GROUP (Integrated Layer) -->
+  <g id="web-app" transform="translate(325, 95)">
+    <rect x="0" y="0" width="280" height="350" rx="24" fill="#ffffff" stroke="#000000" stroke-width="1.8" />
+    <text x="140" y="32" class="group-title">Integrated Stack</text>
+
+    <!-- Card 1: Nginx Ingress -->
+    <g transform="translate(20, 48)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Nginx Gateway</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">Port 8080 Ingress</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">Header Propagation</text>
+    </g>
+
+    <!-- Card 2: Express Contract Service -->
+    <g transform="translate(20, 142)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Express API Service</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">OpenAPI 3 Validation</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">Orders Route Handler</text>
+    </g>
+
+    <!-- Card 3: Redis Idempotency Engine -->
+    <g transform="translate(20, 236)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Idempotency Engine</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">Redis Mutex Lock</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">24h Replay Cache</text>
+    </g>
+  </g>
+
+  <!-- Arrows from Stack to Backing Services -->
+  <path d="M 605 200 L 675 200" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 605 300 L 675 300" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 4. MIDDLE NODES (Redis & DB) -->
+  <g id="redis-node" transform="translate(680, 174)">
+    <rect x="0" y="0" width="140" height="52" rx="12" fill="#c5f0f7" stroke="#000000" stroke-width="1.5" />
+    <text x="70" y="25" class="box-title">redis01</text>
+    <text x="70" y="41" class="box-sub">Lock &amp; Replay Cache</text>
+  </g>
+
+  <g id="orders-node" transform="translate(680, 274)">
+    <rect x="0" y="0" width="140" height="52" rx="12" fill="#c5f0f7" stroke="#000000" stroke-width="1.5" />
+    <text x="70" y="25" class="box-title">ordersDb[]</text>
+    <text x="70" y="41" class="box-sub">Persistent Order Store</text>
+  </g>
+
+  <!-- Arrows from Backing Services to Guarantees -->
+  <path d="M 820 200 L 885 200" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 820 300 L 885 300" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 5. RIGHT GROUP (Layer Guarantees) -->
+  <g id="integrated-guarantees" transform="translate(890, 135)">
+    <rect x="0" y="0" width="215" height="270" rx="24" fill="#fff5f0" stroke="#000000" stroke-width="1.8" />
+    <text x="107" y="38" class="group-title">Layer Guarantees</text>
+
+    <!-- Pill 1 -->
+    <rect x="25" y="65" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="85" class="pill-text">Edge Auth (401)</text>
+    <text x="107" y="99" class="box-sub">Gateway Boundary</text>
+
+    <!-- Pill 2 -->
+    <rect x="25" y="128" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="148" class="pill-text">Contract Guard (400)</text>
+    <text x="107" y="162" class="box-sub">OpenAPI Schema Check</text>
+
+    <!-- Pill 3 -->
+    <rect x="25" y="191" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="211" class="pill-text">Idempotent Replay</text>
+    <text x="107" y="225" class="box-sub">Zero Duplicate Write</text>
+  </g>
+
+</svg>

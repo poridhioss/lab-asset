@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 480" width="1150" height="480">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#000000" />
+    </marker>
+    <style>
+      text {
+        font-family: "Times New Roman", Times, "Liberation Serif", serif;
+        font-weight: bold;
+        fill: #000000;
+      }
+      .banner-title { font-size: 20px; font-weight: bold; }
+      .banner-sub { font-size: 13.5px; fill: #444444; font-style: italic; }
+      .group-title { font-size: 18px; text-anchor: middle; }
+      .card-title { font-size: 14.5px; text-anchor: middle; }
+      .pill-text { font-size: 12.5px; text-anchor: middle; }
+      .box-title { font-size: 14.5px; text-anchor: middle; }
+      .box-sub { font-size: 12px; text-anchor: middle; fill: #444444; }
+      .flow-arrow {
+        stroke: #000000;
+        stroke-width: 1.6;
+        stroke-dasharray: 6 5;
+        fill: none;
+        animation: flowAnimation 1s linear infinite;
+      }
+      @keyframes flowAnimation {
+        from { stroke-dashoffset: 22; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Outer Border -->
+  <rect x="15" y="15" width="1120" height="450" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5" />
+
+  <!-- Header Banner -->
+  <text x="38" y="45" class="banner-title">Idempotent Write Endpoint Architecture</text>
+  <text x="38" y="66" class="banner-sub">Express Server • Redis 7 Atomic Locks (SETNX) • Response Caching • Persistent Data Store</text>
+  <line x1="38" y1="78" x2="1105" y2="78" stroke="#dddddd" stroke-width="1.5" />
+
+  <!-- 1. CLIENT (Stick Figure) -->
+  <g id="client" transform="translate(55, 230)">
+    <circle cx="25" cy="-15" r="14" fill="#000000" />
+    <line x1="25" y1="-1" x2="25" y2="38" stroke="#000000" stroke-width="2.5" />
+    <line x1="5" y1="14" x2="45" y2="14" stroke="#000000" stroke-width="2.5" />
+    <line x1="25" y1="38" x2="8" y2="70" stroke="#000000" stroke-width="2.5" />
+    <line x1="25" y1="38" x2="42" y2="70" stroke="#000000" stroke-width="2.5" />
+    <text x="25" y="92" class="box-title">HTTP Client</text>
+    <text x="25" y="108" class="box-sub">cURL / Automated Tests</text>
+  </g>
+
+  <!-- Arrow: Client -> Poridhi LB -->
+  <path d="M 110 250 L 175 250" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 2. PORIDHI LOAD BALANCER -->
+  <g id="lb" transform="translate(180, 210)">
+    <ellipse cx="55" cy="40" rx="55" ry="30" fill="#d0d7fe" stroke="#000000" stroke-width="1.8" />
+    <text x="55" y="37" class="box-title">Poridhi LB</text>
+    <text x="55" y="53" class="box-sub">Port 5000</text>
+  </g>
+
+  <!-- Branching Arrows from LB to Express Cards -->
+  <path d="M 290 250 C 315 220, 315 175, 342 175" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 290 250 L 342 250" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 290 250 C 315 280, 315 325, 342 325" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 3. WEB APPLICATION GROUP -->
+  <g id="web-app" transform="translate(325, 95)">
+    <rect x="0" y="0" width="280" height="350" rx="24" fill="#ffffff" stroke="#000000" stroke-width="1.8" />
+    <text x="140" y="32" class="group-title">Web application</text>
+
+    <!-- Card 1: Idempotency Lock -->
+    <g transform="translate(20, 48)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Idempotency Middleware</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">SETNX Mutex Lock</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">Key: idemp:&lt;uuid&gt;</text>
+    </g>
+
+    <!-- Card 2: Order Mutation -->
+    <g transform="translate(20, 142)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Mutation Controller</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">POST /api/v1/orders</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">Single Database Commit</text>
+    </g>
+
+    <!-- Card 3: Replay Cache Handler -->
+    <g transform="translate(20, 236)">
+      <rect x="0" y="0" width="240" height="82" rx="14" fill="#fceef2" stroke="#000000" stroke-width="1.5" />
+      <text x="120" y="21" class="card-title">Replay Cache Handler</text>
+      <rect x="40" y="29" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="45" class="pill-text">X-Cache: HIT / MISS</text>
+      <rect x="40" y="54" width="160" height="22" rx="11" fill="#cce5ff" stroke="#000000" stroke-width="1.2" />
+      <text x="120" y="70" class="pill-text">24h TTL Expiration</text>
+    </g>
+  </g>
+
+  <!-- Arrows from Web App to Middle Store Nodes -->
+  <path d="M 605 200 L 675 200" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 605 300 L 675 300" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 4. MIDDLE NODES -->
+  <g id="redis-box" transform="translate(680, 174)">
+    <rect x="0" y="0" width="140" height="52" rx="12" fill="#c5f0f7" stroke="#000000" stroke-width="1.5" />
+    <text x="70" y="25" class="box-title">redis01</text>
+    <text x="70" y="41" class="box-sub">Redis 7 (:6379)</text>
+  </g>
+
+  <g id="orders-db" transform="translate(680, 274)">
+    <rect x="0" y="0" width="140" height="52" rx="12" fill="#c5f0f7" stroke="#000000" stroke-width="1.5" />
+    <text x="70" y="25" class="box-title">ordersDb[]</text>
+    <text x="70" y="41" class="box-sub">Persistent Order DB</text>
+  </g>
+
+  <!-- Arrows from Middle Nodes to Right Group -->
+  <path d="M 820 200 L 885 200" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+  <path d="M 820 300 L 885 300" class="flow-arrow" marker-end="url(#arrow)">
+    <animate attributeName="stroke-dashoffset" from="22" to="0" dur="1s" repeatCount="indefinite" />
+  </path>
+
+  <!-- 5. RIGHT GROUP (Guarantees) -->
+  <g id="idempotency-rules" transform="translate(890, 135)">
+    <rect x="0" y="0" width="215" height="270" rx="24" fill="#fff5f0" stroke="#000000" stroke-width="1.8" />
+    <text x="107" y="38" class="group-title">Idempotency Rules</text>
+
+    <!-- Pill 1 -->
+    <rect x="25" y="65" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="85" class="pill-text">Atomic Locking</text>
+    <text x="107" y="99" class="box-sub">SETNX EX 60</text>
+
+    <!-- Pill 2 -->
+    <rect x="25" y="128" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="148" class="pill-text">Conflict Guard</text>
+    <text x="107" y="162" class="box-sub">409 In-Progress</text>
+
+    <!-- Pill 3 -->
+    <rect x="25" y="191" width="165" height="40" rx="20" fill="#cce5ff" stroke="#000000" stroke-width="1.3" />
+    <text x="107" y="211" class="pill-text">Replay Cache</text>
+    <text x="107" y="225" class="box-sub">HIT on Client Retry</text>
+  </g>
+
+</svg>
