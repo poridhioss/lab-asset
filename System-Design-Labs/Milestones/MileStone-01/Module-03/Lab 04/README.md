@@ -1,4 +1,4 @@
-# Reliability Baseline for a URL Shortener
+# Reliability Baseline for a URL Shortener 
 
 Before building a URL shortener, you need to decide how reliable it should be and whether your design can support that goal. A service may have backup copies and still fail because every request depends on other parts. The purpose of this lab is to combine the availability math from Lab 1, the reliability targets from Lab 2, and the design modeling from Lab 3 into one reliability baseline: a written reference for checking future design changes.
 
