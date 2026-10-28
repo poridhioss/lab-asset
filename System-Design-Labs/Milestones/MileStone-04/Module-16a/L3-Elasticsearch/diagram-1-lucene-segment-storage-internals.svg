@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-header-blue { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; }
+      .card-header-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; }
+      .card-header-slate { fill: #F1F5F9; stroke: #64748B; stroke-width: 1.5; }
+      .title-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; font-size: 19px; fill: #0F172A; }
+      .subtitle-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #475569; }
+      .body-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #334155; }
+      .bold-text { font-weight: 600; fill: #1E293B; }
+      .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+      .badge-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 600; }
+      .flow-line { stroke: #2563EB; stroke-width: 2; stroke-dasharray: 6,4; fill: none; animation: flow 1.5s linear infinite; }
+      .flow-line-green { stroke: #059669; stroke-width: 2; stroke-dasharray: 6,4; fill: none; animation: flow 1.5s linear infinite; }
+      .solid-line { stroke: #94A3B8; stroke-width: 1.5; fill: none; }
+      @keyframes flow { to { stroke-dashoffset: -20; } }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="540" class="bg"/>
+
+  <!-- Main Canvas Card Frame -->
+  <rect x="20" y="20" width="940" height="500" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" rx="12"/>
+
+  <!-- Title Banner -->
+  <text x="490" y="52" text-anchor="middle" class="title-text">Lucene Segment Storage Internals: Inverted Index, Doc Values &amp; Stored Fields</text>
+  <text x="490" y="73" text-anchor="middle" class="subtitle-text">Three distinct on-disk physical storage layouts optimized for search matching, columnar sorting, and document display</text>
+
+  <!-- ============================================================== -->
+  <!-- COLUMN 1: INVERTED INDEX (.tim, .tip, .doc)                    -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 95)">
+    <rect width="280" height="325" class="card" stroke="#3B82F6"/>
+    <path d="M 0 8 Q 0 0 8 0 L 272 0 Q 280 0 280 8 L 280 26 L 0 26 Z" class="card-header-blue"/>
+    <text x="140" y="18" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="11">1. INVERTED INDEX (.tim, .tip, .doc)</text>
+
+    <!-- Sub-box 1A: Term Index FST -->
+    <g transform="translate(15, 38)">
+      <rect width="250" height="70" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Term Index (.tip) [RAM / FST]</text>
+      <text x="10" y="34" class="subtitle-text">Finite State Transducer in memory</text>
+      <text x="10" y="52" class="mono-text" fill="#2563EB">FST Prefix Trie: "con" ──▶ Block #42</text>
+    </g>
+
+    <!-- Sub-box 1B: Term Dictionary -->
+    <g transform="translate(15, 118)">
+      <rect width="250" height="85" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Term Dictionary (.tim) [Disk]</text>
+      <text x="10" y="34" class="body-text">Sorted B-Tree term blocks:</text>
+      <text x="10" y="50" class="mono-text">"cache"      | DF: 4 | Offset: 0x1A0</text>
+      <text x="10" y="66" class="mono-text">"consensus"  | DF: 3 | Offset: 0x240</text>
+      <text x="10" y="80" class="mono-text">"leader"     | DF: 2 | Offset: 0x310</text>
+    </g>
+
+    <!-- Sub-box 1C: Posting Lists -->
+    <g transform="translate(15, 213)">
+      <rect width="250" height="98" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Postings &amp; Freqs (.doc) [PFOR-DELTA]</text>
+      <text x="10" y="34" class="body-text">SIMD 128-bit delta-compressed doc IDs:</text>
+      <text x="10" y="52" class="mono-text" fill="#1E3A8A">"consensus" ──▶ [Doc 2, +3, +1]</text>
+      <text x="10" y="70" class="mono-text" fill="#64748B">Delta encoded: [Doc 2, Doc 5, Doc 6]</text>
+      <text x="10" y="88" class="badge-text" fill="#2563EB">Term Freqs: [TF: 2, TF: 1, TF: 1]</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- COLUMN 2: COLUMNAR DOC VALUES (.dvd, .dvm)                     -->
+  <!-- ============================================================== -->
+  <g transform="translate(350, 95)">
+    <rect width="280" height="325" class="card" stroke="#10B981"/>
+    <path d="M 0 8 Q 0 0 8 0 L 272 0 Q 280 0 280 8 L 280 26 L 0 26 Z" class="card-header-green"/>
+    <text x="140" y="18" text-anchor="middle" class="bold-text" fill="#065F46" font-size="11">2. DOC VALUES (.dvd, .dvm)</text>
+
+    <!-- Sub-box 2A: Page Cache Mapping -->
+    <g transform="translate(15, 38)">
+      <rect width="250" height="70" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#065F46">Metadata &amp; Pointers (.dvm)</text>
+      <text x="10" y="34" class="subtitle-text">Memory-mapped via OS Page Cache</text>
+      <text x="10" y="52" class="mono-text" fill="#059669">Kernel mmap: Zero JVM GC pauses!</text>
+    </g>
+
+    <!-- Sub-box 2B: Columnar Dense Arrays -->
+    <g transform="translate(15, 118)">
+      <rect width="250" height="120" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#065F46">Columnar Storage (.dvd)</text>
+      <text x="10" y="34" class="body-text">Dense array indexed by DocID:</text>
+      <text x="10" y="52" class="mono-text">Doc 1: [len_norm: 15, cat: "cache"]</text>
+      <text x="10" y="70" class="mono-text">Doc 2: [len_norm: 29, cat: "raft"]</text>
+      <text x="10" y="88" class="mono-text">Doc 3: [len_norm: 32, cat: "shard"]</text>
+      <text x="10" y="106" class="mono-text">Doc 8: [len_norm: 26, cat: "repl"]</text>
+    </g>
+
+    <!-- Sub-box 2C: Use Case Box -->
+    <g transform="translate(15, 248)">
+      <rect width="250" height="63" fill="#ECFDF5" stroke="#10B981" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#065F46">Fast Columnar Analytics &amp; Sort</text>
+      <text x="10" y="34" class="body-text">Evaluates document length norms</text>
+      <text x="10" y="50" class="badge-text" fill="#059669">Without uncompressing raw documents</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- COLUMN 3: COMPRESSED STORED FIELDS (.fdt, .fdx)                -->
+  <!-- ============================================================== -->
+  <g transform="translate(650, 95)">
+    <rect width="280" height="325" class="card" stroke="#64748B"/>
+    <path d="M 0 8 Q 0 0 8 0 L 272 0 Q 280 0 280 8 L 280 26 L 0 26 Z" class="card-header-slate"/>
+    <text x="140" y="18" text-anchor="middle" class="bold-text" fill="#334155" font-size="11">3. STORED FIELDS (.fdt, .fdx)</text>
+
+    <!-- Sub-box 3A: Field Index -->
+    <g transform="translate(15, 38)">
+      <rect width="250" height="70" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#334155">Stored Field Index (.fdx)</text>
+      <text x="10" y="34" class="subtitle-text">Fast binary offset index</text>
+      <text x="10" y="52" class="mono-text" fill="#475569">DocID ──▶ Chunk #0 (Offset: 0x000)</text>
+    </g>
+
+    <!-- Sub-box 3B: Compressed Chunks -->
+    <g transform="translate(15, 118)">
+      <rect width="250" height="120" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#334155">Compressed Field Data (.fdt)</text>
+      <text x="10" y="34" class="body-text">16 KB LZ4-compressed document blocks:</text>
+      <text x="10" y="52" class="mono-text">Chunk #0: [Doc 1, Doc 2, Doc 3]</text>
+      <text x="10" y="70" class="mono-text">  • title: "Redis In-Memory..."</text>
+      <text x="10" y="88" class="mono-text">  • content: "Full raw text..."</text>
+      <text x="10" y="106" class="mono-text">Chunk #1: [Doc 4, Doc 5, Doc 6]</text>
+    </g>
+
+    <!-- Sub-box 3C: Use Case Box -->
+    <g transform="translate(15, 248)">
+      <rect width="250" height="63" fill="#F1F5F9" stroke="#64748B" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#334155">Lazy Payload Materialization</text>
+      <text x="10" y="34" class="body-text">LZ4 blocks decompressed *only* for</text>
+      <text x="10" y="50" class="badge-text" fill="#475569">Top-K winning search hits (_source)</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- BOTTOM TAKEAWAY CARD: WHY THREE LAYERS?                        -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 432)">
+    <rect width="880" height="74" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" rx="8"/>
+    <text x="15" y="22" class="bold-text" font-size="12" fill="#1E40AF">Production Engineering Principle: Why Lucene Segregates Storage Layers</text>
+    <text x="15" y="42" class="body-text">• Inverted Index (.tim/.doc): Inverted mapping (Term ──▶ DocIDs) accelerates candidate filtering with SIMD bit-packing.</text>
+    <text x="15" y="60" class="body-text">• Doc Values (.dvd): Forward columnar mapping (DocID ──▶ Value) accelerates BM25 length norms &amp; sorting in OS page cache.</text>
+    <text x="730" y="60" class="badge-text" fill="#2563EB">[Eliminates JVM Heap GC Choke]</text>
+  </g>
+</svg>

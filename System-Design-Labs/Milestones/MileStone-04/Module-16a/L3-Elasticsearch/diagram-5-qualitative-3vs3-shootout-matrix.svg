@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-header-blue { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; }
+      .card-header-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; }
+      .title-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; font-size: 19px; fill: #0F172A; }
+      .subtitle-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #475569; }
+      .body-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .bold-text { font-weight: 600; fill: #1E293B; }
+      .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
+      .badge-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="540" class="bg"/>
+
+  <!-- Main Canvas Card Frame -->
+  <rect x="20" y="20" width="940" height="500" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" rx="12"/>
+
+  <!-- Title Banner -->
+  <text x="490" y="52" text-anchor="middle" class="title-text">Qualitative Architectural Comparison: The 3 vs 3 Benchmark Matrix</text>
+  <text x="490" y="73" text-anchor="middle" class="subtitle-text">Contrasting production strengths of Elasticsearch against distinct engineering advantages of First Principles Python</text>
+
+  <!-- ============================================================== -->
+  <!-- LEFT COLUMN: ELASTICSEARCH DOMINANCE (CATEGORY A)              -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 95)">
+    <rect width="425" height="340" class="card" stroke="#10B981"/>
+    <path d="M 0 8 Q 0 0 8 0 L 417 0 Q 425 0 425 8 L 425 26 L 0 26 Z" class="card-header-green"/>
+    <text x="212" y="18" text-anchor="middle" class="bold-text" fill="#065F46" font-size="11">ELASTICSEARCH PRODUCTION WINS (CATEGORY A)</text>
+
+    <!-- Card A1: Stemming -->
+    <g transform="translate(12, 36)">
+      <rect width="401" height="90" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#065F46">Query A1: "replicating cache nodes" [Morphological Stemming]</text>
+      <text x="10" y="33" class="body-text">• Root Cause: Corpus has "replication" (Doc 1). Custom AND fails on exact match.</text>
+      <text x="10" y="49" class="body-text">• ES English: Porter stemmer maps both to "replic" ──▶ Doc 1 Rank 1 (BM25: 3.10).</text>
+      <rect x="10" y="59" width="380" height="22" fill="#ECFDF5" stroke="#10B981" rx="4"/>
+      <text x="200" y="74" text-anchor="middle" class="badge-text" fill="#065F46">ES Precision@1: 1.0000 | Custom: 0.0000 (100% Recall Win)</text>
+    </g>
+
+    <!-- Card A2: Disjunction -->
+    <g transform="translate(12, 134)">
+      <rect width="401" height="90" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#065F46">Query A2: "redis cache clustering and sharding" [Disjunctive Recall]</text>
+      <text x="10" y="33" class="body-text">• Root Cause: Doc 1 has Redis/Cache; Doc 3 has Sharding. Custom AND drops both.</text>
+      <text x="10" y="49" class="body-text">• ES Disjunction: Surfaces both Doc 1 (Score: 5.77) and Doc 3 (Score: 2.83).</text>
+      <rect x="10" y="59" width="380" height="22" fill="#ECFDF5" stroke="#10B981" rx="4"/>
+      <text x="200" y="74" text-anchor="middle" class="badge-text" fill="#065F46">ES Precision@1: 1.0000 | Custom: 0.0000 (WAND Candidate Win)</text>
+    </g>
+
+    <!-- Card A3: Stopwords -->
+    <g transform="translate(12, 232)">
+      <rect width="401" height="96" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#065F46">Query A3: "how to achieve consensus..." [Stopword &amp; IDF Pruning]</text>
+      <text x="10" y="33" class="body-text">• Root Cause: Conversational query; filler term "achieve" missing from Doc 2.</text>
+      <text x="10" y="49" class="body-text">• ES English: Drops stopwords ("how", "to") and scores "consensus" heavily.</text>
+      <rect x="10" y="65" width="380" height="22" fill="#ECFDF5" stroke="#10B981" rx="4"/>
+      <text x="200" y="80" text-anchor="middle" class="badge-text" fill="#065F46">ES Precision@1: 1.0000 | Custom: 0.0000 (Stopword Filtering Win)</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- RIGHT COLUMN: HOMEMADE PYTHON ADVANTAGES (CATEGORY B)          -->
+  <!-- ============================================================== -->
+  <g transform="translate(505, 95)">
+    <rect width="425" height="340" class="card" stroke="#3B82F6"/>
+    <path d="M 0 8 Q 0 0 8 0 L 417 0 Q 425 0 425 8 L 425 26 L 0 26 Z" class="card-header-blue"/>
+    <text x="212" y="18" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="11">HOMEMADE PYTHON ADVANTAGES (CATEGORY B)</text>
+
+    <!-- Card B1: Hyphens -->
+    <g transform="translate(12, 36)">
+      <rect width="401" height="90" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#1E40AF">Query B1: "in-memory key-value" [Hyphen Token Preservation]</text>
+      <text x="10" y="33" class="body-text">• ES Behavior: Standard analyzer breaks hyphenated terms into separate words.</text>
+      <text x="10" y="49" class="body-text">• Custom Advantage: Regex \b[a-zA-Z0-9_-]+\b treats "in-memory" as single key.</text>
+      <rect x="10" y="59" width="380" height="22" fill="#EFF6FF" stroke="#3B82F6" rx="4"/>
+      <text x="200" y="74" text-anchor="middle" class="badge-text" fill="#1E40AF">Homemade Score: 4.7436 | Latency: 0.03 ms (Exact Hyphen Match)</text>
+    </g>
+
+    <!-- Card B2: Small IDF -->
+    <g transform="translate(12, 134)">
+      <rect width="401" height="90" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#1E40AF">Query B2: "scatter-gather" [Unquantized Float IDF Scoring]</text>
+      <text x="10" y="33" class="body-text">• ES Behavior: Lucene compresses doc lengths into 1-byte lossy table (computeNorm).</text>
+      <text x="10" y="49" class="body-text">• Custom Advantage: Unquantized 64-bit float IDF gives distinct separation on tiny corpora.</text>
+      <rect x="10" y="59" width="380" height="22" fill="#EFF6FF" stroke="#3B82F6" rx="4"/>
+      <text x="200" y="74" text-anchor="middle" class="badge-text" fill="#1E40AF">Homemade Score: 2.1802 | Perfect Float Precision Separation</text>
+    </g>
+
+    <!-- Card B3: Raw Latency -->
+    <g transform="translate(12, 232)">
+      <rect width="401" height="96" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="17" class="bold-text" font-size="10.5" fill="#1E40AF">Query B3: "raft consensus leader election" [Raw Microsecond Latency]</text>
+      <text x="10" y="33" class="body-text">• ES Behavior: HTTP REST serialization, network socket, and Lucene readers take 6.62ms.</text>
+      <text x="10" y="49" class="body-text">• Custom Advantage: Two-pointer merge directly in Python RAM runs in 0.05ms.</text>
+      <rect x="10" y="65" width="380" height="22" fill="#EFF6FF" stroke="#3B82F6" rx="4"/>
+      <text x="200" y="80" text-anchor="middle" class="badge-text" fill="#1E40AF">Execution: 0.05 ms vs 6.62 ms (130x Speedup in CPU Cache)</text>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- BOTTOM TAKEAWAY CARD: ARCHITECTURAL VERDICT                    -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 445)">
+    <rect width="880" height="60" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" rx="8"/>
+    <text x="15" y="22" class="bold-text" font-size="12" fill="#1E40AF">Architectural Verdict: Distributed Durability vs. Microsecond In-Process Traversal</text>
+    <text x="15" y="42" class="body-text">• Deploy Elasticsearch when building user-facing search with grammatical variation, multi-term queries, and terabyte durability.</text>
+    <text x="735" y="42" class="badge-text" fill="#2563EB">[100% P@1 Recall]</text>
+  </g>
+</svg>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-header-blue { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; }
+      .card-header-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; }
+      .card-header-slate { fill: #F1F5F9; stroke: #64748B; stroke-width: 1.5; }
+      .title-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; font-size: 19px; fill: #0F172A; }
+      .subtitle-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #475569; }
+      .body-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .bold-text { font-weight: 600; fill: #1E293B; }
+      .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10.5px; }
+      .badge-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10.5px; font-weight: 600; }
+      .flow-line { stroke: #2563EB; stroke-width: 2; stroke-dasharray: 6,4; fill: none; animation: flow 1.5s linear infinite; }
+      .flow-line-green { stroke: #059669; stroke-width: 2; stroke-dasharray: 6,4; fill: none; animation: flow 1.5s linear infinite; }
+      .solid-line { stroke: #94A3B8; stroke-width: 1.5; fill: none; }
+      @keyframes flow { to { stroke-dashoffset: -20; } }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="540" class="bg"/>
+
+  <!-- Main Canvas Card Frame -->
+  <rect x="20" y="20" width="940" height="500" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" rx="12"/>
+
+  <!-- Title Banner -->
+  <text x="490" y="52" text-anchor="middle" class="title-text">Elasticsearch Ingestion Lifecycle: NRT Refresh, Translog &amp; Tiered Merging</text>
+  <text x="490" y="73" text-anchor="middle" class="subtitle-text">Achieving 1-second search visibility, zero-data-loss durability, and background segment compaction</text>
+
+  <!-- ============================================================== -->
+  <!-- STEP 1: INGESTION SPLIT                                        -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 95)">
+    <rect width="205" height="315" class="card" stroke="#3B82F6"/>
+    <path d="M 0 8 Q 0 0 8 0 L 197 0 Q 205 0 205 8 L 205 26 L 0 26 Z" class="card-header-blue"/>
+    <text x="102" y="18" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="11">1. INGESTION SPLIT</text>
+
+    <!-- Ingress Document -->
+    <text x="12" y="44" class="bold-text" font-size="11">POST /_doc</text>
+    <text x="12" y="58" class="mono-text" fill="#2563EB">{"title": "Redis Cache"}</text>
+
+    <!-- Path A: Memory Buffer -->
+    <g transform="translate(10, 72)">
+      <rect width="185" height="80" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Memory Index Buffer</text>
+      <text x="10" y="34" class="body-text">Lives in JVM Heap RAM</text>
+      <text x="10" y="50" class="mono-text" fill="#64748B">• Collects in-flight docs</text>
+      <text x="10" y="68" class="badge-text" fill="#DC2626">• Unsearchable state</text>
+    </g>
+
+    <!-- Path B: Translog WAL -->
+    <g transform="translate(10, 162)">
+      <rect width="185" height="85" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Translog (Write-Ahead Log)</text>
+      <text x="10" y="34" class="body-text">Sequential append-only log</text>
+      <text x="10" y="50" class="mono-text" fill="#2563EB">• On-disk fsync per request</text>
+      <text x="10" y="68" class="badge-text" fill="#059669">• Guarantees zero data loss</text>
+    </g>
+
+    <!-- Status badge -->
+    <rect x="10" y="260" width="185" height="42" fill="#EFF6FF" stroke="#3B82F6" rx="6"/>
+    <text x="102" y="277" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="10.5">Dual-Path Dispatch</text>
+    <text x="102" y="293" text-anchor="middle" class="body-text" font-size="9.5">Durability via Translog</text>
+  </g>
+
+  <!-- Flow 1 -> 2 -->
+  <path d="M 255 240 L 275 240" class="flow-line" marker-end="url(#arrow)"/>
+
+  <!-- ============================================================== -->
+  <!-- STEP 2: 1-SECOND NRT REFRESH                                   -->
+  <!-- ============================================================== -->
+  <g transform="translate(275, 95)">
+    <rect width="205" height="315" class="card" stroke="#10B981"/>
+    <path d="M 0 8 Q 0 0 8 0 L 197 0 Q 205 0 205 8 L 205 26 L 0 26 Z" class="card-header-green"/>
+    <text x="102" y="18" text-anchor="middle" class="bold-text" fill="#065F46" font-size="11">2. 1-SEC NRT REFRESH</text>
+
+    <!-- Trigger -->
+    <text x="12" y="44" class="bold-text" font-size="11">refresh_interval: 1s</text>
+    <text x="12" y="58" class="mono-text" fill="#059669">Buffer written to segment</text>
+
+    <!-- Sub-box 2A: OS Page Cache -->
+    <g transform="translate(10, 72)">
+      <rect width="185" height="80" fill="#ECFDF5" stroke="#10B981" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#065F46">OS Page Cache (Kernel)</text>
+      <text x="10" y="34" class="body-text">New segment written to RAM</text>
+      <text x="10" y="50" class="mono-text" fill="#059669">• mmap file descriptor</text>
+      <text x="10" y="68" class="badge-text" fill="#047857">• NO physical disk fsync</text>
+    </g>
+
+    <!-- Sub-box 2B: Searchable -->
+    <g transform="translate(10, 162)">
+      <rect width="185" height="85" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#065F46">Index Reader Re-opened</text>
+      <text x="10" y="34" class="body-text">Search threads access segment</text>
+      <text x="10" y="50" class="mono-text" fill="#1E293B">• Visible to search in 1s</text>
+      <text x="10" y="68" class="badge-text" fill="#059669">• Near-Real-Time SLA Met</text>
+    </g>
+
+    <!-- Status badge -->
+    <rect x="10" y="260" width="185" height="42" fill="#ECFDF5" stroke="#10B981" rx="6"/>
+    <text x="102" y="277" text-anchor="middle" class="bold-text" fill="#065F46" font-size="10.5">Searchable in 1.0s</text>
+    <text x="102" y="293" text-anchor="middle" class="body-text" font-size="9.5">RAM write without fsync cost</text>
+  </g>
+
+  <!-- Flow 2 -> 3 -->
+  <path d="M 480 240 L 500 240" class="flow-line-green" marker-end="url(#arrow-green)"/>
+
+  <!-- ============================================================== -->
+  <!-- STEP 3: PERIODIC FLUSH (fsync)                                 -->
+  <!-- ============================================================== -->
+  <g transform="translate(500, 95)">
+    <rect width="205" height="315" class="card" stroke="#64748B"/>
+    <path d="M 0 8 Q 0 0 8 0 L 197 0 Q 205 0 205 8 L 205 26 L 0 26 Z" class="card-header-slate"/>
+    <text x="102" y="18" text-anchor="middle" class="bold-text" fill="#334155" font-size="11">3. PERIODIC FLUSH</text>
+
+    <!-- Trigger -->
+    <text x="12" y="44" class="bold-text" font-size="11">Every 30m OR 512MB</text>
+    <text x="12" y="58" class="mono-text" fill="#475569">Physical commit to disk</text>
+
+    <!-- Sub-box 3A: Disk fsync -->
+    <g transform="translate(10, 72)">
+      <rect width="185" height="80" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#334155">Kernel fsync() Executed</text>
+      <text x="10" y="34" class="body-text">Kernel flushes Page Cache</text>
+      <text x="10" y="50" class="mono-text" fill="#475569">• Segments written to SSD</text>
+      <text x="10" y="68" class="badge-text" fill="#1E293B">• Permanent physical storage</text>
+    </g>
+
+    <!-- Sub-box 3B: Translog Truncation -->
+    <g transform="translate(10, 162)">
+      <rect width="185" height="85" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#334155">Translog Pruned</text>
+      <text x="10" y="34" class="body-text">Safe to truncate WAL</text>
+      <text x="10" y="50" class="mono-text" fill="#475569">• Disk space reclaimed</text>
+      <text x="10" y="68" class="badge-text" fill="#059669">• New commit point marked</text>
+    </g>
+
+    <!-- Status badge -->
+    <rect x="10" y="260" width="185" height="42" fill="#F1F5F9" stroke="#64748B" rx="6"/>
+    <text x="102" y="277" text-anchor="middle" class="bold-text" fill="#334155" font-size="10.5">Physical Durability</text>
+    <text x="102" y="293" text-anchor="middle" class="body-text" font-size="9.5">Crash-safe on persistent SSD</text>
+  </g>
+
+  <!-- Flow 3 -> 4 -->
+  <path d="M 705 240 L 725 240" class="flow-line" marker-end="url(#arrow)"/>
+
+  <!-- ============================================================== -->
+  <!-- STEP 4: TIERED BACKGROUND MERGES                               -->
+  <!-- ============================================================== -->
+  <g transform="translate(725, 95)">
+    <rect width="205" height="315" class="card" stroke="#3B82F6"/>
+    <path d="M 0 8 Q 0 0 8 0 L 197 0 Q 205 0 205 8 L 205 26 L 0 26 Z" class="card-header-blue"/>
+    <text x="102" y="18" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="11">4. TIERED MERGES</text>
+
+    <!-- Trigger -->
+    <text x="12" y="44" class="bold-text" font-size="11">TieredMergePolicy</text>
+    <text x="12" y="58" class="mono-text" fill="#2563EB">Background compaction</text>
+
+    <!-- Sub-box 4A: Segment Merge -->
+    <g transform="translate(10, 72)">
+      <rect width="185" height="80" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Merge Small Segments</text>
+      <text x="10" y="34" class="body-text">Segments #1, #2, #3 merged</text>
+      <text x="10" y="50" class="mono-text" fill="#2563EB">Combined ──▶ Segment #A</text>
+      <text x="10" y="68" class="badge-text" fill="#1E40AF">• Lowers file handle count</text>
+    </g>
+
+    <!-- Sub-box 4B: Purge Tomestones -->
+    <g transform="translate(10, 162)">
+      <rect width="185" height="85" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2" rx="6"/>
+      <text x="10" y="18" class="bold-text" font-size="11" fill="#1E40AF">Purge .del Tomestones</text>
+      <text x="10" y="34" class="body-text">Hard-deletes marked rows</text>
+      <text x="10" y="50" class="mono-text" fill="#DC2626">• Deleted Docs omitted</text>
+      <text x="10" y="68" class="badge-text" fill="#059669">• Reclaims physical disk space</text>
+    </g>
+
+    <!-- Status badge -->
+    <rect x="10" y="260" width="185" height="42" fill="#EFF6FF" stroke="#3B82F6" rx="6"/>
+    <text x="102" y="277" text-anchor="middle" class="bold-text" fill="#1E40AF" font-size="10.5">Optimized Index</text>
+    <text x="102" y="293" text-anchor="middle" class="body-text" font-size="9.5">Clean, compacted segments</text>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- BOTTOM TAKEAWAY: WRITE AMPLIFICATION & NRT TAX                 -->
+  <!-- ============================================================== -->
+  <g transform="translate(50, 425)">
+    <rect width="880" height="80" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" rx="8"/>
+    <text x="15" y="22" class="bold-text" font-size="12" fill="#1E40AF">The Write Amplification &amp; NRT Trade-Off (Why Refresh != Flush)</text>
+    <text x="15" y="42" class="body-text">• Refresh (1-sec interval): Writes buffer to OS Page Cache. Data is searchable instantly by query threads without expensive disk fsync.</text>
+    <text x="15" y="58" class="body-text">• Flush (30-min interval): Executes kernel fsync() to ensure permanent crash recovery on SSD and truncates the Translog.</text>
+    <text x="15" y="74" class="body-text">• Write Amplification Tax: Every document is written to Translog, written to an NRT segment, and re-written multiple times during tiered merges.</text>
+  </g>
+</svg>
