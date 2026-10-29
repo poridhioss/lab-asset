@@ -98,16 +98,16 @@
     <path d="M 334 245 L 334 280 L 395 280 L 395 312" class="track-red" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
     <path d="M 334 245 L 334 280 L 395 280 L 395 306" class="pulse-red"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
 
-    <!-- 10. Error: 409 Conflict -->
-    <path d="M 539 245 L 539 280 L 565 280 L 565 312" class="track-red" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
-    <path d="M 539 245 L 539 280 L 565 280 L 565 306" class="pulse-red"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
+    <!-- 10. Error: 409 Conflict (SORASORI / COMPLETELY STRAIGHT VERTICAL!) -->
+    <path d="M 565 245 L 565 312" class="track-red" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
+    <path d="M 565 245 L 565 306" class="pulse-red"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
 
-    <!-- 11. Success: 201 Created & 200 OK (Replay) -->
-    <path d="M 567 245 L 567 280 L 710 280 L 710 312" class="track-green" stroke-dasharray="5 4" marker-end="url(#arr-green)"/>
-    <path d="M 567 245 L 567 280 L 710 280 L 710 306" class="pulse-green"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
+    <!-- 11. Success: 201 Created & 200 OK (Replay) (From Express x=605 down and right) -->
+    <path d="M 605 245 L 605 280 L 719 280 L 719 312" class="track-green" stroke-dasharray="5 4" marker-end="url(#arr-green)"/>
+    <path d="M 605 245 L 605 280 L 719 280 L 719 306" class="pulse-green"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
 
-    <path d="M 710 280 L 860 280 L 860 312" class="track-green" stroke-dasharray="5 4" marker-end="url(#arr-green)"/>
-    <path d="M 710 280 L 860 280 L 860 306" class="pulse-green"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
+    <path d="M 719 280 L 878 280 L 878 312" class="track-green" stroke-dasharray="5 4" marker-end="url(#arr-green)"/>
+    <path d="M 719 280 L 878 280 L 878 306" class="pulse-green"><animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.85s" repeatCount="indefinite"/></path>
   </g>
 
   <!-- FLOW LABELS -->
