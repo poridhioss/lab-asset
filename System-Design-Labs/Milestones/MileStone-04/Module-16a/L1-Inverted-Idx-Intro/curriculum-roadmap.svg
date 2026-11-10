@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .card-slate { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-blue { fill: #EFF6FF; stroke: #93C5FD; stroke-width: 1.5; rx: 8px; }
+      .card-green { fill: #ECFDF5; stroke: #A7F3D0; stroke-width: 1.5; rx: 8px; }
+      .card-active { fill: #EFF6FF; stroke: #2563EB; stroke-width: 2; rx: 8px; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .text-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 600; fill: #475569; }
+      .text-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .text-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 10px; fill: #1E293B; }
+      .text-tag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #FFFFFF; }
+      .pill-blue { fill: #2563EB; rx: 4px; }
+      .pill-green { fill: #059669; rx: 4px; }
+      .pill-active { fill: #1E40AF; rx: 4px; }
+      .wire { stroke: #94A3B8; stroke-width: 2; fill: none; }
+      .wire-active { stroke: #2563EB; stroke-width: 2.5; stroke-dasharray: 6 4; fill: none; animation: flow 2s linear infinite; }
+      .wire-green { stroke: #059669; stroke-width: 2.5; stroke-dasharray: 6 4; fill: none; animation: flow 2s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 20; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="460" class="bg" />
+
+  <!-- Global Header -->
+  <text x="40" y="34" class="text-title" font-size="18">Curriculum Progression: Fundamental Building Blocks to Applied Distributed Systems</text>
+  <text x="40" y="54" class="text-subtitle">6 Fundamental Labs Isolate Core Data Structures; 4 Applied Labs Assemble Production Microservices</text>
+
+  <!-- Left: 6 Fundamental Labs -->
+  <g transform="translate(40, 75)">
+    <rect width="420" height="360" class="card-slate" />
+    <rect x="15" y="12" width="130" height="18" class="pill-blue" />
+    <text x="22" y="25" class="text-tag">6 FUNDAMENTAL LABS</text>
+    <text x="160" y="26" class="text-subtitle" fill="#1E40AF">Core Primitives (Pure Node.js 20+)</text>
+
+    <!-- Lab 1 (Current Active) -->
+    <g transform="translate(15, 38)">
+      <rect width="390" height="46" class="card-active" />
+      <text x="12" y="19" class="text-title" font-size="12" fill="#1D4ED8">How Search Engines Read When You Misspell</text>
+      <text x="12" y="34" class="text-code" fill="#2563EB">TextAnalyzer.js • Token Streams • O(1) Stopwords • Lexicon Map</text>
+      <rect x="305" y="10" width="75" height="16" class="pill-active" />
+      <text x="312" y="22" class="text-tag">CURRENT LAB</text>
+    </g>
+
+    <!-- Lab 2 -->
+    <g transform="translate(15, 90)">
+      <rect width="390" height="46" class="card-blue" />
+      <text x="12" y="19" class="text-title" font-size="12">Matching Multiple Words Across Millions of Pages</text>
+      <text x="12" y="34" class="text-code">PostingList.js • Uint32Array • Two-Pointer Merge O(L1 + L2)</text>
+    </g>
+
+    <!-- Lab 3 -->
+    <g transform="translate(15, 142)">
+      <rect width="390" height="46" class="card-slate" />
+      <text x="12" y="19" class="text-title" font-size="12">Predicting What You Want Before You Finish Typing</text>
+      <text x="12" y="34" class="text-code">TrieNode.js • Character Trie • V8 Hidden Classes • Top-K Cache</text>
+    </g>
+
+    <!-- Lab 4 -->
+    <g transform="translate(15, 194)">
+      <rect width="390" height="46" class="card-slate" />
+      <text x="12" y="19" class="text-title" font-size="12">Handling Top Five Searches Without Crashing</text>
+      <text x="12" y="34" class="text-code">MinHeap.js • Custom Binary MinHeap • Flat Prefix Map • Zipf Skew</text>
+    </g>
+
+    <!-- Lab 5 -->
+    <g transform="translate(15, 246)">
+      <rect width="390" height="46" class="card-slate" />
+      <text x="12" y="19" class="text-title" font-size="12">Measuring If Search Results Are Actually Good</text>
+      <text x="12" y="34" class="text-code">RelevanceMetrics.js • Cranfield Ground Truth • MAP • MRR</text>
+    </g>
+
+    <!-- Lab 6 -->
+    <g transform="translate(15, 298)">
+      <rect width="390" height="46" class="card-slate" />
+      <text x="12" y="19" class="text-title" font-size="12">Preventing Slow Databases from Crashing Your Site</text>
+      <text x="12" y="34" class="text-code">CircuitBreaker.js • 3-State FSM • Uint8Array Ring Buffer • Canary</text>
+    </g>
+  </g>
+
+  <!-- Connectors -->
+  <!-- Lab 1 & 2 -> Applied 1 -->
+  <path d="M 460 135 C 500 135, 500 150, 535 150" class="wire-active" marker-end="url(#arr-blue)" />
+  <path d="M 460 185 C 500 185, 500 150, 535 150" class="wire-active" marker-end="url(#arr-blue)" />
+
+  <!-- Lab 3 & 4 -> Applied 2 -->
+  <path d="M 460 240 C 500 240, 500 235, 535 235" class="wire" />
+  <path d="M 460 290 C 500 290, 500 235, 535 235" class="wire" />
+
+  <!-- Lab 5 -> Applied 3 -->
+  <path d="M 460 345 C 500 345, 500 320, 535 320" class="wire" />
+
+  <!-- Lab 6 -> Applied 4 -->
+  <path d="M 460 400 C 500 400, 500 400, 535 400" class="wire" />
+
+  <!-- Right: 4 Applied Production Labs -->
+  <g transform="translate(540, 75)">
+    <rect width="380" height="360" class="card-green" />
+    <rect x="15" y="12" width="130" height="18" class="pill-green" />
+    <text x="22" y="25" class="text-tag">4 APPLIED LABS</text>
+    <text x="160" y="26" class="text-subtitle" fill="#047857">Production Systems &amp; Clusters</text>
+
+    <!-- Applied 1 -->
+    <g transform="translate(15, 38)">
+      <rect width="350" height="70" class="card-slate" />
+      <text x="12" y="22" class="text-title" font-size="12" fill="#0F172A">Full-Text Search Engine with Smart Ranking</text>
+      <text x="12" y="40" class="text-body">• Combines TextAnalyzer &amp; PostingList</text>
+      <text x="12" y="56" class="text-code" fill="#059669">Okapi BM25 Ranking • Express HTTP Search API</text>
+    </g>
+
+    <!-- Applied 2 -->
+    <g transform="translate(15, 120)">
+      <rect width="350" height="70" class="card-slate" />
+      <text x="12" y="22" class="text-title" font-size="12" fill="#0F172A">High-Throughput Autocomplete Service</text>
+      <text x="12" y="40" class="text-body">• Combines Character Trie &amp; MinHeap</text>
+      <text x="12" y="56" class="text-code" fill="#059669">Sub-50ms SLA • Poridhi Redis ACL • Top-K Caching</text>
+    </g>
+
+    <!-- Applied 3 -->
+    <g transform="translate(15, 202)">
+      <rect width="350" height="70" class="card-slate" />
+      <text x="12" y="22" class="text-title" font-size="12" fill="#0F172A">First Principles vs Elasticsearch in Production</text>
+      <text x="12" y="40" class="text-body">• Uses RelevanceMetrics Ground Truth</text>
+      <text x="12" y="56" class="text-code" fill="#059669">Docker ES 8.11 Cluster • Lucene WAND Shootout</text>
+    </g>
+
+    <!-- Applied 4 -->
+    <g transform="translate(15, 284)">
+      <rect width="350" height="70" class="card-slate" />
+      <text x="12" y="22" class="text-title" font-size="12" fill="#0F172A">The Unified Search Gateway with Live Traffic</text>
+      <text x="12" y="40" class="text-body">• Integrates CircuitBreaker FSM</text>
+      <text x="12" y="56" class="text-code" fill="#059669">Multi-Engine Broker • 200ms Debounce • Chaos Test</text>
+    </g>
+  </g>
+</svg>

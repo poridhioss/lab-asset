@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 400" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; filter: url(#drop-shadow); rx: 10px; }
+      .engine-card { fill: #FFFFFF; stroke: #94A3B8; stroke-width: 1.5; filter: url(#drop-shadow); rx: 12px; }
+      .header-strip { fill: #2563EB; }
+      .header-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #FFFFFF; letter-spacing: 0.5px; }
+      .title-main { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .title-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #64748B; }
+      .node-card { fill: #F1F5F9; stroke: #CBD5E1; stroke-width: 1.2; rx: 8px; }
+      .node-card-active { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .node-card-success { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; rx: 8px; }
+      .node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; }
+      .node-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; fill: #475569; }
+      .code-token { font-family: "JetBrains Mono", Consolas, monospace; font-size: 10px; fill: #1E293B; }
+      .badge-blue { fill: #DBEAFE; stroke: #3B82F6; stroke-width: 1; rx: 4px; }
+      .badge-text-blue { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #1D4ED8; }
+      .badge-green { fill: #D1FAE5; stroke: #10B981; stroke-width: 1; rx: 4px; }
+      .badge-text-green { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #065F46; }
+      .flow-arrow { stroke: #2563EB; stroke-width: 2.2; fill: none; stroke-dasharray: 6 5; animation: flow 1.2s linear infinite; }
+      .flow-arrow-green { stroke: #059669; stroke-width: 2.2; fill: none; stroke-dasharray: 6 5; animation: flow 1.2s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 22; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <filter id="drop-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="400" class="bg" />
+
+  <!-- Diagram Title Header -->
+  <text x="40" y="38" class="title-main">High-Throughput Text Processing &amp; Ingestion Architecture</text>
+  <text x="40" y="58" class="title-sub">Transforming raw unstructured text and search queries into deterministic token streams and a shared Lexicon</text>
+
+  <!-- Left: Inputs Section (Documents & Queries) -->
+  <g transform="translate(40, 85)">
+    <!-- Input 1: Raw Documents -->
+    <g transform="translate(0, 0)">
+      <rect width="170" height="95" class="card" />
+      <path d="M 0 10 Q 0 0 10 0 L 160 0 Q 170 0 170 10 L 170 24 L 0 24 Z" class="header-strip" />
+      <text x="12" y="16" class="header-title">DOCUMENTS (CORPUS)</text>
+      <text x="12" y="44" class="node-title">Unstructured Text</text>
+      <text x="12" y="60" class="node-desc">Casing, punctuation, typos</text>
+      <rect x="12" y="70" width="85" height="18" class="badge-blue" />
+      <text x="18" y="82" class="badge-text-blue">dataset.js (8 docs)</text>
+    </g>
+
+    <!-- Input 2: Search Queries -->
+    <g transform="translate(0, 130)">
+      <rect width="170" height="95" class="card" />
+      <path d="M 0 10 Q 0 0 10 0 L 160 0 Q 170 0 170 10 L 170 24 L 0 24 Z" fill="#475569" />
+      <text x="12" y="16" class="header-title">USER QUERIES</text>
+      <text x="12" y="44" class="node-title">Search Input</text>
+      <text x="12" y="60" class="node-desc">"distributed caching"</text>
+      <rect x="12" y="70" width="105" height="18" class="badge-blue" />
+      <text x="18" y="82" class="badge-text-blue">Runtime Lookups</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrows from Inputs to Engine -->
+  <path d="M 210 132 L 250 160" class="flow-arrow" marker-end="url(#arrow-blue)" />
+  <path d="M 210 262 L 250 220" class="flow-arrow" marker-end="url(#arrow-blue)" />
+
+  <!-- Center: Text Ingestion Engine Card (TextAnalyzer.js) -->
+  <g transform="translate(260, 85)">
+    <rect width="520" height="270" class="engine-card" />
+    <path d="M 0 12 Q 0 0 12 0 L 508 0 Q 520 0 520 12 L 520 28 L 0 28 Z" class="header-strip" />
+    <text x="16" y="19" class="header-title">TEXTANALYZER ENGINE: 4-STAGE PIPELINE (NODE.JS 20+)</text>
+
+    <!-- Stage 1: Normalize -->
+    <g transform="translate(20, 50)">
+      <rect width="105" height="80" class="node-card-active" />
+      <text x="10" y="24" class="node-title">1. Normalize</text>
+      <text x="10" y="42" class="node-desc">Case folding</text>
+      <text x="10" y="56" class="node-desc">Unicode strip</text>
+      <rect x="10" y="62" width="60" height="14" class="badge-blue" />
+      <text x="14" y="72" class="badge-text-blue">\p{L}\p{N}</text>
+    </g>
+
+    <!-- Connector 1 -> 2 -->
+    <path d="M 125 90 L 145 90" class="flow-arrow" marker-end="url(#arrow-blue)" />
+
+    <!-- Stage 2: Tokenize -->
+    <g transform="translate(150, 50)">
+      <rect width="105" height="80" class="node-card-active" />
+      <text x="10" y="24" class="node-title">2. Tokenize</text>
+      <text x="10" y="42" class="node-desc">Boundary split</text>
+      <text x="10" y="56" class="node-desc">Length check</text>
+      <rect x="10" y="62" width="65" height="14" class="badge-blue" />
+      <text x="14" y="72" class="badge-text-blue">/\s+/ split</text>
+    </g>
+
+    <!-- Connector 2 -> 3 -->
+    <path d="M 255 90 L 275 90" class="flow-arrow" marker-end="url(#arrow-blue)" />
+
+    <!-- Stage 3: Filter -->
+    <g transform="translate(280, 50)">
+      <rect width="105" height="80" class="node-card-active" />
+      <text x="10" y="24" class="node-title">3. Filter</text>
+      <text x="10" y="42" class="node-desc">Stop words</text>
+      <text x="10" y="56" class="node-desc">O(1) Set lookup</text>
+      <rect x="10" y="62" width="65" height="14" class="badge-blue" />
+      <text x="14" y="72" class="badge-text-blue">Set.has()</text>
+    </g>
+
+    <!-- Connector 3 -> 4 -->
+    <path d="M 385 90 L 405 90" class="flow-arrow" marker-end="url(#arrow-blue)" />
+
+    <!-- Stage 4: Stem -->
+    <g transform="translate(410, 50)">
+      <rect width="90" height="80" class="node-card-active" />
+      <text x="10" y="24" class="node-title">4. Stem</text>
+      <text x="10" y="42" class="node-desc">Porter rules</text>
+      <text x="10" y="56" class="node-desc">Base roots</text>
+      <rect x="10" y="62" width="65" height="14" class="badge-blue" />
+      <text x="14" y="72" class="badge-text-blue">-ing / -ed / -s</text>
+    </g>
+
+    <!-- Engine Performance Banner -->
+    <g transform="translate(20, 155)">
+      <rect width="480" height="95" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+      <text x="16" y="24" class="node-title">Engine Throughput &amp; V8 Memory Invariants</text>
+      <text x="16" y="44" class="code-token">Throughput: ~7,000,000 tokens/sec  |  Heap Used: &lt; 4.5 MB</text>
+      <text x="16" y="62" class="node-desc">The Iron Rule: Documents and user queries pass through the exact same 4 stages,</text>
+      <text x="16" y="78" class="node-desc">guaranteeing that vocabulary terms match deterministically at query time.</text>
+    </g>
+  </g>
+
+  <!-- Connectors from Engine to Dual Outputs -->
+  <path d="M 780 135 L 820 120" class="flow-arrow" marker-end="url(#arrow-blue)" />
+  <path d="M 780 270 L 820 280" class="flow-arrow-green" marker-end="url(#arrow-green)" />
+
+  <!-- Right: Dual Outputs -->
+  <g transform="translate(830, 85)">
+    <!-- Output 1: Token Stream -->
+    <g transform="translate(0, 0)">
+      <rect width="230" height="115" class="card" />
+      <path d="M 0 10 Q 0 0 10 0 L 220 0 Q 230 0 230 10 L 230 24 L 0 24 Z" class="header-strip" />
+      <text x="12" y="16" class="header-title">OUTPUT 1: TOKEN STREAM</text>
+      <text x="12" y="44" class="node-title">Clean Searchable Tokens</text>
+      <text x="12" y="62" class="code-token">["raft", "distribut", "consensus"]</text>
+      <text x="12" y="80" class="node-desc">35% size reduction vs. raw input</text>
+      <rect x="12" y="90" width="100" height="16" class="badge-blue" />
+      <text x="16" y="102" class="badge-text-blue">Zero noise tokens</text>
+    </g>
+
+    <!-- Output 2: Lexicon Dictionary -->
+    <g transform="translate(0, 135)">
+      <rect width="230" height="135" class="card" stroke="#10B981" />
+      <path d="M 0 10 Q 0 0 10 0 L 220 0 Q 230 0 230 10 L 230 24 L 0 24 Z" fill="#059669" />
+      <text x="12" y="16" class="header-title">OUTPUT 2: LEXICON DICTIONARY</text>
+      <text x="12" y="44" class="node-title">In-Memory Vocabulary Map</text>
+      <text x="12" y="62" class="code-token">"leader"    -&gt; Term ID: 10 (DF: 3)</text>
+      <text x="12" y="78" class="code-token">"distribut" -&gt; Term ID: 1  (DF: 5)</text>
+      <text x="12" y="94" class="node-desc">Maps unique words to 32-bit IDs</text>
+      <rect x="12" y="106" width="165" height="18" class="badge-green" />
+      <text x="16" y="119" class="badge-text-green">Unlocks Lab 2: Posting Lists</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 400" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; filter: url(#drop-shadow); rx: 8px; }
+      .header-blue { fill: #2563EB; }
+      .header-green { fill: #059669; }
+      .header-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; letter-spacing: 0.5px; }
+      .title-main { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .title-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #64748B; }
+      .node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; }
+      .node-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; fill: #475569; }
+      .code-main { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+      .code-blue { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #2563EB; }
+      .code-green { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #059669; }
+      .table-hdr { fill: #F1F5F9; stroke: #CBD5E1; stroke-width: 1; }
+      .table-hdr-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #475569; }
+      .badge-blue { fill: #DBEAFE; stroke: #3B82F6; stroke-width: 1; rx: 4px; }
+      .badge-text-blue { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #1D4ED8; }
+      .badge-green { fill: #D1FAE5; stroke: #10B981; stroke-width: 1; rx: 4px; }
+      .badge-text-green { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #065F46; }
+      .flow-arrow { stroke: #2563EB; stroke-width: 2; fill: none; stroke-dasharray: 4 3; animation: flow 1s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 14; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <filter id="drop-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563EB"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="400" class="bg" />
+
+  <!-- Title Header -->
+  <text x="40" y="38" class="title-main">In-Memory Lexicon Dictionary Architecture</text>
+  <text x="40" y="58" class="title-sub">The central JavaScript Map that assigns 32-bit Term IDs and tracks document frequencies across the corpus</text>
+
+  <!-- Left: Lexicon Map Table -->
+  <g transform="translate(40, 85)">
+    <rect width="490" height="280" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 260 0 Q 270 0 270 8 L 270 22 L 0 22 Z" class="header-blue" />
+    <text x="12" y="15" class="header-text">LEXICON MAP: Map&lt;string, TermMeta&gt;</text>
+
+    <!-- Table Column Headers -->
+    <g transform="translate(14, 35)">
+      <rect x="0" y="0" width="462" height="24" class="table-hdr" rx="4" />
+      <text x="12" y="16" class="table-hdr-text">Vocabulary Term (Key)</text>
+      <text x="160" y="16" class="table-hdr-text">Term ID</text>
+      <text x="235" y="16" class="table-hdr-text">Doc Freq (DF)</text>
+      <text x="350" y="16" class="table-hdr-text">Total Count</text>
+
+      <!-- Row 1 -->
+      <g transform="translate(0, 32)">
+        <text x="12" y="18" class="code-blue">"leader"</text>
+        <text x="160" y="18" class="code-main">10</text>
+        <text x="235" y="18" class="code-green">3 / 8 docs</text>
+        <text x="350" y="18" class="code-main">7</text>
+        <line x1="0" y1="26" x2="462" y2="26" stroke="#E2E8F0" stroke-width="1" />
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 64)">
+        <text x="12" y="18" class="code-blue">"distribut"</text>
+        <text x="160" y="18" class="code-main">1</text>
+        <text x="235" y="18" class="code-green">5 / 8 docs</text>
+        <text x="350" y="18" class="code-main">6</text>
+        <line x1="0" y1="26" x2="462" y2="26" stroke="#E2E8F0" stroke-width="1" />
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 96)">
+        <text x="12" y="18" class="code-blue">"consensus"</text>
+        <text x="160" y="18" class="code-main">2</text>
+        <text x="235" y="18" class="code-green">2 / 8 docs</text>
+        <text x="350" y="18" class="code-main">4</text>
+        <line x1="0" y1="26" x2="462" y2="26" stroke="#E2E8F0" stroke-width="1" />
+      </g>
+
+      <!-- Row 4 -->
+      <g transform="translate(0, 128)">
+        <text x="12" y="18" class="code-blue">"algorithm"</text>
+        <text x="160" y="18" class="code-main">3</text>
+        <text x="235" y="18" class="code-green">1 / 8 docs</text>
+        <text x="350" y="18" class="code-main">2</text>
+        <line x1="0" y1="26" x2="462" y2="26" stroke="#E2E8F0" stroke-width="1" />
+      </g>
+    </g>
+
+    <text x="16" y="240" class="node-desc">Lexicon discovery across 8 technical documents: 209 distinct vocabulary terms</text>
+    <rect x="16" y="248" width="135" height="18" class="badge-blue" />
+    <text x="22" y="260" class="badge-text-blue">O(1) Map Hash Lookups</text>
+  </g>
+
+  <!-- Flow Connector to Wins Card -->
+  <path d="M 530 220 L 565 220" class="flow-arrow" marker-end="url(#arrow-blue)" />
+
+  <!-- Right: Two Critical Systems Wins -->
+  <g transform="translate(565, 85)">
+    <rect width="345" height="280" class="card" stroke="#10B981" stroke-width="1.8" />
+    <path d="M 0 8 Q 0 0 8 0 L 250 0 Q 260 0 260 8 L 260 22 L 0 22 Z" class="header-green" />
+    <text x="12" y="15" class="header-text">THE TWO CORE PRODUCTION WINS</text>
+
+    <!-- Win 1: Memory Economy -->
+    <g transform="translate(16, 40)">
+      <rect width="313" height="95" rx="6" fill="#F8FAFC" stroke="#E2E8F0" />
+      <text x="12" y="22" class="node-title">1. Eliminating String Bloat</text>
+      <text x="12" y="42" class="node-desc">Posting lists store 4-byte integers (termId: 10)</text>
+      <text x="12" y="58" class="node-desc">instead of duplicating 16-byte V8 string headers.</text>
+      <rect x="12" y="68" width="150" height="18" class="badge-green" />
+      <text x="18" y="80" class="badge-text-green">80%+ RAM Footprint Drop</text>
+    </g>
+
+    <!-- Win 2: Query Fast-Fail -->
+    <g transform="translate(16, 150)">
+      <rect width="313" height="95" rx="6" fill="#F8FAFC" stroke="#E2E8F0" />
+      <text x="12" y="22" class="node-title">2. Query-Time Instant Fast-Fail</text>
+      <text x="12" y="42" class="node-desc">If query term is missing in Lexicon Map:</text>
+      <text x="12" y="58" class="node-desc">Returns empty candidates in 0.001ms without</text>
+      <text x="12" y="74" class="node-desc">ever touching disk or reading document lists.</text>
+      <rect x="195" y="8" width="105" height="18" class="badge-blue" />
+      <text x="202" y="20" class="badge-text-blue">0.001ms Fast-Fail</text>
+    </g>
+  </g>
+</svg>

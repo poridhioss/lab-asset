@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 360" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; filter: url(#drop-shadow); rx: 8px; }
+      .header-blue { fill: #2563EB; }
+      .header-green { fill: #059669; }
+      .header-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; letter-spacing: 0.5px; }
+      .title-main { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .title-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #64748B; }
+      .node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; }
+      .node-desc { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; fill: #475569; }
+      .code-main { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+      .code-blue { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #2563EB; }
+      .code-green { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; font-weight: 700; fill: #059669; }
+      .badge-blue { fill: #DBEAFE; stroke: #3B82F6; stroke-width: 1; rx: 4px; }
+      .badge-text-blue { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #1D4ED8; }
+      .badge-green { fill: #D1FAE5; stroke: #10B981; stroke-width: 1; rx: 4px; }
+      .badge-text-green { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #065F46; }
+      .flow-arrow { stroke: #2563EB; stroke-width: 2.2; fill: none; stroke-dasharray: 6 4; animation: flow 1.2s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 20; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <filter id="drop-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563EB"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="360" class="bg" />
+
+  <!-- Title Header -->
+  <text x="40" y="38" class="title-main">The Architectural Handoff: From Clean Tokens to Posting Lists</text>
+  <text x="40" y="58" class="title-sub">How Lab 1 vocabulary terms and document tokens feed directly into the contiguous posting engine of Lab 2</text>
+
+  <!-- Left: Lab 1 Output -->
+  <g transform="translate(40, 85)">
+    <rect width="360" height="175" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 220 0 Q 230 0 230 8 L 230 22 L 0 22 Z" class="header-blue" />
+    <text x="12" y="15" class="header-text">LAB 1 DELIVERABLE: TextAnalyzer.js</text>
+
+    <!-- Token Stream Output -->
+    <g transform="translate(16, 40)">
+      <text x="0" y="0" class="node-title">1. Normalized Token Streams</text>
+      <text x="0" y="18" class="code-blue">Doc 1: ["raft", "consensus", "leader"]</text>
+      <text x="0" y="34" class="code-blue">Doc 2: ["paxos", "consensus", "lease"]</text>
+      <text x="0" y="50" class="code-blue">Doc 5: ["inverted", "index", "leader"]</text>
+    </g>
+
+    <!-- Lexicon Output -->
+    <g transform="translate(16, 115)">
+      <text x="0" y="0" class="node-title">2. Lexicon Dictionary Entry</text>
+      <text x="0" y="18" class="code-main">"leader" -&gt; Term ID: 10 (DF: 2)</text>
+      <rect x="0" y="24" width="125" height="16" class="badge-blue" />
+      <text x="6" y="36" class="badge-text-blue">Clean 32-bit Term ID</text>
+    </g>
+  </g>
+
+  <!-- Center: Flow Arrow with Inversion Label -->
+  <g transform="translate(400, 160)">
+    <path d="M 10 12 L 130 12" class="flow-arrow" marker-end="url(#arrow-blue)" />
+    <text x="12" y="-4" class="code-blue" font-size="10">THE INVERSION STEP</text>
+    <text x="10" y="28" class="node-desc">Invert Doc -&gt; Terms</text>
+    <text x="10" y="42" class="node-desc">into Term -&gt; Docs</text>
+  </g>
+
+  <!-- Right: Lab 2 Target -->
+  <g transform="translate(550, 85)">
+    <rect width="360" height="175" class="card" stroke="#10B981" stroke-width="1.8" />
+    <path d="M 0 8 Q 0 0 8 0 L 220 0 Q 230 0 230 8 L 230 22 L 0 22 Z" class="header-green" />
+    <text x="12" y="15" class="header-text">LAB 2 TARGET: PostingList.js</text>
+
+    <!-- Postings List Output -->
+    <g transform="translate(16, 40)">
+      <text x="0" y="0" class="node-title">Contiguous Uint32Array Postings</text>
+      <text x="0" y="20" class="node-desc">Sorted Document ID buffers in C-level memory:</text>
+      <text x="0" y="40" class="code-green">Term 10 ("leader") -&gt; Uint32Array[ 1, 5 ]</text>
+      <text x="0" y="58" class="code-green">Term 2 ("consensus") -&gt; Uint32Array[ 1, 2 ]</text>
+    </g>
+
+    <!-- Two-Pointer Preview -->
+    <g transform="translate(16, 115)">
+      <text x="0" y="0" class="node-title">Two-Pointer Linear Boolean Intersect</text>
+      <text x="0" y="16" class="code-dim">Synchronized cursors match multi-term queries in O(L1 + L2)</text>
+      <rect x="0" y="24" width="160" height="16" class="badge-green" />
+      <text x="6" y="36" class="badge-text-green">Sub-Millisecond Candidate Filter</text>
+    </g>
+  </g>
+
+  <!-- Bottom Forward Banner -->
+  <g transform="translate(40, 280)">
+    <rect width="870" height="55" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+    <text x="20" y="24" class="node-title" fill="#1D4ED8">Coming Up Next in Lab 2:</text>
+    <text x="20" y="42" class="node-desc">We ingest these Lexicon Term IDs and tokens to construct sorted Uint32Array posting lists,</text>
+    <text x="500" y="42" class="node-desc">eliminating V8 garbage collection churn and matching Boolean queries in microseconds!</text>
+  </g>
+</svg>

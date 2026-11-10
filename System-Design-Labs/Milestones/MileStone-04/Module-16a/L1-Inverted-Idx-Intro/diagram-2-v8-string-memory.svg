@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 440" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; filter: url(#drop-shadow); rx: 8px; }
+      .header-dark { fill: #1E293B; }
+      .header-blue { fill: #2563EB; }
+      .header-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; letter-spacing: 0.5px; }
+      .title-main { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .title-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #64748B; }
+      .node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; }
+      .code-main { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+      .code-dim { font-family: "JetBrains Mono", Consolas, monospace; font-size: 10px; fill: #64748B; }
+      .code-alert { font-family: "JetBrains Mono", Consolas, monospace; font-size: 10px; font-weight: 700; fill: #DC2626; }
+      .code-green { font-family: "JetBrains Mono", Consolas, monospace; font-size: 10px; font-weight: 700; fill: #059669; }
+      .cell-box { fill: #EFF6FF; stroke: #93C5FD; stroke-width: 1; rx: 4px; }
+      .cell-box-utf16 { fill: #F1F5F9; stroke: #94A3B8; stroke-width: 1; rx: 4px; }
+      .cell-trap { fill: #FEE2E2; stroke: #FCA5A5; stroke-width: 1.2; rx: 6px; }
+      .cell-safe { fill: #ECFDF5; stroke: #6EE7B7; stroke-width: 1.2; rx: 6px; }
+      .badge-blue { fill: #DBEAFE; stroke: #3B82F6; stroke-width: 1; rx: 4px; }
+      .badge-text-blue { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #1D4ED8; }
+      .badge-green { fill: #D1FAE5; stroke: #10B981; stroke-width: 1; rx: 4px; }
+      .badge-text-green { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #065F46; }
+      .badge-red { fill: #FEE2E2; stroke: #EF4444; stroke-width: 1; rx: 4px; }
+      .badge-text-red { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #991B1B; }
+      .flow-arrow-red { stroke: #DC2626; stroke-width: 1.8; fill: none; stroke-dasharray: 4 3; animation: flow 1.2s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 14; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <filter id="drop-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#DC2626"/>
+    </marker>
+  </defs>
+
+  <rect width="950" height="440" class="bg" />
+
+  <!-- Title Header -->
+  <text x="40" y="38" class="title-main">V8 Engine Internal String Layout &amp; Heap Mechanics</text>
+  <text x="40" y="58" class="title-sub">Memory layout of string primitives in V8 and avoiding the SlicedString memory retention trap</text>
+
+  <!-- Top: Representation Modes (Latin-1 vs UTF-16) -->
+  <g transform="translate(40, 85)">
+    <!-- SeqOneByteString (ASCII) -->
+    <g transform="translate(0, 0)">
+      <rect width="420" height="135" class="card" />
+      <path d="M 0 8 Q 0 0 8 0 L 220 0 Q 230 0 230 8 L 230 22 L 0 22 Z" class="header-blue" />
+      <text x="12" y="15" class="header-text">SeqOneByteString (LATIN-1 / ASCII)</text>
+      <text x="14" y="44" class="node-title">1 Byte per character (Lean &amp; Cache-Friendly)</text>
+      <text x="14" y="60" class="code-dim">Allocates 16-byte object header + 1B per char</text>
+
+      <!-- Byte Memory Cells -->
+      <g transform="translate(14, 75)">
+        <rect x="0" y="0" width="70" height="32" class="cell-box" />
+        <text x="8" y="20" class="code-main">'r' (1B)</text>
+
+        <rect x="76" y="0" width="70" height="32" class="cell-box" />
+        <text x="84" y="20" class="code-main">'a' (1B)</text>
+
+        <rect x="152" y="0" width="70" height="32" class="cell-box" />
+        <text x="160" y="20" class="code-main">'f' (1B)</text>
+
+        <rect x="228" y="0" width="70" height="32" class="cell-box" />
+        <text x="236" y="20" class="code-main">'t' (1B)</text>
+
+        <rect x="306" y="6" width="95" height="20" class="badge-green" />
+        <text x="312" y="19" class="badge-text-green">Optimal Heap Footprint</text>
+      </g>
+    </g>
+
+    <!-- SeqTwoByteString (Unicode) -->
+    <g transform="translate(450, 0)">
+      <rect width="420" height="135" class="card" />
+      <path d="M 0 8 Q 0 0 8 0 L 240 0 Q 250 0 250 8 L 250 22 L 0 22 Z" class="header-dark" />
+      <text x="12" y="15" class="header-text">SeqTwoByteString (UTF-16 / MULTIBYTE)</text>
+      <text x="14" y="44" class="node-title">2 Bytes per character (Instant 2x Memory Expansion)</text>
+      <text x="14" y="60" class="code-dim">Triggered by non-Latin characters (accents, emojis, CJK)</text>
+
+      <!-- UTF-16 Cells -->
+      <g transform="translate(14, 75)">
+        <rect x="0" y="0" width="76" height="32" class="cell-box-utf16" />
+        <text x="8" y="20" class="code-main">'ü' (2B)</text>
+
+        <rect x="82" y="0" width="76" height="32" class="cell-box-utf16" />
+        <text x="90" y="20" class="code-main">'b' (2B)</text>
+
+        <rect x="158" y="0" width="76" height="32" class="cell-box-utf16" />
+        <text x="166" y="20" class="code-main">'e' (2B)</text>
+
+        <rect x="234" y="0" width="76" height="32" class="cell-box-utf16" />
+        <text x="242" y="20" class="code-main">'r' (2B)</text>
+
+        <rect x="318" y="6" width="90" height="20" class="badge-blue" />
+        <text x="324" y="19" class="badge-text-blue">2x RAM Footprint</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom: The SlicedString Memory Leak vs Decoupled Allocation -->
+  <g transform="translate(40, 240)">
+    <rect width="870" height="165" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 320 0 Q 330 0 330 8 L 330 22 L 0 22 Z" class="header-dark" />
+    <text x="12" y="15" class="header-text">THE SLICEDSTRING MEMORY RETENTION PITFALL</text>
+
+    <!-- Left Trap Box -->
+    <g transform="translate(20, 40)">
+      <rect width="395" height="105" class="cell-trap" />
+      <text x="12" y="22" class="node-title" fill="#991B1B">The Trap: Parent Buffer Retention Leak</text>
+      <text x="12" y="42" class="code-dim">token = largeDocument.substring(0, 4); // "raft"</text>
+      <text x="12" y="62" class="code-alert">SlicedString holds pointer to 50MB parent document!</text>
+      <text x="12" y="80" class="code-dim">Entire 50MB stays pinned in RAM, blocking Garbage Collection.</text>
+      <rect x="290" y="8" width="90" height="18" class="badge-red" />
+      <text x="296" y="20" class="badge-text-red">OOM Hazard</text>
+    </g>
+
+    <!-- Leak Pointer Arrow -->
+    <path d="M 425 92 L 460 92" class="flow-arrow-red" marker-end="url(#arrow-red)" />
+
+    <!-- Right Safe Box -->
+    <g transform="translate(470, 40)">
+      <rect width="380" height="105" class="cell-safe" />
+      <text x="12" y="22" class="node-title" fill="#065F46">The Fix: Clean Decoupled Tokens</text>
+      <text x="12" y="42" class="code-dim">token = cleanText.split(/\s+/)[0]; // New string buffer</text>
+      <text x="12" y="62" class="code-green">Only 4 bytes allocated on heap for "raft".</text>
+      <text x="12" y="80" class="code-dim">Parent document buffer is safely freed by V8 Scavenger GC.</text>
+      <rect x="275" y="8" width="95" height="18" class="badge-green" />
+      <text x="281" y="20" class="badge-text-green">Zero Leak Risk</text>
+    </g>
+  </g>
+</svg>
