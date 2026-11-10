@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .card { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-accent { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .card-prod { fill: #F0FDF4; stroke: #16A34A; stroke-width: 2; rx: 8px; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .text-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #475569; }
+      .text-heading { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0F172A; }
+      .text-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .text-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 11px; fill: #0F172A; }
+      .text-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #FFFFFF; }
+      .badge-slate { fill: #475569; rx: 4px; }
+      .badge-blue { fill: #2563EB; rx: 4px; }
+      .badge-green { fill: #16A34A; rx: 4px; }
+      .cell { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1; rx: 4px; }
+      .wire-flow { stroke: #2563EB; stroke-width: 2; stroke-dasharray: 6 4; fill: none; animation: flow 2s linear infinite; }
+      .wire-green { stroke: #16A34A; stroke-width: 2.5; stroke-dasharray: 6 4; fill: none; animation: flow 2s linear infinite; }
+      @keyframes flow {
+        from { stroke-dashoffset: 20; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="440" class="bg" />
+
+  <!-- Global Header -->
+  <text x="40" y="38" class="text-title">The Two-Phase Information Retrieval Architecture</text>
+  <text x="40" y="58" class="text-subtitle">How Candidate Retrieval (Labs 1 &amp; 2) Feeds into Statistical Relevance Ranking (Applied Lab 7)</text>
+
+  <!-- Column 1: Fundamental Lab 1 (Text Processing) -->
+  <g transform="translate(40, 85)">
+    <rect width="265" height="325" class="card" />
+    <rect x="15" y="15" width="115" height="18" class="badge-slate" />
+    <text x="22" y="28" class="text-badge">FUNDAMENTAL LAB 1</text>
+    <text x="15" y="52" class="text-heading">Text Ingestion Engine</text>
+    <text x="15" y="68" class="text-subtitle">01-text-processing/</text>
+
+    <!-- Primitives Block -->
+    <rect x="15" y="85" width="235" height="135" class="cell" />
+    <text x="25" y="105" class="text-subtitle" fill="#475569">Exported Primitive</text>
+    <text x="25" y="125" class="text-code" font-weight="700">TextAnalyzer.js</text>
+    <text x="25" y="145" class="text-body">• 5-stage text normalization</text>
+    <text x="25" y="163" class="text-body">• Constant-time stop-word Set</text>
+    <text x="25" y="181" class="text-body">• Rule-based suffix stemming</text>
+    <text x="25" y="199" class="text-body">• In-memory Lexicon dictionary</text>
+
+    <!-- Role in Engine -->
+    <rect x="15" y="235" width="235" height="75" rx="6" fill="#F1F5F9" />
+    <text x="25" y="255" class="text-code" font-size="10" font-weight="700" fill="#334155">Pipeline Mission</text>
+    <text x="25" y="272" class="text-body" font-size="10">Front-door text analysis pipeline</text>
+    <text x="25" y="288" class="text-body" font-size="10">for raw text and search queries.</text>
+  </g>
+
+  <!-- Flow Connector Lab 1 -> Lab 2 -->
+  <path d="M 305 200 L 335 200" class="wire-flow" marker-end="url(#arr-blue)" />
+
+  <!-- Column 2: Fundamental Lab 2 (Posting Lists) -->
+  <g transform="translate(345, 85)">
+    <rect width="265" height="325" class="card-accent" />
+    <rect x="15" y="15" width="115" height="18" class="badge-blue" />
+    <text x="22" y="28" class="text-badge">FUNDAMENTAL LAB 2</text>
+    <text x="15" y="52" class="text-heading" fill="#1D4ED8">Candidate Retrieval</text>
+    <text x="15" y="68" class="text-subtitle" fill="#1E40AF">02-posting-lists/ (Current Lab)</text>
+
+    <!-- Primitives Block -->
+    <rect x="15" y="85" width="235" height="135" rx="6" fill="#FFFFFF" stroke="#93C5FD" />
+    <text x="25" y="105" class="text-subtitle" fill="#1D4ED8">Exported Primitive</text>
+    <text x="25" y="125" class="text-code" font-weight="700" fill="#1E40AF">PostingList.js</text>
+    <text x="25" y="145" class="text-body">• Contiguous Uint32Array</text>
+    <text x="25" y="163" class="text-body">• Two-Pointer merge O(L1 + L2)</text>
+    <text x="25" y="181" class="text-body">• Shortest-List-First heuristic</text>
+    <text x="25" y="199" class="text-body">• Delta gap memory compression</text>
+
+    <!-- Funnel Filter -->
+    <rect x="15" y="235" width="235" height="75" rx="6" fill="#DBEAFE" />
+    <text x="25" y="255" class="text-code" font-size="10" font-weight="700" fill="#1E40AF">Candidate Filter Funnel</text>
+    <text x="25" y="272" class="text-code" font-size="10" font-weight="700" fill="#1D4ED8">10M Docs ──▶ 250 Candidates</text>
+    <text x="25" y="288" class="text-body" font-size="10" fill="#1E3A8A">Sub-millisecond candidate filter.</text>
+  </g>
+
+  <!-- Flow Connector Lab 2 -> Applied Lab 7 -->
+  <path d="M 610 200 L 640 200" class="wire-green" marker-end="url(#arr-green)" />
+
+  <!-- Column 3: Applied Lab 7 (Full-Text Search Engine) -->
+  <g transform="translate(650, 85)">
+    <rect width="270" height="325" class="card-prod" />
+    <rect x="15" y="15" width="115" height="18" class="badge-green" />
+    <text x="22" y="28" class="text-badge">APPLIED LAB 7</text>
+    <text x="15" y="52" class="text-heading" fill="#15803D">Search Microservice</text>
+    <text x="15" y="68" class="text-subtitle" fill="#166534">m16a-l1-inverted-index/</text>
+
+    <!-- Primitives Block -->
+    <rect x="15" y="85" width="240" height="135" rx="6" fill="#FFFFFF" stroke="#86EFAC" />
+    <text x="25" y="105" class="text-subtitle" fill="#15803D">Applied Production Stack</text>
+    <text x="25" y="125" class="text-code" font-weight="700" fill="#166534">BM25Ranker.js &amp; api.js</text>
+    <text x="25" y="145" class="text-body">• Okapi BM25 scoring (k1, b)</text>
+    <text x="25" y="163" class="text-body">• Document length normalization</text>
+    <text x="25" y="181" class="text-body">• Dynamic snippet highlighting</text>
+    <text x="25" y="199" class="text-body">• Express REST API endpoint</text>
+
+    <!-- Final Ranking Output -->
+    <rect x="15" y="235" width="240" height="75" rx="6" fill="#DCFCE7" />
+    <text x="25" y="255" class="text-code" font-size="10" font-weight="700" fill="#15803D">Top-K Ranked Results</text>
+    <text x="25" y="272" class="text-code" font-size="10" font-weight="700" fill="#166534">250 Candidates ──▶ Top-10</text>
+    <text x="25" y="288" class="text-body" font-size="10" fill="#14532D">Sorted by statistical relevance score.</text>
+  </g>
+</svg>

@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .card { fill: #F8FAFC; stroke: #E2E8F0; stroke-width: 1.5; rx: 8px; }
+      .card-active { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .card-match { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; rx: 8px; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .text-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #475569; }
+      .text-heading { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0F172A; }
+      .text-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .text-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 11px; fill: #0F172A; }
+      .text-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #FFFFFF; }
+      .badge-blue { fill: #2563EB; rx: 4px; }
+      .badge-green { fill: #059669; rx: 4px; }
+      .badge-slate { fill: #475569; rx: 4px; }
+      .cell { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1; rx: 4px; }
+      .cell-match { fill: #D1FAE5; stroke: #059669; stroke-width: 1.5; rx: 4px; }
+      .wire { stroke: #94A3B8; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+      .wire-active { stroke: #2563EB; stroke-width: 2; fill: none; }
+      .wire-flow { stroke: #2563EB; stroke-width: 2; stroke-dasharray: 6 4; fill: none; animation: flow 2s linear infinite; }
+      .wire-green { stroke: #059669; stroke-width: 2; fill: none; }
+      @keyframes flow {
+        from { stroke-dashoffset: 20; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="460" class="bg" />
+
+  <!-- Global Header -->
+  <text x="40" y="38" class="text-title">Candidate Retrieval Architecture: From Query to Matching Postings</text>
+  <text x="40" y="58" class="text-subtitle">Sub-Millisecond Multi-Word Boolean Candidate Filtering via Monotonic Posting Lists</text>
+
+  <!-- Stage 1: Query Ingestion -->
+  <g transform="translate(40, 85)">
+    <rect width="180" height="340" class="card" />
+    <rect x="15" y="15" width="70" height="18" class="badge-slate" />
+    <text x="22" y="28" class="text-badge">STAGE 1</text>
+    <text x="15" y="52" class="text-heading">Query Analysis</text>
+    <text x="15" y="68" class="text-subtitle">Text Ingestion</text>
+
+    <!-- Query Input Box -->
+    <rect x="15" y="85" width="150" height="50" class="cell" />
+    <text x="25" y="103" class="text-subtitle">User Input</text>
+    <text x="25" y="122" class="text-code" font-weight="700">"distributed cache"</text>
+
+    <!-- Normalization Arrow -->
+    <path d="M 90 135 L 90 165" class="wire-active" marker-end="url(#arr-blue)" />
+
+    <!-- Tokens Box -->
+    <rect x="15" y="175" width="150" height="75" class="card-active" />
+    <text x="25" y="195" class="text-subtitle" fill="#1D4ED8">Normalized Tokens</text>
+    <text x="25" y="215" class="text-code">1. "distribut"</text>
+    <text x="25" y="233" class="text-code">2. "cache"</text>
+
+    <!-- Note -->
+    <text x="15" y="280" class="text-body" fill="#64748B">Deterministic stems</text>
+    <text x="15" y="296" class="text-body" fill="#64748B">mapped to integer</text>
+    <text x="15" y="312" class="text-body" fill="#64748B">Term IDs in O(1) time</text>
+  </g>
+
+  <!-- Connectors Stage 1 -> Stage 2 -->
+  <path d="M 220 280 L 260 210" class="wire-flow" marker-end="url(#arr-blue)" />
+  <path d="M 220 300 L 260 320" class="wire-flow" marker-end="url(#arr-blue)" />
+
+  <!-- Stage 2: Lexicon & Posting Buffers -->
+  <g transform="translate(265, 85)">
+    <rect width="250" height="340" class="card" />
+    <rect x="15" y="15" width="70" height="18" class="badge-blue" />
+    <text x="22" y="28" class="text-badge">STAGE 2</text>
+    <text x="15" y="52" class="text-heading">Inverted Index</text>
+    <text x="15" y="68" class="text-subtitle">Contiguous Uint32Array Buffers</text>
+
+    <!-- Term 1 Posting Block -->
+    <rect x="15" y="85" width="220" height="105" class="card-active" />
+    <text x="25" y="105" class="text-code" font-weight="700" fill="#1D4ED8">Term: "distribut"</text>
+    <text x="25" y="121" class="text-subtitle">Posting List (Sorted Doc IDs)</text>
+    <g transform="translate(25, 130)">
+      <rect x="0" y="0" width="28" height="24" class="cell" />
+      <text x="10" y="16" class="text-code">1</text>
+      <rect x="34" y="0" width="28" height="24" class="cell-match" />
+      <text x="44" y="16" class="text-code" font-weight="700" fill="#065F46">3</text>
+      <rect x="68" y="0" width="28" height="24" class="cell" />
+      <text x="78" y="16" class="text-code">5</text>
+      <rect x="102" y="0" width="28" height="24" class="cell" />
+      <text x="112" y="16" class="text-code">7</text>
+      <rect x="136" y="0" width="28" height="24" class="cell" />
+      <text x="146" y="16" class="text-code">9</text>
+    </g>
+    <text x="25" y="174" class="text-body" font-size="10" fill="#2563EB">DF: 5 docs | 4B contiguous memory</text>
+
+    <!-- Term 2 Posting Block -->
+    <rect x="15" y="205" width="220" height="105" class="card-active" />
+    <text x="25" y="225" class="text-code" font-weight="700" fill="#1D4ED8">Term: "cache"</text>
+    <text x="25" y="241" class="text-subtitle">Posting List (Sorted Doc IDs)</text>
+    <g transform="translate(25, 250)">
+      <rect x="0" y="0" width="28" height="24" class="cell" />
+      <text x="10" y="16" class="text-code">2</text>
+      <rect x="34" y="0" width="28" height="24" class="cell-match" />
+      <text x="44" y="16" class="text-code" font-weight="700" fill="#065F46">3</text>
+      <rect x="68" y="0" width="28" height="24" class="cell" />
+      <text x="78" y="16" class="text-code">4</text>
+      <rect x="102" y="0" width="28" height="24" class="cell" />
+      <text x="112" y="16" class="text-code">8</text>
+    </g>
+    <text x="25" y="294" class="text-body" font-size="10" fill="#2563EB">DF: 4 docs | Delta-compressible</text>
+  </g>
+
+  <!-- Connectors Stage 2 -> Stage 3 -->
+  <path d="M 515 137 L 555 180" class="wire-flow" marker-end="url(#arr-blue)" />
+  <path d="M 515 257 L 555 240" class="wire-flow" marker-end="url(#arr-blue)" />
+
+  <!-- Stage 3: Two-Pointer Intersector -->
+  <g transform="translate(560, 85)">
+    <rect width="200" height="340" class="card" />
+    <rect x="15" y="15" width="70" height="18" class="badge-blue" />
+    <text x="22" y="28" class="text-badge">STAGE 3</text>
+    <text x="15" y="52" class="text-heading">Two-Pointer Merge</text>
+    <text x="15" y="68" class="text-subtitle">Linear Set Intersection</text>
+
+    <!-- Cursor Logic Box -->
+    <rect x="15" y="85" width="170" height="135" class="cell" />
+    <text x="25" y="105" class="text-subtitle">Synchronized Cursors</text>
+    <text x="25" y="125" class="text-code">p1 ──▶ List A ("distribut")</text>
+    <text x="25" y="145" class="text-code">p2 ──▶ List B ("cache")</text>
+    <line x1="25" y1="158" x2="170" y2="158" stroke="#E2E8F0" />
+    <text x="25" y="176" class="text-code" font-weight="700" fill="#059669">Match: A[p1] === B[p2]</text>
+    <text x="25" y="194" class="text-code" fill="#2563EB">Advance: p1++, p2++</text>
+    <text x="25" y="210" class="text-body" font-size="10" fill="#64748B">Else: advance smaller</text>
+
+    <!-- Complexity Pill -->
+    <rect x="15" y="235" width="170" height="50" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+    <text x="25" y="255" class="text-code" font-weight="700" fill="#1D4ED8">Time: O(L1 + L2)</text>
+    <text x="25" y="272" class="text-body" font-size="10" fill="#1E40AF">0 Heap Allocations</text>
+
+    <!-- Optimization Tag -->
+    <text x="15" y="315" class="text-body" font-size="10" fill="#059669">Shortest-List-First</text>
+  </g>
+
+  <!-- Connectors Stage 3 -> Stage 4 -->
+  <path d="M 760 240 L 795 240" class="wire-flow" marker-end="url(#arr-green)" />
+
+  <!-- Stage 4: Candidate Matches Output -->
+  <g transform="translate(800, 85)">
+    <rect width="120" height="340" class="card-match" />
+    <rect x="15" y="15" width="70" height="18" class="badge-green" />
+    <text x="22" y="28" class="text-badge">OUTPUT</text>
+    <text x="15" y="52" class="text-heading">Candidates</text>
+    <text x="15" y="68" class="text-subtitle">Matched IDs</text>
+
+    <!-- Result Card -->
+    <rect x="15" y="85" width="90" height="70" rx="6" fill="#FFFFFF" stroke="#6EE7B7" />
+    <text x="25" y="108" class="text-subtitle" fill="#065F46">Matched</text>
+    <text x="25" y="132" class="text-code" font-size="14" font-weight="700" fill="#065F46">[ Doc 3 ]</text>
+
+    <!-- Metric -->
+    <rect x="15" y="170" width="90" height="60" rx="4" fill="#FFFFFF" stroke="#A7F3D0" />
+    <text x="25" y="190" class="text-body" font-size="10" fill="#64748B">Latency:</text>
+    <text x="25" y="208" class="text-code" font-weight="700" fill="#059669">&lt; 0.01 ms</text>
+
+    <!-- Next Step Bridge -->
+    <rect x="15" y="245" width="90" height="70" rx="4" fill="#D1FAE5" />
+    <text x="22" y="265" class="text-code" font-size="9" font-weight="700" fill="#065F46">Next Step:</text>
+    <text x="22" y="280" class="text-body" font-size="9" fill="#047857">Relevance</text>
+    <text x="22" y="295" class="text-body" font-size="9" fill="#047857">Ranking (BM25)</text>
+  </g>
+</svg>

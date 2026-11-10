@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .card-red { fill: #FEF2F2; stroke: #FCA5A5; stroke-width: 1.5; rx: 8px; }
+      .card-amber { fill: #FFFBEB; stroke: #FCD34D; stroke-width: 1.5; rx: 8px; }
+      .card-green { fill: #ECFDF5; stroke: #6EE7B7; stroke-width: 2; rx: 8px; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .text-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #475569; }
+      .text-heading { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 700; fill: #0F172A; }
+      .text-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .text-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 11px; fill: #0F172A; }
+      .text-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #FFFFFF; }
+      .badge-red { fill: #DC2626; rx: 4px; }
+      .badge-amber { fill: #D97706; rx: 4px; }
+      .badge-green { fill: #059669; rx: 4px; }
+      .cell-mesh { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1; rx: 3px; }
+      .line-mesh { stroke: #EF4444; stroke-width: 1; stroke-dasharray: 2 2; fill: none; opacity: 0.6; }
+      .wire-green { stroke: #059669; stroke-width: 2; stroke-dasharray: 4 3; fill: none; }
+    </style>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="440" class="bg" />
+
+  <!-- Global Header -->
+  <text x="40" y="38" class="text-title">Set Intersection Complexity: Unsorted vs Hash vs Sorted Two-Pointer</text>
+  <text x="40" y="58" class="text-subtitle">Why Inverted Indices Strictly Enforce Ascending Document IDs to Eliminate Latency Spikes</text>
+
+  <!-- Panel 1: Unsorted Nested Loops -->
+  <g transform="translate(40, 85)">
+    <rect width="270" height="325" class="card-red" />
+    <rect x="15" y="15" width="135" height="18" class="badge-red" />
+    <text x="22" y="28" class="text-badge">QUADRATIC O(L1 × L2)</text>
+    <text x="15" y="52" class="text-heading" fill="#991B1B">Unsorted Nested Scan</text>
+    <text x="15" y="68" class="text-subtitle" fill="#7F1D1D">All-to-all cross comparison</text>
+
+    <!-- Visual Mesh of Comparisons -->
+    <rect x="15" y="85" width="240" height="100" rx="6" fill="#FFFFFF" stroke="#FECACA" />
+    <g transform="translate(25, 95)">
+      <!-- Array A items (top) -->
+      <circle cx="20" cy="15" r="7" fill="#F87171" />
+      <circle cx="65" cy="15" r="7" fill="#F87171" />
+      <circle cx="110" cy="15" r="7" fill="#F87171" />
+      <circle cx="155" cy="15" r="7" fill="#F87171" />
+      <circle cx="200" cy="15" r="7" fill="#F87171" />
+
+      <!-- Array B items (bottom) -->
+      <circle cx="20" cy="65" r="7" fill="#94A3B8" />
+      <circle cx="65" cy="65" r="7" fill="#94A3B8" />
+      <circle cx="110" cy="65" r="7" fill="#94A3B8" />
+      <circle cx="155" cy="65" r="7" fill="#94A3B8" />
+      <circle cx="200" cy="65" r="7" fill="#94A3B8" />
+
+      <!-- Crossing Mesh Lines -->
+      <line x1="20" y1="22" x2="20" y2="58" class="line-mesh" />
+      <line x1="20" y1="22" x2="65" y2="58" class="line-mesh" />
+      <line x1="20" y1="22" x2="110" y2="58" class="line-mesh" />
+      <line x1="20" y1="22" x2="155" y2="58" class="line-mesh" />
+      <line x1="20" y1="22" x2="200" y2="58" class="line-mesh" />
+
+      <line x1="65" y1="22" x2="20" y2="58" class="line-mesh" />
+      <line x1="65" y1="22" x2="65" y2="58" class="line-mesh" />
+      <line x1="65" y1="22" x2="110" y2="58" class="line-mesh" />
+      <line x1="65" y1="22" x2="155" y2="58" class="line-mesh" />
+      <line x1="65" y1="22" x2="200" y2="58" class="line-mesh" />
+
+      <line x1="110" y1="22" x2="20" y2="58" class="line-mesh" />
+      <line x1="110" y1="22" x2="65" y2="58" class="line-mesh" />
+      <line x1="110" y1="22" x2="110" y2="58" class="line-mesh" />
+      <line x1="110" y1="22" x2="155" y2="58" class="line-mesh" />
+      <line x1="110" y1="22" x2="200" y2="58" class="line-mesh" />
+
+      <line x1="155" y1="22" x2="20" y2="58" class="line-mesh" />
+      <line x1="155" y1="22" x2="65" y2="58" class="line-mesh" />
+      <line x1="155" y1="22" x2="110" y2="58" class="line-mesh" />
+      <line x1="155" y1="22" x2="155" y2="58" class="line-mesh" />
+      <line x1="155" y1="22" x2="200" y2="58" class="line-mesh" />
+
+      <line x1="200" y1="22" x2="20" y2="58" class="line-mesh" />
+      <line x1="200" y1="22" x2="65" y2="58" class="line-mesh" />
+      <line x1="200" y1="22" x2="110" y2="58" class="line-mesh" />
+      <line x1="200" y1="22" x2="155" y2="58" class="line-mesh" />
+      <line x1="200" y1="22" x2="200" y2="58" class="line-mesh" />
+    </g>
+
+    <!-- Metrics Callout -->
+    <rect x="15" y="195" width="240" height="85" rx="6" fill="#FFFFFF" stroke="#FECACA" />
+    <text x="25" y="215" class="text-subtitle" fill="#991B1B">Cost on 1M Docs Each</text>
+    <text x="25" y="235" class="text-code">Checks:  1,000,000,000,000</text>
+    <text x="25" y="253" class="text-code">Latency: ~20 mins (100% CPU)</text>
+    <text x="25" y="271" class="text-body" font-size="10" fill="#DC2626">Result: Gateway Timeout</text>
+
+    <!-- Verdict Tag -->
+    <rect x="15" y="290" width="240" height="22" rx="4" fill="#FEE2E2" />
+    <text x="25" y="305" class="text-code" font-size="10" font-weight="700" fill="#991B1B">Verdict: Unusable at scale</text>
+  </g>
+
+  <!-- Panel 2: Hash Set Allocation -->
+  <g transform="translate(345, 85)">
+    <rect width="270" height="325" class="card-amber" />
+    <rect x="15" y="15" width="135" height="18" class="badge-amber" />
+    <text x="22" y="28" class="text-badge">MEMORY CHURN O(L1)</text>
+    <text x="15" y="52" class="text-heading" fill="#92400E">Transient Hash Join</text>
+    <text x="15" y="68" class="text-subtitle" fill="#78350F">Allocate Set from A, probe with B</text>
+
+    <!-- Visual Hash Table Allocation -->
+    <rect x="15" y="85" width="240" height="100" rx="6" fill="#FFFFFF" stroke="#FDE68A" />
+    <g transform="translate(25, 95)">
+      <!-- Input Array A -->
+      <text x="0" y="15" class="text-code" font-size="10">List A</text>
+      <rect x="40" y="5" width="60" height="18" class="cell-mesh" />
+      <text x="45" y="18" class="text-code" font-size="9">1M docs</text>
+
+      <!-- Arrow to Hash Buckets -->
+      <path d="M 105 14 L 140 14" stroke="#D97706" stroke-width="1.5" marker-end="url(#arr-amber)" />
+
+      <!-- Heap Buckets -->
+      <g transform="translate(145, 5)">
+        <rect x="0" y="0" width="80" height="70" rx="4" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1" />
+        <text x="8" y="15" class="text-code" font-size="9" font-weight="700">V8 Heap</text>
+        <rect x="8" y="22" width="64" height="12" rx="2" fill="#FFFFFF" />
+        <text x="12" y="31" class="text-code" font-size="8">bucket_0</text>
+        <rect x="8" y="36" width="64" height="12" rx="2" fill="#FFFFFF" />
+        <text x="12" y="45" class="text-code" font-size="8">bucket_1</text>
+        <rect x="8" y="50" width="64" height="12" rx="2" fill="#FFFFFF" />
+        <text x="12" y="59" class="text-code" font-size="8">bucket_n...</text>
+      </g>
+    </g>
+
+    <!-- Metrics Callout -->
+    <rect x="15" y="195" width="240" height="85" rx="6" fill="#FFFFFF" stroke="#FDE68A" />
+    <text x="25" y="215" class="text-subtitle" fill="#92400E">Cost on 1M Docs Each</text>
+    <text x="25" y="235" class="text-code">Checks:  O(L1 + L2) time</text>
+    <text x="25" y="253" class="text-code">RAM:     64 MB heap churn</text>
+    <text x="25" y="271" class="text-body" font-size="10" fill="#D97706">Result: GC Scavenger pauses</text>
+
+    <!-- Verdict Tag -->
+    <rect x="15" y="290" width="240" height="22" rx="4" fill="#FEF3C7" />
+    <text x="25" y="305" class="text-code" font-size="10" font-weight="700" fill="#92400E">Verdict: High GC Latency Jitter</text>
+  </g>
+
+  <!-- Panel 3: Sorted Two-Pointer Merge -->
+  <g transform="translate(650, 85)">
+    <rect width="270" height="325" class="card-green" />
+    <rect x="15" y="15" width="135" height="18" class="badge-green" />
+    <text x="22" y="28" class="text-badge">LINEAR O(L1 + L2)</text>
+    <text x="15" y="52" class="text-heading" fill="#065F46">Two-Pointer Linear Merge</text>
+    <text x="15" y="68" class="text-subtitle" fill="#047857">Dual cursors on sorted streams</text>
+
+    <!-- Visual Linear Cursor Slide -->
+    <rect x="15" y="85" width="240" height="100" rx="6" fill="#FFFFFF" stroke="#A7F3D0" />
+    <g transform="translate(25, 100)">
+      <!-- Array A Cursors -->
+      <text x="0" y="15" class="text-code" font-size="10" fill="#2563EB">p1 ──▶</text>
+      <g transform="translate(45, 0)">
+        <rect x="0" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="10" y="14" class="text-code" font-size="9">1</text>
+        <rect x="32" y="0" width="28" height="20" fill="#D1FAE5" stroke="#059669" stroke-width="1.5" rx="3" />
+        <text x="42" y="14" class="text-code" font-size="9" font-weight="700" fill="#065F46">3</text>
+        <rect x="64" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="74" y="14" class="text-code" font-size="9">7</text>
+        <rect x="96" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="106" y="14" class="text-code" font-size="9">9</text>
+      </g>
+
+      <!-- Array B Cursors -->
+      <text x="0" y="45" class="text-code" font-size="10" fill="#059669">p2 ──▶</text>
+      <g transform="translate(45, 30)">
+        <rect x="0" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="10" y="14" class="text-code" font-size="9">2</text>
+        <rect x="32" y="0" width="28" height="20" fill="#D1FAE5" stroke="#059669" stroke-width="1.5" rx="3" />
+        <text x="42" y="14" class="text-code" font-size="9" font-weight="700" fill="#065F46">3</text>
+        <rect x="64" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="74" y="14" class="text-code" font-size="9">6</text>
+        <rect x="96" y="0" width="28" height="20" class="cell-mesh" />
+        <text x="106" y="14" class="text-code" font-size="9">7</text>
+      </g>
+
+      <!-- Synchronization indicator -->
+      <path d="M 87 22 L 87 28" stroke="#059669" stroke-width="2" />
+    </g>
+
+    <!-- Metrics Callout -->
+    <rect x="15" y="195" width="240" height="85" rx="6" fill="#FFFFFF" stroke="#A7F3D0" />
+    <text x="25" y="215" class="text-subtitle" fill="#065F46">Cost on 1M Docs Each</text>
+    <text x="25" y="235" class="text-code">Checks:  Max 2,000,000</text>
+    <text x="25" y="253" class="text-code">Latency: ~1.8 milliseconds</text>
+    <text x="25" y="271" class="text-body" font-size="10" fill="#059669">RAM: Exactly 0 bytes allocated</text>
+
+    <!-- Verdict Tag -->
+    <rect x="15" y="290" width="240" height="22" rx="4" fill="#D1FAE5" />
+    <text x="25" y="305" class="text-code" font-size="10" font-weight="700" fill="#065F46">Verdict: Sub-Millisecond Standard</text>
+  </g>
+</svg>

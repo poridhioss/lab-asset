@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFFFF; }
+      .card { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .text-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #475569; }
+      .text-heading { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0F172A; }
+      .text-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #334155; }
+      .text-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 11px; fill: #0F172A; }
+      .text-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #FFFFFF; }
+      .badge-blue { fill: #2563EB; rx: 4px; }
+      .badge-amber { fill: #D97706; rx: 4px; }
+      .badge-green { fill: #059669; rx: 4px; }
+      .cell { fill: #FFFFFF; stroke: #94A3B8; stroke-width: 1.5; rx: 4px; }
+      .cell-match { fill: #D1FAE5; stroke: #059669; stroke-width: 2; rx: 4px; }
+      .wire-step { stroke: #94A3B8; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+      .wire-blue { stroke: #2563EB; stroke-width: 2; fill: none; }
+      .wire-amber { stroke: #D97706; stroke-width: 2; fill: none; }
+      .wire-green { stroke: #059669; stroke-width: 2; fill: none; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="460" class="bg" />
+
+  <!-- Global Header -->
+  <text x="40" y="38" class="text-title">Two-Pointer Linear Intersection: Active Decision Flow</text>
+  <text x="40" y="58" class="text-subtitle">Dual Synchronized Cursors Traversing Monotonic Postings in Strictly O(L1 + L2) Operations</text>
+
+  <!-- Top: Monotonic Array Views -->
+  <g transform="translate(40, 85)">
+    <!-- Array A -->
+    <g transform="translate(0, 0)">
+      <text x="0" y="16" class="text-heading" fill="#2563EB">List A ("consensus") [L1 = 6]</text>
+      <g transform="translate(0, 25)">
+        <rect x="0" y="0" width="55" height="35" class="cell" />
+        <text x="22" y="22" class="text-code" font-weight="700">1</text>
+
+        <rect x="65" y="0" width="55" height="35" class="cell-match" />
+        <text x="87" y="22" class="text-code" font-weight="700" fill="#065F46">3</text>
+
+        <rect x="130" y="0" width="55" height="35" class="cell" />
+        <text x="152" y="22" class="text-code" font-weight="700">5</text>
+
+        <rect x="195" y="0" width="55" height="35" class="cell-match" />
+        <text x="217" y="22" class="text-code" font-weight="700" fill="#065F46">7</text>
+
+        <rect x="260" y="0" width="55" height="35" class="cell" />
+        <text x="282" y="22" class="text-code" font-weight="700">9</text>
+
+        <rect x="325" y="0" width="55" height="35" class="cell-match" />
+        <text x="343" y="22" class="text-code" font-weight="700" fill="#065F46">12</text>
+      </g>
+    </g>
+
+    <!-- Array B -->
+    <g transform="translate(490, 0)">
+      <text x="0" y="16" class="text-heading" fill="#D97706">List B ("leader") [L2 = 6]</text>
+      <g transform="translate(0, 25)">
+        <rect x="0" y="0" width="55" height="35" class="cell" />
+        <text x="22" y="22" class="text-code" font-weight="700">2</text>
+
+        <rect x="65" y="0" width="55" height="35" class="cell-match" />
+        <text x="87" y="22" class="text-code" font-weight="700" fill="#065F46">3</text>
+
+        <rect x="130" y="0" width="55" height="35" class="cell-match" />
+        <text x="152" y="22" class="text-code" font-weight="700" fill="#065F46">7</text>
+
+        <rect x="195" y="0" width="55" height="35" class="cell" />
+        <text x="213" y="22" class="text-code" font-weight="700">10</text>
+
+        <rect x="260" y="0" width="55" height="35" class="cell-match" />
+        <text x="278" y="22" class="text-code" font-weight="700" fill="#065F46">12</text>
+
+        <rect x="325" y="0" width="55" height="35" class="cell" />
+        <text x="343" y="22" class="text-code" font-weight="700">15</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Middle: 3-Case Decision Flowchart -->
+  <g transform="translate(40, 185)">
+    <rect width="880" height="150" class="card" />
+
+    <!-- Decision Diamond / Hub -->
+    <g transform="translate(35, 30)">
+      <rect x="0" y="15" width="160" height="60" rx="6" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1.5" />
+      <text x="20" y="40" class="text-code" font-weight="700" fill="#0F172A">Compare Elements</text>
+      <text x="20" y="58" class="text-subtitle" fill="#2563EB">A[p1] vs B[p2]</text>
+    </g>
+
+    <!-- Branch 1: A[p1] < B[p2] -->
+    <g transform="translate(240, 20)">
+      <path d="M -45 55 L -5 55" class="wire-blue" marker-end="url(#arr-blue)" />
+      <rect x="0" y="0" width="180" height="110" rx="6" fill="#EFF6FF" stroke="#93C5FD" />
+      <rect x="12" y="12" width="95" height="18" class="badge-blue" />
+      <text x="18" y="25" class="text-badge">CASE 1: A IS SMALLER</text>
+      <text x="12" y="48" class="text-code" font-weight="700" fill="#1D4ED8">A[p1] &lt; B[p2]</text>
+      <text x="12" y="66" class="text-body" fill="#1E40AF">No future element in B</text>
+      <text x="12" y="80" class="text-body" fill="#1E40AF">can ever match A[p1].</text>
+      <text x="12" y="98" class="text-code" font-weight="700" fill="#2563EB">Action: p1++</text>
+    </g>
+
+    <!-- Branch 2: A[p1] > B[p2] -->
+    <g transform="translate(460, 20)">
+      <path d="M -40 55 L -5 55" class="wire-amber" marker-end="url(#arr-amber)" />
+      <rect x="0" y="0" width="180" height="110" rx="6" fill="#FFFBEB" stroke="#FDE68A" />
+      <rect x="12" y="12" width="95" height="18" class="badge-amber" />
+      <text x="18" y="25" class="text-badge">CASE 2: B IS SMALLER</text>
+      <text x="12" y="48" class="text-code" font-weight="700" fill="#92400E">A[p1] &gt; B[p2]</text>
+      <text x="12" y="66" class="text-body" fill="#78350F">No future element in A</text>
+      <text x="12" y="80" class="text-body" fill="#78350F">can ever match B[p2].</text>
+      <text x="12" y="98" class="text-code" font-weight="700" fill="#D97706">Action: p2++</text>
+    </g>
+
+    <!-- Branch 3: EXACT MATCH -->
+    <g transform="translate(680, 20)">
+      <path d="M -40 55 L -5 55" class="wire-green" marker-end="url(#arr-green)" />
+      <rect x="0" y="0" width="180" height="110" rx="6" fill="#ECFDF5" stroke="#A7F3D0" />
+      <rect x="12" y="12" width="95" height="18" class="badge-green" />
+      <text x="18" y="25" class="text-badge">CASE 3: EXACT MATCH</text>
+      <text x="12" y="48" class="text-code" font-weight="700" fill="#065F46">A[p1] === B[p2]</text>
+      <text x="12" y="66" class="text-body" fill="#047857">Term in both documents!</text>
+      <text x="12" y="80" class="text-body" fill="#047857">Append to matches.</text>
+      <text x="12" y="98" class="text-code" font-weight="700" fill="#059669">Action: p1++, p2++</text>
+    </g>
+  </g>
+
+  <!-- Bottom: Emitted Matches Stream -->
+  <g transform="translate(40, 360)">
+    <rect width="880" height="65" rx="6" fill="#F8FAFC" stroke="#E2E8F0" />
+    <text x="25" y="38" class="text-heading" fill="#0F172A">Emitted Candidates:</text>
+
+    <!-- Match Emitted Cards -->
+    <g transform="translate(180, 15)">
+      <rect x="0" y="0" width="70" height="35" class="cell-match" />
+      <text x="18" y="22" class="text-code" font-weight="700" fill="#065F46">Doc 3</text>
+
+      <path d="M 75 18 L 95 18" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)" />
+
+      <rect x="105" y="0" width="70" height="35" class="cell-match" />
+      <text x="123" y="22" class="text-code" font-weight="700" fill="#065F46">Doc 7</text>
+
+      <path d="M 180 18 L 200 18" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)" />
+
+      <rect x="210" y="0" width="70" height="35" class="cell-match" />
+      <text x="224" y="22" class="text-code" font-weight="700" fill="#065F46">Doc 12</text>
+    </g>
+
+    <!-- Operational Guarantee Badge -->
+    <g transform="translate(580, 18)">
+      <rect x="0" y="0" width="280" height="30" rx="4" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1" />
+      <text x="15" y="19" class="text-code" font-size="10" font-weight="700" fill="#1D4ED8">Completed in 8 steps (Max L1 + L2 = 12)</text>
+    </g>
+  </g>
+</svg>
