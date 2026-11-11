@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 170" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9.5px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="170" class="bg" />
+
+  <!-- LEFT: L1 Cache (Short Prefixes L <= 6) -->
+  <g transform="translate(20, 15)">
+    <rect width="400" height="140" class="sketch-box" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8" />
+    <rect x="12" y="10" width="170" height="18" rx="3" fill="#DCFCE7" />
+    <text x="18" y="23" class="txt-badge" fill="#166534">PREFIX LENGTH L &#8804; 6 (85%)</text>
+    <text x="195" y="24" class="txt-title" fill="#14532D">L1 Flat Prefix Map</text>
+
+    <!-- Path Details -->
+    <rect x="12" y="38" width="376" height="26" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+    <text x="22" y="55" class="txt-code" fill="#15803D">Route: Local RAM Hash Table Lookup</text>
+
+    <g transform="translate(12, 72)">
+      <rect x="0" y="0" width="130" height="24" rx="4" fill="#DCFCE7" />
+      <text x="65" y="16" text-anchor="middle" class="txt-badge" fill="#166534">&#9889; Sub-1&#181;s Latency</text>
+
+      <rect x="140" y="0" width="120" height="24" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+      <text x="200" y="16" text-anchor="middle" class="txt-code" fill="#166534">Zero Pointer Hops</text>
+
+      <rect x="270" y="0" width="105" height="24" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+      <text x="322" y="16" text-anchor="middle" class="txt-badge" fill="#15803D">O(1) Direct</text>
+    </g>
+
+    <text x="22" y="125" class="txt-sub" fill="#166534">Handles 85%+ of user typing traffic with zero tree overhead.</text>
+  </g>
+
+  <!-- RIGHT: L2 Fallback (Long Prefixes L > 6) -->
+  <g transform="translate(440, 15)">
+    <rect width="400" height="140" class="sketch-box" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.8" />
+    <rect x="12" y="10" width="170" height="18" rx="3" fill="#FEF3C7" />
+    <text x="18" y="23" class="txt-badge" fill="#92400E">PREFIX LENGTH L &gt; 6 (15%)</text>
+    <text x="195" y="24" class="txt-title" fill="#92400E">L2 Trie / Index Fallback</text>
+
+    <!-- Path Details -->
+    <rect x="12" y="38" width="376" height="26" rx="4" fill="#FFFFFF" stroke="#FDE68A" />
+    <text x="22" y="55" class="txt-code" fill="#92400E">Route: Deep Tree / Compressed Posting List</text>
+
+    <g transform="translate(12, 72)">
+      <rect x="0" y="0" width="130" height="24" rx="4" fill="#FEF3C7" />
+      <text x="65" y="16" text-anchor="middle" class="txt-badge" fill="#92400E">~15&#181;s Traversal</text>
+
+      <rect x="140" y="0" width="120" height="24" rx="4" fill="#FFFFFF" stroke="#FDE68A" />
+      <text x="200" y="16" text-anchor="middle" class="txt-code" fill="#92400E">Node Pointer Hop</text>
+
+      <rect x="270" y="0" width="105" height="24" rx="4" fill="#FFFFFF" stroke="#FDE68A" />
+      <text x="322" y="16" text-anchor="middle" class="txt-badge" fill="#B45309">O(L) Search</text>
+    </g>
+
+    <text x="22" y="125" class="txt-sub" fill="#92400E">Rare tail queries bypass L1, protecting cache from tail explosion.</text>
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 170" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9.5px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="170" class="bg" />
+
+  <!-- LEFT: 3 DIVERSE SEARCH ENGINES -->
+  <g transform="translate(20, 12)">
+    <rect x="0" y="0" width="230" height="42" rx="6" fill="#EFF6FF" stroke="#93C5FD" class="sketch-box" />
+    <text x="12" y="18" class="txt-badge" fill="#1D4ED8">ENGINE 1: BM25 LEXICAL</text>
+    <text x="12" y="34" class="txt-sub" fill="#1E40AF">Top 10 Keyword Matches</text>
+
+    <rect x="0" y="50" width="230" height="42" rx="6" fill="#F0FDF4" stroke="#86EFAC" class="sketch-box" />
+    <text x="12" y="68" class="txt-badge" fill="#15803D">ENGINE 2: DENSE VECTOR</text>
+    <text x="12" y="84" class="txt-sub" fill="#166534">Top 10 Semantic Embeddings</text>
+
+    <rect x="0" y="100" width="230" height="42" rx="6" fill="#FFFBEB" stroke="#FDE68A" class="sketch-box" />
+    <text x="12" y="118" class="txt-badge" fill="#92400E">ENGINE 3: HYBRID SPLAT</text>
+    <text x="12" y="134" class="txt-sub" fill="#B45309">Top 10 Sparse+Dense Rerank</text>
+
+    <!-- Connectors to Pool -->
+    <path d="M 235 21 L 285 65" stroke="#93C5FD" stroke-width="1.8" stroke-dasharray="4,4" />
+    <path d="M 235 71 L 285 71" stroke="#86EFAC" stroke-width="1.8" stroke-dasharray="4,4" />
+    <path d="M 235 121 L 285 77" stroke="#FDE68A" stroke-width="1.8" stroke-dasharray="4,4" />
+  </g>
+
+  <!-- CENTER: TREC POOL DEDUPLICATION -->
+  <g transform="translate(290, 20)">
+    <rect width="250" height="125" class="sketch-box" fill="#FAF5FF" stroke="#C084FC" stroke-width="1.8" />
+    <rect x="12" y="10" width="145" height="18" rx="3" fill="#EDE9FE" />
+    <text x="18" y="23" class="txt-badge" fill="#7C3AED">TREC POOLING GATE</text>
+
+    <rect x="12" y="38" width="226" height="34" rx="4" fill="#FFFFFF" stroke="#DDD6FE" />
+    <text x="22" y="59" class="txt-code" font-size="10px" font-weight="700" fill="#6D28D9">Union: 30 Docs &#8594; 25 Unique</text>
+
+    <text x="22" y="92" class="txt-sub" fill="#6B21A8">Eliminates overlap between models.</text>
+    <text x="22" y="108" class="txt-sub" fill="#6B21A8">Bypasses unretrieved collection tail.</text>
+  </g>
+
+  <!-- CONNECTOR TO HUMAN ANNOTATION -->
+  <path d="M 545 82 L 585 82" stroke="#16A34A" stroke-width="2.2" stroke-dasharray="4,4" />
+
+  <!-- RIGHT: HUMAN EVALUATION -->
+  <g transform="translate(590, 20)">
+    <rect width="250" height="125" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" />
+    <rect x="12" y="10" width="145" height="18" rx="3" fill="#DCFCE7" />
+    <text x="18" y="23" class="txt-badge" fill="#15803D">HUMAN ANNOTATORS</text>
+
+    <rect x="12" y="38" width="226" height="32" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+    <text x="22" y="58" class="txt-badge" fill="#166534">&#10003; Grade 25 Docs / Query</text>
+
+    <rect x="12" y="76" width="226" height="36" rx="4" fill="#DCFCE7" />
+    <text x="22" y="94" class="txt-badge" fill="#166534">99.9% Annotation Savings</text>
+    <text x="22" y="106" class="txt-sub" fill="#14532D">vs. scanning 1,000,000 documents</text>
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 170" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9.5px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="170" class="bg" />
+
+  <!-- LEFT: Consumer Mode (High Precision) -->
+  <g transform="translate(20, 15)">
+    <rect width="400" height="140" class="sketch-box" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.8" />
+    <rect x="12" y="10" width="165" height="18" rx="3" fill="#DBEAFE" />
+    <text x="18" y="23" class="txt-badge" fill="#1E40AF">CONSUMER: HIGH PRECISION</text>
+    <text x="190" y="24" class="txt-title" fill="#1E40AF">Clean Page 1</text>
+
+    <!-- Specs -->
+    <rect x="12" y="38" width="376" height="26" rx="4" fill="#FFFFFF" stroke="#93C5FD" />
+    <text x="22" y="55" class="txt-code" fill="#1E3A8A">Gate: Precision@5 (Strict: minGrade = 2)</text>
+
+    <g transform="translate(12, 72)">
+      <rect x="0" y="0" width="120" height="24" rx="4" fill="#DBEAFE" />
+      <text x="60" y="16" text-anchor="middle" class="txt-badge" fill="#1E40AF">Score &#8805; 0.8 Cutoff</text>
+
+      <rect x="130" y="0" width="125" height="24" rx="4" fill="#FFFFFF" stroke="#93C5FD" />
+      <text x="192" y="16" text-anchor="middle" class="txt-code" fill="#1E40AF">Prunes Noise</text>
+
+      <rect x="265" y="0" width="110" height="24" rx="4" fill="#FFFFFF" stroke="#93C5FD" />
+      <text x="320" y="16" text-anchor="middle" class="txt-badge" fill="#2563EB">Fast Answers</text>
+    </g>
+
+    <text x="22" y="125" class="txt-sub" fill="#1D4ED8">Users see only top-tier bullseye answers above the mobile fold.</text>
+  </g>
+
+  <!-- RIGHT: Compliance Mode (Exhaustive Recall) -->
+  <g transform="translate(440, 15)">
+    <rect width="400" height="140" class="sketch-box" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8" />
+    <rect x="12" y="10" width="165" height="18" rx="3" fill="#DCFCE7" />
+    <text x="18" y="23" class="txt-badge" fill="#166534">AUDIT: EXHAUSTIVE RECALL</text>
+    <text x="190" y="24" class="txt-title" fill="#14532D">Zero-Omission</text>
+
+    <!-- Specs -->
+    <rect x="12" y="38" width="376" height="26" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+    <text x="22" y="55" class="txt-code" fill="#15803D">Gate: Recall@100 (Lenient: minGrade &#8805; 1)</text>
+
+    <g transform="translate(12, 72)">
+      <rect x="0" y="0" width="120" height="24" rx="4" fill="#DCFCE7" />
+      <text x="60" y="16" text-anchor="middle" class="txt-badge" fill="#166534">Score &gt; 0.0 Cutoff</text>
+
+      <rect x="130" y="0" width="125" height="24" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+      <text x="192" y="16" text-anchor="middle" class="txt-code" fill="#15803D">Catches Evidence</text>
+
+      <rect x="265" y="0" width="110" height="24" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+      <text x="320" y="16" text-anchor="middle" class="txt-badge" fill="#15803D">Recall &#8805; 0.98</text>
+    </g>
+
+    <text x="22" y="125" class="txt-sub" fill="#15803D">Guarantees no partially relevant evidence is omitted during subpoenas.</text>
+  </g>
+</svg>

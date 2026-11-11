@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 170" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9.5px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; }
+      .txt-note { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+      .arrow { stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    </style>
+    <marker id="arr-green8" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+    <marker id="arr-blue8" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="170" class="bg" />
+
+  <!-- LEFT: Active Serving (Read Path) -->
+  <g transform="translate(20, 14)">
+    <rect width="380" height="142" class="sketch-box" fill="#EFF6FF" stroke="#93C5FD" />
+    <rect x="12" y="8" width="125" height="18" rx="3" fill="#DBEAFE" />
+    <text x="18" y="21" class="txt-badge" fill="#1E40AF">ACTIVE SERVING TIER</text>
+    <text x="150" y="22" class="txt-title" fill="#1E40AF">Active Trie (V1)</text>
+
+    <!-- Query stream -->
+    <rect x="12" y="34" width="356" height="26" rx="4" fill="#FFFFFF" stroke="#93C5FD" />
+    <text x="20" y="51" class="txt-code" fill="#334155">50,000 QPS Keystrokes: "ka", "ban"...</text>
+
+    <!-- Stat chips -->
+    <rect x="12" y="68" width="150" height="24" rx="4" fill="#DBEAFE" stroke="#3B82F6" />
+    <text x="18" y="84" class="txt-code" fill="#1E40AF">Zero Mutex Locks</text>
+
+    <path d="M 170 80 L 195 80" class="arrow" stroke="#3B82F6" marker-end="url(#arr-blue8)" />
+
+    <rect x="202" y="68" width="166" height="24" rx="4" fill="#DBEAFE" stroke="#3B82F6" />
+    <text x="208" y="84" class="txt-code" fill="#1E40AF">&lt;0.02ms Pure Read</text>
+
+    <!-- Note -->
+    <text x="14" y="122" class="txt-note" fill="#1E40AF">&#10004; Readers run completely wait-free on immutable reference</text>
+  </g>
+
+  <!-- CENTER: Atomic Pointer Swap Arrow -->
+  <g transform="translate(402, 70)">
+    <path d="M 5 15 Q 28 -5 51 15" class="arrow" stroke="#10B981" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr-green8)" />
+    <text x="2" y="35" class="txt-badge" fill="#047857">SWAP (1ns)</text>
+  </g>
+
+  <!-- RIGHT: Shadow Ingestion (Write Path) -->
+  <g transform="translate(460, 14)">
+    <rect width="380" height="142" class="sketch-box" fill="#FFFBEB" stroke="#FCD34D" />
+    <rect x="12" y="8" width="125" height="18" rx="3" fill="#FEF3C7" />
+    <text x="18" y="21" class="txt-badge" fill="#92400E">BACKGROUND WORKER</text>
+    <text x="150" y="22" class="txt-title" fill="#92400E">Shadow Trie (V2)</text>
+
+    <!-- Update task -->
+    <rect x="12" y="34" width="356" height="26" rx="4" fill="#FFFFFF" stroke="#FCD34D" />
+    <text x="20" y="51" class="txt-code" fill="#92400E">Batch update weights &amp; recompute top-k</text>
+
+    <!-- Progress chips -->
+    <rect x="12" y="68" width="165" height="24" rx="4" fill="#FEF3C7" stroke="#F59E0B" />
+    <text x="18" y="84" class="txt-code" fill="#92400E">Isolated Mutation</text>
+
+    <rect x="185" y="68" width="183" height="24" rx="4" fill="#DCFCE7" stroke="#10B981" />
+    <text x="191" y="84" class="txt-code" fill="#166534">Ready &#8594; Atomic Swap</text>
+
+    <!-- Note -->
+    <text x="14" y="122" class="txt-note" fill="#92400E">&#9888; Zero impact on reader latency &#8226; V1 reclaimed after drain</text>
+  </g>
+</svg>
