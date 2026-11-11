@@ -68,8 +68,8 @@
     <!-- Bottleneck Explanation -->
     <rect x="18" y="195" width="384" height="85" fill="#FEF9C3" stroke="#EAB308" rx="8" />
     <text x="28" y="218" class="txt-heading" font-size="15px" fill="#854D0E">The Scale Bottleneck:</text>
-    <text x="28" y="238" class="txt-sub" fill="#854D0E">If prefix has 100,000 matches, sorting all 100,000 just to keep the top 5</text>
-    <text x="28" y="254" class="txt-sub" fill="#854D0E">burns heavy CPU and triggers temporary array buffer allocations.</text>
+    <text x="28" y="238" class="txt-sub" font-size="12px" fill="#854D0E">&#8226; Sorting 100,000 matches just to keep the top 5</text>
+    <text x="28" y="254" class="txt-sub" font-size="12px" fill="#854D0E">  burns heavy CPU and triggers temporary array allocations.</text>
   </g>
 
   <!-- Animated Bridge Flow Connector (Calm & Steady) -->
@@ -92,7 +92,7 @@
     <!-- Optimization Highlight -->
     <rect x="18" y="195" width="384" height="85" fill="#DCFCE7" stroke="#10B981" rx="8" />
     <text x="28" y="218" class="txt-heading" font-size="15px" fill="#065F46">The Lab 4 Breakthrough:</text>
-    <text x="28" y="238" class="txt-sub" fill="#065F46">Since K = 5 is tiny (log 5 = 2.3 ops), candidate aggregation becomes</text>
-    <text x="28" y="254" class="txt-sub" fill="#065F46">essentially linear O(N) with zero full-array sorting overhead!</text>
+    <text x="28" y="238" class="txt-sub" font-size="12px" fill="#065F46">&#8226; Since K = 5 is tiny (log 5 = 2.3 ops), candidate tracking</text>
+    <text x="28" y="254" class="txt-sub" font-size="12px" fill="#065F46">  is strictly linear O(N) with zero full-array sorting overhead.</text>
   </g>
 </svg>

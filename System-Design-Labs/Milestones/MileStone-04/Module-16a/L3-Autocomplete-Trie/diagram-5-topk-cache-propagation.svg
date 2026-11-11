@@ -117,12 +117,13 @@
     <text x="28" y="112" class="txt-code" font-size="10px">[ "kacchi biryani": 16.4k, "kacchi mutton": 9.2k, ... ]</text>
 
     <!-- Step 2: Merge Self Invariant -->
-    <rect x="18" y="135" width="389" height="52" class="card-merge" />
-    <text x="28" y="154" class="txt-heading" font-size="15px" fill="#854D0E">2. Self-Ending Word Invariant:</text>
-    <text x="28" y="172" class="txt-sub" fill="#854D0E">Node 'i' isEnd is true! Merge self: { word: "kacchi", freq: 8500 }</text>
+    <rect x="18" y="132" width="389" height="60" class="card-merge" />
+    <text x="28" y="150" class="txt-heading" font-size="15px" fill="#854D0E">2. Self-Ending Word Invariant:</text>
+    <text x="28" y="167" class="txt-sub" font-size="11.5px" fill="#854D0E">Node 'i' isEnd is true! Merge self query term:</text>
+    <text x="28" y="182" class="txt-code" font-size="10px" font-weight="700" fill="#854D0E">&#8594; { word: "kacchi", frequency: 8500 }</text>
 
     <!-- Step 3: Final Top-K Cache -->
-    <rect x="18" y="198" width="389" height="112" class="card-cached" />
+    <rect x="18" y="200" width="389" height="112" class="card-cached" />
     <text x="28" y="218" class="txt-heading" font-size="15px" fill="#065F46">3. Final Sorted Top-K (node.topSuggestions):</text>
     <text x="28" y="238" class="txt-code" font-size="10px">Rank 1: "kacchi biryani"  (vol: 16,400)</text>
     <text x="28" y="254" class="txt-code" font-size="10px">Rank 2: "kacchi mutton"   (vol: 9,200)</text>

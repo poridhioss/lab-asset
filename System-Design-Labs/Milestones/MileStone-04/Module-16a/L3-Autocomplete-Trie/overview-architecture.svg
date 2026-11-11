@@ -1,162 +1,189 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" height="100%">
   <defs>
     <style>
       @keyframes flowDash {
-        to { stroke-dashoffset: -28; }
+        to { stroke-dashoffset: -24; }
       }
       .bg { fill: #FFFDF8; }
       .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
-      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
-      .sketch-card {
-        fill: #FFFFFF;
-        stroke: #334155;
-        stroke-width: 1.8;
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .flow-query {
+        stroke: #3B82F6;
+        stroke-width: 2.2;
         stroke-linecap: round;
-        stroke-linejoin: round;
-        rx: 12;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 4.2s linear infinite;
       }
-      .card-stage1 { fill: #F0F7FF; stroke: #3B82F6; }
-      .card-stage2 { fill: #FEF9C3; stroke: #EAB308; }
-      .card-stage3 { fill: #ECFDF5; stroke: #10B981; stroke-width: 2.2; }
-      .card-stage4 { fill: #FAF5FF; stroke: #A855F7; }
-      .flow-wire {
-        stroke: #94A3B8;
+      .flow-result {
+        stroke: #10B981;
         stroke-width: 2.2;
         stroke-linecap: round;
         stroke-dasharray: 6, 6;
         fill: none;
         animation: flowDash 3.8s linear infinite;
       }
-      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
-      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
-      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
-      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+      .tree-edge-muted { stroke: #CBD5E1; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+      .tree-edge-active { stroke: #10B981; stroke-width: 2.4; stroke-linecap: round; fill: none; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; fill: #1E293B; }
+      .node-circle { fill: #FFFFFF; stroke: #475569; stroke-width: 1.8; }
+      .node-active { fill: #DCFCE7; stroke: #10B981; stroke-width: 2.2; }
+      .node-terminal { fill: #DCFCE7; stroke: #10B981; stroke-width: 2.2; }
     </style>
-    <marker id="arr-ink" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
     </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="960" height="410" class="bg" />
+  <rect width="960" height="420" class="bg" />
 
   <!-- Title Header -->
-  <g transform="translate(40, 28)">
-    <text x="0" y="0" class="sketch-title">End-to-End Typeahead Pipeline &amp; Trie Architecture</text>
-    <text x="0" y="18" class="sketch-subtitle">Keystroke Stream &#8594; O(L) Pointer Navigation &#8594; O(1) Precomputed Top-5 Cache &#8594; Sub-1ms UI Paint</text>
+  <g transform="translate(40, 26)">
+    <text x="0" y="0" class="sketch-title">Typeahead: Mobile Client to In-Memory Trie</text>
+    <text x="0" y="18" class="sketch-subtitle">Instant autocomplete suggestions returned from RAM directly to the search dropdown</text>
   </g>
 
-  <!-- Continuous Animated Signal Wire (Calm & Slow) -->
-  <path d="M 230 205 C 250 205, 255 205, 275 205" class="flow-wire" marker-end="url(#arr-ink)" />
-  <path d="M 475 205 C 495 205, 500 205, 520 205" class="flow-wire" marker-end="url(#arr-ink)" />
-  <path d="M 720 205 C 740 205, 745 205, 765 205" class="flow-wire" marker-end="url(#arr-ink)" />
+  <!-- Left: Hand-Drawn Mobile Client Screen -->
+  <g transform="translate(50, 68)">
+    <!-- Mobile Phone Bezel -->
+    <rect width="210" height="325" rx="22" fill="#FFFFFF" stroke="#334155" stroke-width="2" />
+    <rect x="80" y="10" width="50" height="4" rx="2" fill="#CBD5E1" />
 
-  <!-- Calm Traveling Particle (5.0s steady pace) -->
-  <circle r="4.5" fill="#10B981" stroke="#FFFFFF" stroke-width="1.5">
-    <animate attributeName="cx" values="135;375;620;845;920" dur="5.0s" repeatCount="indefinite" />
-    <animate attributeName="cy" values="205;205;205;205;205" dur="5.0s" repeatCount="indefinite" />
-    <animate attributeName="opacity" values="0;1;1;1;0" dur="5.0s" repeatCount="indefinite" />
-  </circle>
+    <!-- Phone Screen Header -->
+    <text x="16" y="32" class="txt-badge" fill="#64748B">MOBILE CLIENT</text>
 
-  <!-- Stage 1: User Keystrokes -->
-  <g transform="translate(40, 68)">
-    <rect width="190" height="310" class="sketch-card card-stage1" />
-    <rect x="14" y="14" width="70" height="20" fill="#DBEAFE" rx="4" />
-    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#1E40AF">STAGE 1</text>
-    <text x="14" y="56" class="txt-heading">User Keystrokes</text>
-    <text x="14" y="74" class="txt-sub">Client keystroke stream</text>
+    <!-- Search Input Bar -->
+    <rect x="14" y="44" width="182" height="34" rx="8" fill="#F8FAFC" stroke="#93C5FD" stroke-width="1.5" />
+    <circle cx="28" cy="61" r="5" fill="none" stroke="#60A5FA" stroke-width="1.4" />
+    <line x1="32" y1="65" x2="36" y2="69" stroke="#60A5FA" stroke-width="1.4" stroke-linecap="round" />
+    <text x="44" y="65" class="txt-code" font-size="12px" font-weight="700" fill="#1D4ED8">kac|</text>
 
-    <!-- Query Input Card -->
-    <rect x="14" y="95" width="162" height="60" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.5" rx="8" />
-    <text x="22" y="116" class="txt-sub">Typing Prefix:</text>
-    <text x="22" y="138" class="txt-code" font-weight="700" font-size="13px" fill="#1D4ED8">"kacchi"</text>
+    <!-- Dropdown Autocomplete Overlay -->
+    <rect x="14" y="86" width="182" height="175" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
 
-    <!-- Budget Box -->
-    <rect x="14" y="170" width="162" height="110" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" rx="8" />
-    <text x="22" y="194" class="txt-sub" font-weight="700" fill="#0F172A">Typing Cadence:</text>
-    <text x="22" y="214" class="txt-sub">&#8226; 150ms – 200ms / char</text>
-    <text x="22" y="234" class="txt-sub">&#8226; 50ms round-trip SLA</text>
-    <rect x="22" y="246" width="144" height="20" fill="#DBEAFE" rx="4" />
-    <text x="28" y="260" class="txt-badge" font-size="10px" fill="#1E40AF">Trie SLA: &lt;= 3ms</text>
+    <!-- Suggestion Row 1 (Active Highlight) -->
+    <rect x="18" y="94" width="174" height="28" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1.2" />
+    <circle cx="28" cy="108" r="3" fill="#10B981" />
+    <text x="36" y="112" class="txt-code" font-size="10.5px" font-weight="700" fill="#065F46">kacchi biryani</text>
+
+    <!-- Suggestion Row 2 -->
+    <circle cx="28" cy="136" r="2.5" fill="#94A3B8" />
+    <text x="36" y="140" class="txt-code" font-size="10px">kacchi mutton</text>
+
+    <!-- Suggestion Row 3 -->
+    <circle cx="28" cy="164" r="2.5" fill="#94A3B8" />
+    <text x="36" y="168" class="txt-code" font-size="10px">kacchi (self term)</text>
+
+    <!-- Suggestion Row 4 -->
+    <circle cx="28" cy="192" r="2.5" fill="#94A3B8" />
+    <text x="36" y="196" class="txt-code" font-size="10px">kacchi beef</text>
+
+    <!-- Suggestion Row 5 -->
+    <circle cx="28" cy="220" r="2.5" fill="#94A3B8" />
+    <text x="36" y="224" class="txt-code" font-size="10px">kacchi basmati</text>
+
+    <!-- Speed Badge -->
+    <rect x="14" y="272" width="182" height="28" rx="6" fill="#F0F7FF" stroke="#93C5FD" />
+    <text x="24" y="290" class="txt-badge" fill="#1E40AF">&#9889; UI Paint: Sub-1ms (Zero Stutter)</text>
   </g>
 
-  <!-- Stage 2: O(L) Pointer Traversal -->
-  <g transform="translate(280, 68)">
-    <rect width="195" height="310" class="sketch-card card-stage2" />
-    <rect x="14" y="14" width="70" height="20" fill="#FEF08A" rx="4" />
-    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#854D0E">STAGE 2</text>
-    <text x="14" y="56" class="txt-heading">O(L) Trie Walk</text>
-    <text x="14" y="74" class="txt-sub">Map pointer dereferences</text>
+  <!-- Connecting Query Stream: Phone -> Trie Root -->
+  <path d="M 262 128 C 310 128, 330 115, 410 115" class="flow-query" marker-end="url(#arr-blue)" />
+  <rect x="290" y="105" width="80" height="20" rx="4" fill="#DBEAFE" stroke="#93C5FD" />
+  <text x="296" y="119" class="txt-badge" fill="#1E40AF">"kac" query</text>
 
-    <!-- Visual Tree Stem -->
-    <g transform="translate(98, 105)">
-      <!-- Root -->
-      <circle cx="0" cy="0" r="11" fill="#FFFFFF" stroke="#334155" stroke-width="1.8" />
-      <text x="-3" y="4" class="txt-code" font-size="10px">&#8226;</text>
+  <!-- Connecting Result Stream: Node Cache -> Mobile Dropdown -->
+  <path d="M 450 250 C 360 250, 320 200, 262 180" class="flow-result" marker-end="url(#arr-green)" />
+  <rect x="280" y="215" width="115" height="20" rx="4" fill="#DCFCE7" stroke="#10B981" />
+  <text x="286" y="229" class="txt-badge" fill="#065F46">Top-5 Cache (~1 &#181;s)</text>
 
-      <path d="M 0 11 L 0 28" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
-      <circle cx="0" cy="38" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
-      <text x="-4" y="42" class="txt-code" font-size="11px">'k'</text>
+  <!-- Right: In-Memory Character Prefix Trie -->
+  <g transform="translate(420, 68)">
+    <rect width="490" height="325" rx="16" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8" />
+    <text x="20" y="28" class="txt-heading" fill="#065F46">In-Memory Character Prefix Trie (Heap Resident)</text>
+    <text x="20" y="44" class="txt-sub">O(L) Pointer Traversal directly to Precomputed Top-K Cache</text>
 
-      <path d="M 0 48 L 0 65" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
-      <circle cx="0" cy="75" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
-      <text x="-4" y="79" class="txt-code" font-size="11px">'a'</text>
+    <!-- Visual Trie Tree -->
+    <g transform="translate(140, 70)">
+      <!-- Root Node -->
+      <g transform="translate(60, 0)">
+        <circle cx="0" cy="0" r="14" class="node-circle" />
+        <text x="-4" y="4" class="txt-code" font-weight="700">&#8226;</text>
+        <text x="-12" y="-18" class="txt-sub" font-size="11px">Root</text>
+      </g>
 
-      <path d="M 0 85 L 0 102" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
-      <circle cx="0" cy="112" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
-      <text x="-4" y="116" class="txt-code" font-size="11px">'c'</text>
+      <!-- Sibling Branch 'b' (bhuna) -->
+      <path d="M 50 8 Q 20 22 5 40" class="tree-edge-muted" />
+      <g transform="translate(5, 50)">
+        <circle cx="0" cy="0" r="11" class="node-circle" />
+        <text x="-4" y="4" class="txt-code" font-size="9px">'b'</text>
+      </g>
+      <text x="-8" y="72" class="txt-sub" font-size="10px" fill="#94A3B8">bhuna...</text>
 
-      <path d="M 0 122 L 0 139" stroke="#EAB308" stroke-width="2" stroke-linecap="round" />
-      <!-- Terminal Double Circle for 'i' -->
-      <circle cx="0" cy="151" r="13" fill="#DCFCE7" stroke="#10B981" stroke-width="2" />
-      <circle cx="0" cy="151" r="9" fill="none" stroke="#10B981" stroke-width="1.2" />
-      <text x="-3" y="155" class="txt-code" font-weight="700" font-size="11px" fill="#065F46">'i'</text>
+      <!-- Sibling Branch 'd' (dhaka) -->
+      <path d="M 70 8 Q 100 22 115 40" class="tree-edge-muted" />
+      <g transform="translate(115, 50)">
+        <circle cx="0" cy="0" r="11" class="node-circle" />
+        <text x="-4" y="4" class="txt-code" font-size="9px">'d'</text>
+      </g>
+      <text x="100" y="72" class="txt-sub" font-size="10px" fill="#94A3B8">dhaka...</text>
+
+      <!-- Active Path: Hop 1 -> 'k' -->
+      <path d="M 60 14 L 60 40" class="tree-edge-active" marker-end="url(#arr-green)" />
+      <text x="66" y="30" class="txt-code" font-weight="700" fill="#10B981">'k'</text>
+      <g transform="translate(60, 50)">
+        <circle cx="0" cy="0" r="12" class="node-active" />
+        <text x="-4" y="4" class="txt-code" font-weight="700" fill="#065F46">'k'</text>
+      </g>
+
+      <!-- Active Path: Hop 2 -> 'a' -->
+      <path d="M 60 62 L 60 88" class="tree-edge-active" marker-end="url(#arr-green)" />
+      <text x="66" y="78" class="txt-code" font-weight="700" fill="#10B981">'a'</text>
+      <g transform="translate(60, 98)">
+        <circle cx="0" cy="0" r="12" class="node-active" />
+        <text x="-4" y="4" class="txt-code" font-weight="700" fill="#065F46">'a'</text>
+      </g>
+
+      <!-- Active Path: Hop 3 -> 'c' (Prefix Target) -->
+      <path d="M 60 110 L 60 136" class="tree-edge-active" marker-end="url(#arr-green)" />
+      <text x="66" y="126" class="txt-code" font-weight="700" fill="#10B981">'c'</text>
+      <g transform="translate(60, 148)">
+        <circle cx="0" cy="0" r="14" class="node-active" stroke-width="2.5" />
+        <text x="-4" y="4" class="txt-code" font-weight="700" fill="#065F46">'c'</text>
+      </g>
+
+      <!-- Exploded Precomputed Cache Card directly at Node 'c' -->
+      <g transform="translate(90, 120)">
+        <rect width="225" height="74" rx="8" fill="#FFFFFF" stroke="#10B981" stroke-width="1.6" />
+        <rect x="8" y="6" width="130" height="16" rx="3" fill="#ECFDF5" />
+        <text x="12" y="18" class="txt-badge" font-size="9px" fill="#065F46">TARGET NODE 'c' CACHE</text>
+        <text x="8" y="38" class="txt-code" font-size="9.5px">1. kacchi biryani (16.4k)</text>
+        <text x="8" y="52" class="txt-code" font-size="9.5px">2. kacchi mutton (9.2k)...</text>
+        <text x="8" y="66" class="txt-badge" font-size="9px" fill="#059669">&#10003; O(1) Slice: 1.087 &#181;s</text>
+      </g>
+
+      <!-- Suffix Trunk: 'c' -> 'h' -> 'i' -->
+      <path d="M 60 162 L 60 188" class="tree-edge-active" />
+      <g transform="translate(60, 198)">
+        <circle cx="0" cy="0" r="10" class="node-active" />
+        <text x="-4" y="4" class="txt-code" font-size="8.5px" fill="#065F46">'i'</text>
+      </g>
+
+      <!-- Terminal Double Ring Node: 'kacchi' -->
+      <g transform="translate(60, 226)">
+        <circle cx="0" cy="0" r="13" class="node-terminal" />
+        <circle cx="0" cy="0" r="9" fill="none" stroke="#10B981" stroke-width="1.2" />
+        <text x="-3" y="4" class="txt-code" font-size="8px" font-weight="700" fill="#065F46">'i'</text>
+      </g>
+      <text x="82" y="230" class="txt-code" font-size="9.5px" font-weight="700" fill="#065F46">"kacchi" (isEnd: true)</text>
     </g>
-
-    <rect x="14" y="270" width="167" height="28" fill="#FFFFFF" stroke="#CBD5E1" rx="6" />
-    <text x="22" y="288" class="txt-badge" font-size="10px" fill="#854D0E">6 Hops strictly O(L)</text>
-  </g>
-
-  <!-- Stage 3: Node Top-K Cache (HERO) -->
-  <g transform="translate(525, 68)">
-    <rect width="195" height="310" class="sketch-card card-stage3" />
-    <rect x="14" y="14" width="70" height="20" fill="#A7F3D0" rx="4" />
-    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#065F46">STAGE 3</text>
-    <text x="14" y="56" class="txt-heading" fill="#065F46">Node Top-K Cache</text>
-    <text x="14" y="74" class="txt-sub">Precomputed at build-time</text>
-
-    <!-- Cache Card -->
-    <rect x="14" y="95" width="167" height="165" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.5" rx="8" />
-    <text x="22" y="115" class="txt-sub" font-weight="700">node.topSuggestions:</text>
-    <text x="22" y="136" class="txt-code" font-size="10px">1. kacchi biryani</text>
-    <text x="22" y="156" class="txt-code" font-size="10px">2. kacchi mutton</text>
-    <rect x="20" y="165" width="155" height="18" fill="#ECFDF5" rx="3" />
-    <text x="22" y="178" class="txt-code" font-size="10px" font-weight="700" fill="#047857">3. kacchi (Self Invariant!)</text>
-    <text x="22" y="198" class="txt-code" font-size="10px">4. kacchi beef</text>
-    <text x="22" y="218" class="txt-code" font-size="10px">5. kacchi basmati</text>
-
-    <rect x="14" y="270" width="167" height="28" fill="#A7F3D0" rx="6" />
-    <text x="22" y="288" class="txt-badge" font-size="10px" fill="#065F46">O(1) Slice: 1.29 &#181;s</text>
-  </g>
-
-  <!-- Stage 4: UI Dropdown Paint -->
-  <g transform="translate(770, 68)">
-    <rect width="150" height="310" class="sketch-card card-stage4" />
-    <rect x="14" y="14" width="70" height="20" fill="#F3E8FF" rx="4" />
-    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#7E22CE">STAGE 4</text>
-    <text x="14" y="56" class="txt-heading">UI Paint</text>
-    <text x="14" y="74" class="txt-sub">Screen rendering</text>
-
-    <!-- Dropdown Mock -->
-    <rect x="12" y="95" width="126" height="150" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1.5" rx="8" />
-    <text x="20" y="115" class="txt-sub" font-size="11px" font-weight="700">Autocomplete:</text>
-    <text x="20" y="135" class="txt-sub" font-size="11px">&#8226; kacchi biryani</text>
-    <text x="20" y="155" class="txt-sub" font-size="11px">&#8226; kacchi mutton</text>
-    <text x="20" y="175" class="txt-sub" font-size="11px" font-weight="700" fill="#7E22CE">&#8226; kacchi</text>
-    <text x="20" y="195" class="txt-sub" font-size="11px">&#8226; kacchi beef</text>
-    <text x="20" y="215" class="txt-sub" font-size="11px">&#8226; kacchi basmati</text>
-
-    <rect x="12" y="270" width="126" height="28" fill="#F3E8FF" rx="6" />
-    <text x="18" y="288" class="txt-badge" font-size="10px" fill="#7E22CE">Zero UI Stutter</text>
   </g>
 </svg>
