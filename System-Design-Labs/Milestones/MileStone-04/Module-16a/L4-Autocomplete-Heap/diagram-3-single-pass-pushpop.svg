@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .card-err { fill: #FFF5F5; stroke: #F87171; stroke-width: 1.8; rx: 14; }
+      .card-win { fill: #F0FDF4; stroke: #34D399; stroke-width: 2.2; rx: 14; }
+      .tree-edge { stroke: #CBD5E1; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+      .sift-down-path { stroke: #10B981; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 5, 4; fill: none; }
+      .sift-up-path { stroke: #EF4444; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 4, 4; fill: none; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 17px; font-weight: 700; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .node-circle { fill: #FFFFFF; stroke: #475569; stroke-width: 1.6; }
+      .node-root { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .node-new { fill: #DCFCE7; stroke: #10B981; stroke-width: 2; }
+    </style>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="360" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 26)">
+    <text x="0" y="0" class="sketch-title">Single-Pass pushPop Root Replacement</text>
+    <text x="0" y="18" class="sketch-subtitle">Halving sift cycles by overwriting the root directly instead of executing separate pop() and insert() passes</text>
+  </g>
+
+  <!-- Left Card: Naive Two-Pass (pop() + insert()) -->
+  <g transform="translate(40, 68)">
+    <rect width="430" height="265" class="card-err" />
+    <rect x="18" y="14" width="180" height="20" rx="4" fill="#FEE2E2" />
+    <text x="24" y="28" class="txt-badge" fill="#991B1B">NAIVE: TWO SEPARATE PASSES</text>
+    <text x="18" y="56" class="txt-heading" fill="#991B1B">pop() Sift-Down + insert() Sift-Up</text>
+
+    <!-- Visual: Two passes in one tree -->
+    <g transform="translate(140, 75)">
+      <!-- Tree edges -->
+      <path d="M 70 20 L 25 55" class="tree-edge" />
+      <path d="M 70 20 L 115 55" class="tree-edge" />
+      <path d="M 25 75 L 0 110" class="tree-edge" />
+      <path d="M 25 75 L 50 110" class="tree-edge" />
+
+      <!-- Nodes -->
+      <circle cx="70" cy="15" r="13" class="node-root" />
+      <text x="58" y="19" class="txt-code" font-size="8.5px">pop()</text>
+
+      <circle cx="25" cy="65" r="11" class="node-circle" />
+      <circle cx="115" cy="65" r="11" class="node-circle" />
+      <circle cx="0" cy="120" r="11" class="node-circle" />
+      <circle cx="50" cy="120" r="11" class="node-circle" />
+
+      <!-- Pass 1: Downward Arrow -->
+      <path d="M 85 20 Q 120 70 55 110" class="sift-up-path" marker-end="url(#arr-red)" />
+      <text x="100" y="105" class="txt-badge" fill="#DC2626">Pass 1: Sift-Down</text>
+
+      <!-- Pass 2: Upward Arrow -->
+      <path d="M -15 120 Q -30 60 50 10" class="sift-up-path" marker-end="url(#arr-red)" />
+      <text x="-85" y="60" class="txt-badge" fill="#DC2626">Pass 2: Sift-Up</text>
+    </g>
+
+    <!-- Verdict Pill -->
+    <g transform="translate(18, 205)">
+      <rect width="394" height="44" rx="6" fill="#FEE2E2" stroke="#EF4444" />
+      <text x="14" y="18" class="txt-badge" fill="#991B1B">&#10008; 2 &#215; log(K) Traversal Steps</text>
+      <text x="14" y="34" class="txt-sub" font-size="11.5px" fill="#7F1D1D">Two full sift traversals double CPU swap overhead</text>
+    </g>
+  </g>
+
+  <!-- Right Card: Optimized Single-Pass pushPop() -->
+  <g transform="translate(490, 68)">
+    <rect width="430" height="265" class="card-win" />
+    <rect x="18" y="14" width="230" height="20" rx="4" fill="#DCFCE7" />
+    <text x="24" y="28" class="txt-badge" fill="#065F46">OPTIMIZED: SINGLE-PASS pushPop()</text>
+    <text x="18" y="56" class="txt-heading" fill="#065F46">Direct Root Overwrite + Sift-Down (O(log K))</text>
+
+    <!-- Visual: Overwrite Root directly and sink down -->
+    <g transform="translate(140, 75)">
+      <!-- Tree edges -->
+      <path d="M 70 20 L 25 55" class="tree-edge" />
+      <path d="M 70 20 L 115 55" class="tree-edge" />
+      <path d="M 25 75 L 0 110" class="tree-edge" />
+      <path d="M 25 75 L 50 110" class="tree-edge" />
+
+      <!-- Root Node [0] Overwritten Directly -->
+      <circle cx="70" cy="15" r="14" class="node-new" />
+      <text x="56" y="19" class="txt-code" font-size="8.5px" font-weight="700" fill="#065F46">newItem</text>
+
+      <circle cx="25" cy="65" r="11" class="node-circle" />
+      <circle cx="115" cy="65" r="11" class="node-circle" />
+      <circle cx="0" cy="120" r="11" class="node-circle" />
+      <circle cx="50" cy="120" r="11" class="node-circle" />
+
+      <!-- Single Sift-Down Path -->
+      <path d="M 60 30 Q 35 60 25 80 Q 20 95 10 110" class="sift-down-path" marker-end="url(#arr-green)" />
+      <text x="40" y="80" class="txt-badge" fill="#059669">Single Sift-Down Path</text>
+    </g>
+
+    <!-- Verdict Pill -->
+    <g transform="translate(18, 205)">
+      <rect width="394" height="44" rx="6" fill="#DCFCE7" stroke="#10B981" />
+      <text x="14" y="18" class="txt-badge" fill="#065F46">&#10004; 1 &#215; log(K) Single Pass</text>
+      <text x="14" y="34" class="txt-sub" font-size="11.5px" fill="#047857">Cuts memory swaps in half &#8226; Maximum streaming ingestion speed</text>
+    </g>
+  </g>
+</svg>

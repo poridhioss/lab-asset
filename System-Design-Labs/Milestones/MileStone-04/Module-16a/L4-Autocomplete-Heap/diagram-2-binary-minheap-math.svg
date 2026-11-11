@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .tree-edge { stroke: #94A3B8; stroke-width: 1.8; stroke-linecap: round; fill: none; }
+      .bridge-line { stroke: #3B82F6; stroke-width: 1.5; stroke-dasharray: 4, 4; fill: none; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; fill: #1E293B; }
+      .node-root { fill: #FEF3C7; stroke: #D97706; stroke-width: 2.2; }
+      .node-body { fill: #ECFDF5; stroke: #10B981; stroke-width: 2; }
+      .array-slot { fill: #FFFFFF; stroke: #334155; stroke-width: 1.6; }
+      .array-slot-root { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="380" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 26)">
+    <text x="0" y="0" class="sketch-title">Binary Min-Heap Array Indexing Math</text>
+    <text x="0" y="18" class="sketch-subtitle">How a complete binary tree is packed into contiguous zero-pointer array memory</text>
+  </g>
+
+  <!-- Main Canvas Container -->
+  <g transform="translate(40, 68)">
+    <rect width="880" height="280" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6" />
+
+    <!-- Top Section: Logical Complete Binary Tree -->
+    <g transform="translate(440, 20)">
+      <text x="-400" y="16" class="txt-heading" fill="#0F172A">1. Logical Complete Binary Tree (K=5)</text>
+
+      <!-- Edges -->
+      <path d="M 0 35 L -100 75" class="tree-edge" />
+      <path d="M 0 35 L 100 75" class="tree-edge" />
+      <path d="M -100 95 L -150 135" class="tree-edge" />
+      <path d="M -100 95 L -50 135" class="tree-edge" />
+
+      <!-- Node [0]: Root -->
+      <g transform="translate(0, 25)">
+        <circle cx="0" cy="0" r="16" class="node-root" />
+        <text x="-12" y="4" class="txt-code" font-weight="700" fill="#92400E">8.5k</text>
+        <text x="22" y="4" class="txt-badge" fill="#D97706">[0] Root</text>
+      </g>
+
+      <!-- Node [1]: Left Child -->
+      <g transform="translate(-100, 85)">
+        <circle cx="0" cy="0" r="15" class="node-body" />
+        <text x="-12" y="4" class="txt-code" font-weight="700" fill="#065F46">9.2k</text>
+        <text x="-38" y="4" class="txt-badge" fill="#059669">[1]</text>
+      </g>
+
+      <!-- Node [2]: Right Child -->
+      <g transform="translate(100, 85)">
+        <circle cx="0" cy="0" r="15" class="node-body" />
+        <text x="-14" y="4" class="txt-code" font-weight="700" fill="#065F46">11.5k</text>
+        <text x="22" y="4" class="txt-badge" fill="#059669">[2]</text>
+      </g>
+
+      <!-- Node [3]: Left-Left -->
+      <g transform="translate(-150, 145)">
+        <circle cx="0" cy="0" r="14" class="node-body" />
+        <text x="-14" y="4" class="txt-code" font-size="9.5px" fill="#065F46">14.3k</text>
+        <text x="-36" y="4" class="txt-badge" fill="#059669">[3]</text>
+      </g>
+
+      <!-- Node [4]: Left-Right -->
+      <g transform="translate(-50, 145)">
+        <circle cx="0" cy="0" r="14" class="node-body" />
+        <text x="-14" y="4" class="txt-code" font-size="9.5px" fill="#065F46">16.4k</text>
+        <text x="20" y="4" class="txt-badge" fill="#059669">[4]</text>
+      </g>
+    </g>
+
+    <!-- Formula Reference Cards (Left Panel) -->
+    <g transform="translate(30, 60)">
+      <rect width="210" height="96" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+      <text x="12" y="20" class="txt-badge" fill="#475569">INDEX ARITHMETIC FORMULAS</text>
+
+      <text x="12" y="42" class="txt-code" font-size="10px">Parent(i)  : floor((i-1)/2)</text>
+      <text x="12" y="62" class="txt-code" font-size="10px">Left(i)    : 2 * i + 1</text>
+      <text x="12" y="82" class="txt-code" font-size="10px">Right(i)   : 2 * i + 2</text>
+    </g>
+
+    <!-- Bottom Section: Contiguous Physical Array Memory -->
+    <g transform="translate(140, 190)">
+      <text x="-110" y="22" class="txt-heading" fill="#0F172A">2. Physical Memory Array</text>
+
+      <!-- Slot 0 -->
+      <g transform="translate(120, 0)">
+        <rect width="70" height="42" rx="4" class="array-slot-root" />
+        <text x="16" y="16" class="txt-badge" fill="#B45309">Idx 0</text>
+        <text x="16" y="32" class="txt-code" font-weight="700" fill="#92400E">8.5k</text>
+      </g>
+
+      <!-- Slot 1 -->
+      <g transform="translate(195, 0)">
+        <rect width="70" height="42" rx="4" class="array-slot" />
+        <text x="16" y="16" class="txt-badge" fill="#64748B">Idx 1</text>
+        <text x="16" y="32" class="txt-code" font-weight="700">9.2k</text>
+      </g>
+
+      <!-- Slot 2 -->
+      <g transform="translate(270, 0)">
+        <rect width="70" height="42" rx="4" class="array-slot" />
+        <text x="16" y="16" class="txt-badge" fill="#64748B">Idx 2</text>
+        <text x="16" y="32" class="txt-code" font-weight="700">11.5k</text>
+      </g>
+
+      <!-- Slot 3 -->
+      <g transform="translate(345, 0)">
+        <rect width="70" height="42" rx="4" class="array-slot" />
+        <text x="16" y="16" class="txt-badge" fill="#64748B">Idx 3</text>
+        <text x="16" y="32" class="txt-code" font-weight="700">14.3k</text>
+      </g>
+
+      <!-- Slot 4 -->
+      <g transform="translate(420, 0)">
+        <rect width="70" height="42" rx="4" class="array-slot" />
+        <text x="16" y="16" class="txt-badge" fill="#64748B">Idx 4</text>
+        <text x="16" y="32" class="txt-code" font-weight="700">16.4k</text>
+      </g>
+
+      <!-- Performance Note Pill -->
+      <rect x="120" y="54" width="370" height="24" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+      <text x="135" y="70" class="txt-badge" fill="#065F46">&#10004; Zero Pointer Hops &#8226; 100% Contiguous CPU Cache Line Locality</text>
+    </g>
+  </g>
+</svg>

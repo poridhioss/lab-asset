@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes slowCrawl {
+        to { stroke-dashoffset: -20; }
+      }
+      @keyframes swiftFlow {
+        to { stroke-dashoffset: -28; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .card-err { fill: #FFF5F5; stroke: #F87171; stroke-width: 1.8; rx: 14; }
+      .card-win { fill: #F0FDF4; stroke: #34D399; stroke-width: 2.2; rx: 14; }
+      .cell-inner { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; rx: 8; }
+      .wire-slow {
+        stroke: #EF4444;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 4, 6;
+        fill: none;
+        animation: slowCrawl 6.0s linear infinite;
+      }
+      .wire-fast {
+        stroke: #10B981;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: swiftFlow 3.8s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .slot-box { fill: #FFFFFF; stroke: #10B981; stroke-width: 1.4; rx: 4; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="380" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 26)">
+    <text x="0" y="0" class="sketch-title">Full Array Sort vs Bounded Min-Heap Filter</text>
+    <text x="0" y="18" class="sketch-subtitle">Why sorting 80,000 matches locks the event loop compared to fixed-capacity streaming</text>
+  </g>
+
+  <!-- Left: Naive Full Array Sort (O(N log N)) -->
+  <g transform="translate(40, 68)">
+    <rect width="430" height="280" class="card-err" />
+    <rect x="18" y="14" width="180" height="20" rx="4" fill="#FEE2E2" />
+    <text x="24" y="28" class="txt-badge" fill="#991B1B">NAIVE: FULL SUBTREE SORT</text>
+    <text x="18" y="56" class="txt-heading" fill="#991B1B">O(N log N) &#8212; ~1,300,000 comparisons</text>
+
+    <!-- Visual Sketch: Unconstrained Array Buffer -->
+    <g transform="translate(18, 72)">
+      <rect width="394" height="90" class="cell-inner" stroke="#FCA5A5" />
+
+      <!-- Massive Input Array -->
+      <g transform="translate(20, 16)">
+        <rect x="0" y="0" width="150" height="40" rx="6" fill="#FEE2E2" stroke="#F87171" stroke-dasharray="4,3" />
+        <text x="12" y="24" class="txt-code" font-size="10px" font-weight="700" fill="#991B1B">80,000 Candidates</text>
+        <text x="12" y="36" class="txt-sub" font-size="10px" fill="#7F1D1D">(Matches prefix "k")</text>
+
+        <!-- Red Funnel Arrow -->
+        <path d="M 160 20 L 195 20" class="wire-slow" marker-end="url(#arr-red)" />
+
+        <!-- Sorter Box -->
+        <g transform="translate(205, 0)">
+          <rect width="150" height="40" rx="6" fill="#FEF2F2" stroke="#EF4444" />
+          <text x="14" y="18" class="txt-code" font-size="9px" font-weight="700" fill="#991B1B">Array.sort()</text>
+          <text x="14" y="32" class="txt-code" font-size="8.5px" fill="#DC2626">Sorts ranks 6 to 80k</text>
+        </g>
+        <text x="0" y="58" class="txt-sub" font-size="11px" fill="#B91C1C">&#9888; Sorting 79,995 items the user will never see!</text>
+      </g>
+    </g>
+
+    <!-- Code Snippet -->
+    <g transform="translate(18, 172)">
+      <rect width="394" height="34" class="cell-inner" />
+      <text x="14" y="21" class="txt-code" fill="#B91C1C">candidates.sort((a,b) => b.freq - a.freq).slice(0, 5);</text>
+    </g>
+
+    <!-- Punchy Verdict Pill -->
+    <g transform="translate(18, 218)">
+      <rect width="394" height="46" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.4" />
+      <text x="14" y="20" class="txt-badge" font-size="10.5px" fill="#991B1B">&#10008; 77.8ms Event-Loop Lockup</text>
+      <text x="14" y="36" class="txt-sub" font-size="11.5px" fill="#7F1D1D">Violates 3ms server budget &#8226; Massive V8 GC churn</text>
+    </g>
+  </g>
+
+  <!-- Right: Optimized Bounded Min-Heap (O(N log K)) -->
+  <g transform="translate(490, 68)">
+    <rect width="430" height="280" class="card-win" />
+    <rect x="18" y="14" width="220" height="20" rx="4" fill="#DCFCE7" />
+    <text x="24" y="28" class="txt-badge" fill="#065F46">OPTIMIZED: BOUNDED MIN-HEAP</text>
+    <text x="18" y="56" class="txt-heading" fill="#065F46">O(N log K) &#8212; ~185,000 operations (K=5)</text>
+
+    <!-- Visual Sketch: Bounded Hopper & Admission Threshold -->
+    <g transform="translate(18, 72)">
+      <rect width="394" height="90" class="cell-inner" stroke="#86EFAC" />
+
+      <!-- Incoming Stream Flow -->
+      <g transform="translate(15, 12)">
+        <text x="0" y="16" class="txt-code" font-size="9px" fill="#047857">80k Candidate Stream</text>
+        <path d="M 120 12 L 155 12" class="wire-fast" marker-end="url(#arr-green)" />
+
+        <!-- Fixed 5-Slot Hopper -->
+        <g transform="translate(165, 0)">
+          <!-- Slot 0: Root Threshold -->
+          <rect x="0" y="0" width="36" height="34" rx="4" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" />
+          <text x="6" y="14" class="txt-badge" font-size="8px" fill="#B45309">[0]</text>
+          <text x="4" y="28" class="txt-code" font-size="8.5px" font-weight="700" fill="#92400E">8.5k</text>
+
+          <!-- Slots 1 - 4 -->
+          <rect x="42" y="0" width="34" height="34" class="slot-box" />
+          <text x="48" y="14" class="txt-badge" font-size="8px" fill="#059669">[1]</text>
+          <text x="45" y="28" class="txt-code" font-size="8px">9.2k</text>
+
+          <rect x="80" y="0" width="34" height="34" class="slot-box" />
+          <text x="86" y="14" class="txt-badge" font-size="8px" fill="#059669">[2]</text>
+          <text x="82" y="28" class="txt-code" font-size="8px">11.5k</text>
+
+          <rect x="118" y="0" width="34" height="34" class="slot-box" />
+          <text x="124" y="14" class="txt-badge" font-size="8px" fill="#059669">[3]</text>
+          <text x="120" y="28" class="txt-code" font-size="8px">14.3k</text>
+
+          <rect x="156" y="0" width="34" height="34" class="slot-box" />
+          <text x="162" y="14" class="txt-badge" font-size="8px" fill="#059669">[4]</text>
+          <text x="158" y="28" class="txt-code" font-size="8px">16.4k</text>
+        </g>
+        <text x="0" y="58" class="txt-sub" font-size="11px" fill="#065F46">&#10003; 99% of candidates rejected in O(1) at root [0]!</text>
+      </g>
+    </g>
+
+    <!-- Code Snippet -->
+    <g transform="translate(18, 172)">
+      <rect width="394" height="34" class="cell-inner" />
+      <text x="14" y="21" class="txt-code" fill="#065F46">if (item.freq &gt; heap[0].freq) heap.pushPop(item);</text>
+    </g>
+
+    <!-- Punchy Verdict Pill -->
+    <g transform="translate(18, 218)">
+      <rect width="394" height="46" rx="8" fill="#DCFCE7" stroke="#10B981" stroke-width="1.4" />
+      <text x="14" y="20" class="txt-badge" font-size="10.5px" fill="#065F46">&#10004; 23.5ms Execution (3.31x Speedup)</text>
+      <text x="14" y="36" class="txt-sub" font-size="11.5px" fill="#047857">Fixed O(K) memory &#8226; Zero temporary array allocation</text>
+    </g>
+  </g>
+</svg>

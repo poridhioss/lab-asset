@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowDash {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .flow-query {
+        stroke: #3B82F6;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 4.2s linear infinite;
+      }
+      .flow-result {
+        stroke: #10B981;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 3.8s linear infinite;
+      }
+      .tree-edge { stroke: #CBD5E1; stroke-width: 1.6; stroke-linecap: round; fill: none; }
+      .tree-edge-active { stroke: #10B981; stroke-width: 2.2; stroke-linecap: round; fill: none; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; fill: #1E293B; }
+      .node-circle { fill: #FFFFFF; stroke: #475569; stroke-width: 1.8; }
+      .node-root { fill: #FEF3C7; stroke: #D97706; stroke-width: 2.2; }
+      .node-active { fill: #DCFCE7; stroke: #10B981; stroke-width: 2.2; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="420" class="bg" />
+
+  <!-- Title Header -->
+  <g transform="translate(40, 26)">
+    <text x="0" y="0" class="sketch-title">Typeahead: Mobile Client to Flat L1 Cache &amp; Bounded Min-Heap</text>
+    <text x="0" y="18" class="sketch-subtitle">Instant autocomplete via pointerless hash lookup and O(N log K) streaming ingestion</text>
+  </g>
+
+  <!-- Left: Hand-Drawn Mobile Client Screen -->
+  <g transform="translate(45, 68)">
+    <!-- Mobile Phone Bezel -->
+    <rect width="210" height="325" rx="22" fill="#FFFFFF" stroke="#334155" stroke-width="2" />
+    <rect x="80" y="10" width="50" height="4" rx="2" fill="#CBD5E1" />
+
+    <!-- Phone Screen Header -->
+    <text x="16" y="32" class="txt-badge" fill="#64748B">MOBILE CLIENT</text>
+
+    <!-- Search Input Bar -->
+    <rect x="14" y="44" width="182" height="34" rx="8" fill="#F8FAFC" stroke="#93C5FD" stroke-width="1.5" />
+    <circle cx="28" cy="61" r="5" fill="none" stroke="#60A5FA" stroke-width="1.4" />
+    <line x1="32" y1="65" x2="36" y2="69" stroke="#60A5FA" stroke-width="1.4" stroke-linecap="round" />
+    <text x="44" y="65" class="txt-code" font-size="12px" font-weight="700" fill="#1D4ED8">kac|</text>
+
+    <!-- Dropdown Autocomplete Overlay -->
+    <rect x="14" y="86" width="182" height="175" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
+
+    <!-- Suggestion Row 1 (Active Highlight) -->
+    <rect x="18" y="94" width="174" height="28" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1.2" />
+    <circle cx="28" cy="108" r="3" fill="#10B981" />
+    <text x="36" y="112" class="txt-code" font-size="10.5px" font-weight="700" fill="#065F46">kacchi biryani</text>
+
+    <!-- Suggestion Row 2 -->
+    <circle cx="28" cy="136" r="2.5" fill="#94A3B8" />
+    <text x="36" y="140" class="txt-code" font-size="10px">kacchi mutton</text>
+
+    <!-- Suggestion Row 3 -->
+    <circle cx="28" cy="164" r="2.5" fill="#94A3B8" />
+    <text x="36" y="168" class="txt-code" font-size="10px">kacchi (self term)</text>
+
+    <!-- Suggestion Row 4 -->
+    <circle cx="28" cy="192" r="2.5" fill="#94A3B8" />
+    <text x="36" y="196" class="txt-code" font-size="10px">kacchi beef</text>
+
+    <!-- Suggestion Row 5 -->
+    <circle cx="28" cy="220" r="2.5" fill="#94A3B8" />
+    <text x="36" y="224" class="txt-code" font-size="10px">kacchi basmati</text>
+
+    <!-- Speed Badge -->
+    <rect x="14" y="272" width="182" height="28" rx="6" fill="#F0F7FF" stroke="#93C5FD" />
+    <text x="24" y="290" class="txt-badge" fill="#1E40AF">&#9889; UI Paint: Sub-1ms (Zero Stutter)</text>
+  </g>
+
+  <!-- Connecting Query Stream: Phone -> L1 Map -->
+  <path d="M 257 128 C 305 128, 325 115, 395 115" class="flow-query" marker-end="url(#arr-blue)" />
+  <rect x="280" y="105" width="85" height="20" rx="4" fill="#DBEAFE" stroke="#93C5FD" />
+  <text x="286" y="119" class="txt-badge" fill="#1E40AF">"kac" query</text>
+
+  <!-- Connecting Result Stream: L1 Map -> Mobile Dropdown -->
+  <path d="M 395 155 C 330 155, 310 200, 257 180" class="flow-result" marker-end="url(#arr-green)" />
+  <rect x="275" y="200" width="105" height="20" rx="4" fill="#DCFCE7" stroke="#10B981" />
+  <text x="281" y="214" class="txt-badge" fill="#065F46">Top-5 (~3.8 &#181;s)</text>
+
+  <!-- Right: In-Memory Engine (Dual Tier) -->
+  <g transform="translate(400, 68)">
+    <!-- Container Box -->
+    <rect width="520" height="325" rx="16" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.8" />
+
+    <!-- Tier 1: Flat Prefix L1 Map -->
+    <g transform="translate(18, 16)">
+      <rect width="484" height="132" rx="10" fill="#FFFFFF" stroke="#10B981" stroke-width="1.5" />
+      <rect x="12" y="10" width="185" height="20" rx="4" fill="#DCFCE7" />
+      <text x="18" y="24" class="txt-badge" fill="#065F46">L1 CACHE: FLAT PREFIX MAP (L &#8804; 6)</text>
+      <text x="210" y="24" class="txt-badge" fill="#059669">&#9889; O(1) Hash Lookup: ~3.8 &#181;s</text>
+
+      <!-- Visual Hash Table Rows -->
+      <g transform="translate(14, 40)">
+        <!-- Row 1: Key "k" -->
+        <rect x="0" y="0" width="60" height="24" rx="4" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="24" y="16" class="txt-code" font-weight="700">"k"</text>
+        <path d="M 62 12 L 80 12" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr-green)" />
+        <rect x="85" y="0" width="375" height="24" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+        <text x="95" y="16" class="txt-code" font-size="9.5px">[ "kacchi biryani", "kala bhuna", "mezban beef", "khichuri", "shorshe ilish" ]</text>
+
+        <!-- Row 2: Key "kac" (Hit Target) -->
+        <rect x="0" y="32" width="60" height="24" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.6" />
+        <text x="18" y="48" class="txt-code" font-weight="700" fill="#1D4ED8">"kac"</text>
+        <path d="M 62 44 L 80 44" stroke="#10B981" stroke-width="2" marker-end="url(#arr-green)" />
+        <rect x="85" y="32" width="375" height="24" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1.6" />
+        <text x="95" y="48" class="txt-code" font-size="9.5px" font-weight="700" fill="#065F46">[ "kacchi biryani", "kacchi mutton", "kacchi", "kacchi beef", "kacchi basmati" ]</text>
+
+        <!-- Metric Badges -->
+        <text x="0" y="80" class="txt-sub" font-size="11.5px">Zero Pointer Chasing &#8226; 89.1% Less RAM (~13.1 KB vs ~120.2 KB Trie)</text>
+      </g>
+    </g>
+
+    <!-- Tier 2: Bounded Min-Heap (K=5) Ingestion Filter -->
+    <g transform="translate(18, 160)">
+      <rect width="484" height="148" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.4" />
+      <rect x="12" y="10" width="220" height="20" rx="4" fill="#FEF3C7" />
+      <text x="18" y="24" class="txt-badge" fill="#92400E">STREAMING FILTER: BOUNDED MIN-HEAP (K=5)</text>
+      <text x="245" y="24" class="txt-badge" fill="#64748B">O(N log K) Ingestion</text>
+
+      <!-- Mini MinHeap Tree Visualization -->
+      <g transform="translate(70, 42)">
+        <!-- Root Node [0]: Admission Threshold -->
+        <g transform="translate(90, 10)">
+          <circle cx="0" cy="0" r="13" class="node-root" />
+          <text x="-12" y="4" class="txt-code" font-size="8.5px" font-weight="700" fill="#92400E">8.5k</text>
+          <text x="-40" y="-14" class="txt-badge" font-size="9px" fill="#D97706">Root [0]: Threshold</text>
+        </g>
+
+        <!-- Left Child [1] -->
+        <path d="M 80 18 L 45 42" class="tree-edge-active" />
+        <g transform="translate(40, 50)">
+          <circle cx="0" cy="0" r="11" class="node-active" />
+          <text x="-10" y="4" class="txt-code" font-size="8px" fill="#065F46">9.2k</text>
+          <text x="-16" y="20" class="txt-badge" font-size="8px" fill="#64748B">[1]</text>
+        </g>
+
+        <!-- Right Child [2] -->
+        <path d="M 100 18 L 135 42" class="tree-edge-active" />
+        <g transform="translate(140, 50)">
+          <circle cx="0" cy="0" r="11" class="node-active" />
+          <text x="-12" y="4" class="txt-code" font-size="8px" fill="#065F46">11.5k</text>
+          <text x="-6" y="20" class="txt-badge" font-size="8px" fill="#64748B">[2]</text>
+        </g>
+
+        <!-- Child [3] -->
+        <path d="M 33 58 L 18 78" class="tree-edge" />
+        <g transform="translate(15, 86)">
+          <circle cx="0" cy="0" r="10" class="node-circle" />
+          <text x="-11" y="4" class="txt-code" font-size="7.5px">14.3k</text>
+          <text x="-6" y="18" class="txt-badge" font-size="7.5px" fill="#64748B">[3]</text>
+        </g>
+
+        <!-- Child [4] -->
+        <path d="M 47 58 L 62 78" class="tree-edge" />
+        <g transform="translate(65, 86)">
+          <circle cx="0" cy="0" r="10" class="node-circle" />
+          <text x="-11" y="4" class="txt-code" font-size="7.5px">16.4k</text>
+          <text x="-6" y="18" class="txt-badge" font-size="7.5px" fill="#64748B">[4]</text>
+        </g>
+
+        <!-- Ingestion Rule Callout -->
+        <g transform="translate(195, 20)">
+          <rect width="180" height="60" rx="6" fill="#F8FAFC" stroke="#CBD5E1" />
+          <text x="10" y="18" class="txt-code" font-size="9px" font-weight="700">Incoming candidate x:</text>
+          <text x="10" y="34" class="txt-code" font-size="9px" fill="#EF4444">&#8226; x &lt; 8.5k: Discard O(1)</text>
+          <text x="10" y="50" class="txt-code" font-size="9px" fill="#059669">&#8226; x &gt; 8.5k: pushPop() O(log K)</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -28; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .pipe-line {
+        stroke: #10B981;
+        stroke-width: 2.6;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4.0s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9.5px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16.5px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .station-card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 10; }
+      .station-current { fill: #F0FDF4; stroke: #10B981; stroke-width: 2; rx: 10; }
+    </style>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="280" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Typeahead Architecture Curriculum Progression</text>
+    <text x="0" y="18" class="sketch-subtitle">How memory-efficient prefix trees and streaming heaps prepare you for distributed systems</text>
+  </g>
+
+  <!-- Connecting Pipeline -->
+  <path d="M 140 145 L 820 145" class="pipe-line" marker-end="url(#arr-green)" />
+
+  <!-- Stations Container -->
+  <g transform="translate(40, 75)">
+    <!-- Station 1: Character Trie (Lab 3) -->
+    <g transform="translate(0, 0)">
+      <rect width="200" height="140" class="station-card" />
+      <rect x="12" y="12" width="80" height="18" rx="3" fill="#DCFCE7" />
+      <text x="18" y="24" class="txt-badge" fill="#065F46">&#10003; COMPLETED</text>
+      <text x="12" y="52" class="txt-heading">1. Character Trie</text>
+      <text x="12" y="74" class="txt-sub">&#8226; O(L) Prefix Traversal</text>
+      <text x="12" y="94" class="txt-sub">&#8226; Prefix Deduplication</text>
+      <text x="12" y="114" class="txt-sub">&#8226; In-Memory Node Cache</text>
+    </g>
+
+    <!-- Station 2: Top-K Heap & Flat Map (Lab 4 - Current) -->
+    <g transform="translate(225, 0)">
+      <rect width="205" height="140" class="station-current" />
+      <rect x="12" y="12" width="75" height="18" rx="3" fill="#FEF3C7" />
+      <text x="18" y="24" class="txt-badge" fill="#92400E">&#9679; CURRENT</text>
+      <text x="12" y="52" class="txt-heading" fill="#065F46">2. Top-K Heap &amp; L1 Map</text>
+      <text x="12" y="74" class="txt-sub">&#8226; O(N log K) Stream Filter</text>
+      <text x="12" y="94" class="txt-sub">&#8226; Single-Pass pushPop()</text>
+      <text x="12" y="114" class="txt-sub">&#8226; 89% RAM Reduction</text>
+    </g>
+
+    <!-- Station 3: Distributed Redis Architecture (Main Lab 2) -->
+    <g transform="translate(455, 0)">
+      <rect width="205" height="140" class="station-card" />
+      <rect x="12" y="12" width="80" height="18" rx="3" fill="#DBEAFE" />
+      <text x="18" y="24" class="txt-badge" fill="#1E40AF">&#8594; NEXT STEP</text>
+      <text x="12" y="52" class="txt-heading" fill="#1E3A8A">3. Distributed Redis</text>
+      <text x="12" y="74" class="txt-sub">&#8226; Redis ACLs &amp; Sharding</text>
+      <text x="12" y="94" class="txt-sub">&#8226; Read-Replica Pipelines</text>
+      <text x="12" y="114" class="txt-sub">&#8226; Multi-Node Consistency</text>
+    </g>
+
+    <!-- Station 4: Relevance & Personalization (Lab 5) -->
+    <g transform="translate(685, 0)">
+      <rect width="195" height="140" class="station-card" />
+      <rect x="12" y="12" width="75" height="18" rx="3" fill="#F3E8FF" />
+      <text x="18" y="24" class="txt-badge" fill="#6B21A8">&#9889; ADVANCED</text>
+      <text x="12" y="52" class="txt-heading">4. Relevance Scoring</text>
+      <text x="12" y="74" class="txt-sub">&#8226; Recency &amp; Personalization</text>
+      <text x="12" y="94" class="txt-sub">&#8226; Fuzzy String Distance</text>
+      <text x="12" y="114" class="txt-sub">&#8226; Multi-Signal Ranking</text>
+    </g>
+  </g>
+</svg>
