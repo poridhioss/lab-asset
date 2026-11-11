@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowDash {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .card-hit {
+        fill: #F0FDF4;
+        stroke: #34D399;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-miss {
+        fill: #FFF5F5;
+        stroke: #F87171;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .node-step {
+        fill: #FFFFFF;
+        stroke: #3B82F6;
+        stroke-width: 1.8;
+      }
+      .node-target {
+        fill: #ECFDF5;
+        stroke: #10B981;
+        stroke-width: 2.2;
+      }
+      .node-miss {
+        fill: #FEE2E2;
+        stroke: #EF4444;
+        stroke-width: 2;
+        stroke-dasharray: 4, 3;
+      }
+      .flow-hit {
+        stroke: #3B82F6;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 3.5s linear infinite;
+      }
+      .flow-miss-end {
+        stroke: #EF4444;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 4, 4;
+        fill: none;
+        animation: flowDash 4.0s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="440" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">O(L) Prefix Navigation: Roadmap Traversal (Hit vs Early Exit Miss)</text>
+    <text x="0" y="18" class="sketch-subtitle">Tracing character edge lookups: how Tries find targets in exactly L steps and abort immediately on misses</text>
+  </g>
+
+  <!-- Left: Scenario A - Prefix Hit ("kac") -->
+  <g transform="translate(40, 68)">
+    <rect width="425" height="345" class="card-hit" />
+    <rect x="18" y="14" width="130" height="22" fill="#DCFCE7" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#065F46">SCENARIO A: HIT</text>
+    <text x="18" y="58" class="txt-heading" fill="#065F46">Prefix Found: "kac" (L = 3 hops)</text>
+
+    <!-- Mini Tree Visual -->
+    <g transform="translate(130, 95)">
+      <!-- Root -->
+      <circle cx="0" cy="0" r="13" class="node-step" />
+      <text x="-4" y="4" class="txt-code" font-weight="700">&#8226;</text>
+      <text x="-80" y="4" class="txt-sub" font-size="12px">1. Start root</text>
+
+      <!-- Step 'k' -->
+      <path d="M 0 13 L 0 42" class="flow-hit" marker-end="url(#arr-blue)" />
+      <text x="10" y="32" class="txt-code" font-weight="700" fill="#2563EB">'k'</text>
+
+      <circle cx="0" cy="55" r="13" class="node-step" />
+      <text x="-4" y="59" class="txt-code" font-weight="700">'k'</text>
+      <text x="-80" y="59" class="txt-sub" font-size="12px">2. Hop to 'k'</text>
+
+      <!-- Step 'a' -->
+      <path d="M 0 68 L 0 97" class="flow-hit" marker-end="url(#arr-blue)" />
+      <text x="10" y="87" class="txt-code" font-weight="700" fill="#2563EB">'a'</text>
+
+      <circle cx="0" cy="110" r="13" class="node-step" />
+      <text x="-4" y="114" class="txt-code" font-weight="700">'a'</text>
+      <text x="-80" y="114" class="txt-sub" font-size="12px">3. Hop to 'a'</text>
+
+      <!-- Step 'c' Target (Stationary Double Ring) -->
+      <path d="M 0 123 L 0 152" class="flow-hit" marker-end="url(#arr-blue)" />
+      <text x="10" y="142" class="txt-code" font-weight="700" fill="#2563EB">'c'</text>
+
+      <g transform="translate(0, 168)">
+        <circle cx="0" cy="0" r="16" class="node-target" />
+        <circle cx="0" cy="0" r="12" fill="none" stroke="#10B981" stroke-width="1.3" />
+        <text x="-4" y="4" class="txt-code" font-weight="700" fill="#065F46">'c'</text>
+      </g>
+      <text x="-95" y="172" class="txt-heading" font-size="14px" fill="#065F46">4. Target Reached!</text>
+    </g>
+
+    <!-- Cache Result Box -->
+    <rect x="215" y="95" width="192" height="185" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.4" rx="8" />
+    <text x="227" y="118" class="txt-heading" font-size="15px" fill="#065F46">Target Node Cache:</text>
+    <text x="227" y="140" class="txt-code" font-size="10px">1. kacchi biryani</text>
+    <text x="227" y="160" class="txt-code" font-size="10px">2. kacchi mutton</text>
+    <text x="227" y="180" class="txt-code" font-size="10px" font-weight="700" fill="#047857">3. kacchi (self)</text>
+    <text x="227" y="200" class="txt-code" font-size="10px">4. kacchi beef</text>
+    <text x="227" y="220" class="txt-code" font-size="10px">5. kacchi basmati</text>
+
+    <rect x="18" y="295" width="389" height="34" fill="#DCFCE7" rx="6" />
+    <text x="28" y="316" class="txt-badge" fill="#065F46">Total Cost: Exactly 3 hops &#8226; O(L) time = 1.29 &#181;s</text>
+  </g>
+
+  <!-- Right: Scenario B - Prefix Miss ("kax") -->
+  <g transform="translate(495, 68)">
+    <rect width="425" height="345" class="card-miss" />
+    <rect x="18" y="14" width="130" height="22" fill="#FEE2E2" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#991B1B">SCENARIO B: MISS</text>
+    <text x="18" y="58" class="txt-heading" fill="#991B1B">Missing Edge: "kax" (Aborts at hop 2)</text>
+
+    <!-- Mini Tree Visual for Miss -->
+    <g transform="translate(130, 95)">
+      <!-- Root -->
+      <circle cx="0" cy="0" r="13" class="node-step" />
+      <text x="-4" y="4" class="txt-code" font-weight="700">&#8226;</text>
+      <text x="-80" y="4" class="txt-sub" font-size="12px">1. Start root</text>
+
+      <!-- Step 'k' -->
+      <path d="M 0 13 L 0 42" class="flow-hit" marker-end="url(#arr-blue)" />
+      <text x="10" y="32" class="txt-code" font-weight="700" fill="#2563EB">'k'</text>
+
+      <circle cx="0" cy="55" r="13" class="node-step" />
+      <text x="-4" y="59" class="txt-code" font-weight="700">'k'</text>
+      <text x="-80" y="59" class="txt-sub" font-size="12px">2. Hop to 'k'</text>
+
+      <!-- Step 'a' -->
+      <path d="M 0 68 L 0 97" class="flow-hit" marker-end="url(#arr-blue)" />
+      <text x="10" y="87" class="txt-code" font-weight="700" fill="#2563EB">'a'</text>
+
+      <circle cx="0" cy="110" r="13" class="node-step" />
+      <text x="-4" y="114" class="txt-code" font-weight="700">'a'</text>
+      <text x="-80" y="114" class="txt-sub" font-size="12px">3. Hop to 'a'</text>
+
+      <!-- Step 'x' MISS (Stationary) -->
+      <path d="M 0 123 L 0 152" class="flow-miss-end" marker-end="url(#arr-red)" />
+      <text x="10" y="142" class="txt-code" font-weight="700" fill="#DC2626">'x' ?</text>
+
+      <g transform="translate(0, 168)">
+        <circle cx="0" cy="0" r="16" class="node-miss" />
+        <text x="-5" y="5" class="txt-code" font-weight="700" font-size="13px" fill="#DC2626">&#10005;</text>
+      </g>
+      <text x="-95" y="172" class="txt-heading" font-size="14px" fill="#DC2626">Edge 'x' is NULL!</text>
+    </g>
+
+    <!-- Early Exit Box -->
+    <rect x="215" y="95" width="192" height="185" fill="#FFFFFF" stroke="#FECACA" stroke-width="1.4" rx="8" />
+    <text x="227" y="118" class="txt-heading" font-size="15px" fill="#991B1B">Instant Early Exit:</text>
+    <text x="227" y="142" class="txt-sub">&#8226; node.children.has('x')</text>
+    <text x="227" y="160" class="txt-code" fill="#DC2626">&#8594; returns false</text>
+    <text x="227" y="185" class="txt-sub">&#8226; Immediately returns [ ]</text>
+    <text x="227" y="205" class="txt-sub">&#8226; Never visits dead ends</text>
+    <text x="227" y="225" class="txt-sub">&#8226; Zero CPU wasted</text>
+
+    <rect x="18" y="295" width="389" height="34" fill="#FEE2E2" rx="6" />
+    <text x="28" y="316" class="txt-badge" fill="#991B1B">Total Cost: Aborts at hop 2 &#8226; Cost &lt;= O(L) = 0.81 &#181;s</text>
+  </g>
+</svg>

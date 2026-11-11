@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowDash {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .card-lab3 {
+        fill: #FFFFFF;
+        stroke: #94A3B8;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-lab4 {
+        fill: #F0F7FF;
+        stroke: #3B82F6;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .inner-code { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; rx: 8; }
+      .flow-bridge {
+        stroke: #3B82F6;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 3.5s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="400" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">Bridge to Lab 4: Upgrading from Array Sorting to Bounded Min-Heap</text>
+    <text x="0" y="18" class="sketch-subtitle">Replacing O(N log N) subtree sorting with a streaming O(N log K) binary Min-Heap</text>
+  </g>
+
+  <!-- Left: Lab 3 Full Sort -->
+  <g transform="translate(40, 68)">
+    <rect width="420" height="305" class="card-lab3" />
+    <rect x="18" y="14" width="160" height="22" fill="#F1F5F9" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#475569">LAB 3: FULL SORT</text>
+    <text x="18" y="58" class="txt-heading">Array.prototype.sort() over Subtree</text>
+
+    <!-- Code Block -->
+    <rect x="18" y="75" width="384" height="105" class="inner-code" />
+    <text x="28" y="94" class="txt-code" fill="#64748B">// Sorts ALL N candidates in subtree</text>
+    <text x="28" y="112" class="txt-code">candidates.sort((a, b) =&gt; b.freq - a.freq);</text>
+    <text x="28" y="130" class="txt-code">return candidates.slice(0, 5);</text>
+    <text x="28" y="152" class="txt-code" font-weight="700" fill="#DC2626">Cost: O(N log N) time + RAM garbage</text>
+
+    <!-- Bottleneck Explanation -->
+    <rect x="18" y="195" width="384" height="85" fill="#FEF9C3" stroke="#EAB308" rx="8" />
+    <text x="28" y="218" class="txt-heading" font-size="15px" fill="#854D0E">The Scale Bottleneck:</text>
+    <text x="28" y="238" class="txt-sub" fill="#854D0E">If prefix has 100,000 matches, sorting all 100,000 just to keep the top 5</text>
+    <text x="28" y="254" class="txt-sub" fill="#854D0E">burns heavy CPU and triggers temporary array buffer allocations.</text>
+  </g>
+
+  <!-- Animated Bridge Flow Connector (Calm & Steady) -->
+  <path d="M 460 215 C 480 215, 485 215, 500 215" class="flow-bridge" marker-end="url(#arr-blue)" />
+
+  <!-- Right: Lab 4 Bounded Min-Heap -->
+  <g transform="translate(500, 68)">
+    <rect width="420" height="305" class="card-lab4" />
+    <rect x="18" y="14" width="170" height="22" fill="#DBEAFE" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#1E40AF">LAB 4: BOUNDED HEAP</text>
+    <text x="18" y="58" class="txt-heading" fill="#1E40AF">Fixed-Size Binary Min-Heap (K = 5)</text>
+
+    <!-- Code Block -->
+    <rect x="18" y="75" width="384" height="105" class="inner-code" />
+    <text x="28" y="94" class="txt-code" fill="#2563EB">// Heap maintains only top-5 elements</text>
+    <text x="28" y="112" class="txt-code">if (item.freq &gt; heap.peek().freq) {</text>
+    <text x="28" y="130" class="txt-code">  heap.pushPop(item); // O(log K) swap</text>
+    <text x="28" y="152" class="txt-code" font-weight="700" fill="#065F46">Cost: O(N log K) where K = 5 (Strictly linear!)</text>
+
+    <!-- Optimization Highlight -->
+    <rect x="18" y="195" width="384" height="85" fill="#DCFCE7" stroke="#10B981" rx="8" />
+    <text x="28" y="218" class="txt-heading" font-size="15px" fill="#065F46">The Lab 4 Breakthrough:</text>
+    <text x="28" y="238" class="txt-sub" fill="#065F46">Since K = 5 is tiny (log 5 = 2.3 ops), candidate aggregation becomes</text>
+    <text x="28" y="254" class="txt-sub" fill="#065F46">essentially linear O(N) with zero full-array sorting overhead!</text>
+  </g>
+</svg>

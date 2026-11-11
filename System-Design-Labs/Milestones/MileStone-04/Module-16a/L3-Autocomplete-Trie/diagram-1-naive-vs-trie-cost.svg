@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes slowCrawl {
+        to { stroke-dashoffset: -20; }
+      }
+      @keyframes swiftFlow {
+        to { stroke-dashoffset: -28; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .card-err {
+        fill: #FFF5F5;
+        stroke: #F87171;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-win {
+        fill: #F0FDF4;
+        stroke: #34D399;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .cell-inner { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; rx: 8; }
+      .wire-slow {
+        stroke: #EF4444;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 4, 6;
+        fill: none;
+        animation: slowCrawl 6.0s linear infinite;
+      }
+      .wire-fast {
+        stroke: #10B981;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: swiftFlow 3.8s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 19px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="410" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">Why Relational SQL LIKE Collapses vs The In-Memory Character Trie</text>
+    <text x="0" y="18" class="sketch-subtitle">Comparing disk table scans and runtime sorting against deterministic in-memory pointer navigation</text>
+  </g>
+
+  <!-- Left: Naive Relational Database -->
+  <g transform="translate(40, 68)">
+    <rect width="425" height="315" class="card-err" />
+    <rect x="18" y="14" width="165" height="22" fill="#FEE2E2" rx="4" />
+    <text x="26" y="29" class="txt-badge" fill="#991B1B">NAIVE: RELATIONAL SQL</text>
+    <text x="18" y="58" class="txt-heading" fill="#991B1B">B-Tree Range Scan + Disk Buffer Churn</text>
+
+    <!-- Query Snippet -->
+    <rect x="18" y="75" width="389" height="44" class="cell-inner" />
+    <text x="28" y="94" class="txt-code" fill="#B91C1C">SELECT query FROM search_logs</text>
+    <text x="28" y="108" class="txt-code" fill="#B91C1C">WHERE query LIKE 'kacchi%' ORDER BY count DESC LIMIT 5;</text>
+
+    <!-- Bottlenecks -->
+    <rect x="18" y="130" width="389" height="110" class="cell-inner" />
+    <text x="28" y="150" class="txt-heading" font-size="16px" fill="#991B1B">Bottlenecks Under Load:</text>
+    <text x="28" y="170" class="txt-sub">&#8226; Range Scan: Evaluates all matching rows beginning with prefix.</text>
+    <text x="28" y="188" class="txt-sub">&#8226; Sorting Overhead: Sorts thousands of matches on EVERY keystroke.</text>
+    <text x="28" y="206" class="txt-sub">&#8226; Disk Churn: Pollutes database RAM buffer pool with table pages.</text>
+    <text x="28" y="224" class="txt-sub">&#8226; Connection Pool Starvation: 504 Gateway Timeouts under load.</text>
+
+    <!-- Sluggish Slow Flow Line -->
+    <path d="M 30 252 C 150 252, 280 252, 380 252" class="wire-slow" marker-end="url(#arr-red)" />
+
+    <!-- Scorecard -->
+    <rect x="18" y="260" width="389" height="42" fill="#FEE2E2" stroke="#F87171" stroke-width="1.2" rx="8" />
+    <text x="28" y="278" class="txt-badge" fill="#991B1B">Complexity: O(N &#183; L) scan &amp; sort</text>
+    <text x="28" y="294" class="txt-heading" font-size="14px" fill="#DC2626">Latency: 45ms – 250ms (FAILS 50ms SLA!)</text>
+  </g>
+
+  <!-- Right: In-Memory Character Trie Engine -->
+  <g transform="translate(495, 68)">
+    <rect width="425" height="315" class="card-win" />
+    <rect x="18" y="14" width="180" height="22" fill="#DCFCE7" rx="4" />
+    <text x="26" y="29" class="txt-badge" fill="#065F46">SYSTEMS APPROACH: TRIE</text>
+    <text x="18" y="58" class="txt-heading" fill="#065F46">N-ary Character Trie + Node Top-5 Cache</text>
+
+    <!-- Query Snippet -->
+    <rect x="18" y="75" width="389" height="44" class="cell-inner" />
+    <text x="28" y="94" class="txt-code" fill="#047857">const node = trie.findPrefixNode("kacchi");</text>
+    <text x="28" y="108" class="txt-code" fill="#047857">return node.topSuggestions.slice(0, 5); // O(1) instant slice</text>
+
+    <!-- In-Memory Mechanics -->
+    <rect x="18" y="130" width="389" height="110" class="cell-inner" />
+    <text x="28" y="150" class="txt-heading" font-size="16px" fill="#065F46">In-Memory Execution Mechanics:</text>
+    <text x="28" y="170" class="txt-sub">&#8226; Pointer Navigation: Follows 6 character edges down the tree.</text>
+    <text x="28" y="188" class="txt-sub">&#8226; Zero Runtime Sort: Top suggestions already precomputed at build.</text>
+    <text x="28" y="206" class="txt-sub">&#8226; RAM Resident: Stable monomorphic shapes, zero disk page I/O.</text>
+    <text x="28" y="224" class="txt-sub">&#8226; Scale Invariant: Latency identical whether dataset has 1k or 10M.</text>
+
+    <!-- Calm Steady Flow Line -->
+    <path d="M 30 252 C 150 252, 280 252, 380 252" class="wire-fast" marker-end="url(#arr-green)" />
+
+    <!-- Scorecard -->
+    <rect x="18" y="260" width="389" height="42" fill="#DCFCE7" stroke="#34D399" stroke-width="1.2" rx="8" />
+    <text x="28" y="278" class="txt-badge" fill="#065F46">Complexity: O(L) navigation + O(1) array slice</text>
+    <text x="28" y="294" class="txt-heading" font-size="14px" fill="#059669">Latency: 0.003ms (1,000x FASTER THAN SLA!)</text>
+  </g>
+</svg>

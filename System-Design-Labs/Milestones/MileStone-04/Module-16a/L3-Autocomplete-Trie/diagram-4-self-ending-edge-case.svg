@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowDash {
+        to { stroke-dashoffset: -20; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .card-bug {
+        fill: #FFF5F5;
+        stroke: #F87171;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-fix {
+        fill: #F0FDF4;
+        stroke: #34D399;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .cell-box { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; rx: 8; }
+      .node-terminal {
+        fill: #DCFCE7;
+        stroke: #10B981;
+        stroke-width: 2.2;
+      }
+      .node-bug {
+        fill: #FEE2E2;
+        stroke: #EF4444;
+        stroke-width: 2;
+      }
+      .flow-bug {
+        stroke: #EF4444;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 4, 4;
+        fill: none;
+        animation: flowDash 4.0s linear infinite;
+      }
+      .flow-fix {
+        stroke: #10B981;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 5, 5;
+        fill: none;
+        animation: flowDash 3.5s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="410" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">The Self-Ending Word Invariant: Preventing Query Loss</text>
+    <text x="0" y="18" class="sketch-subtitle">Why checking node.isEnd on the current node is mandatory when a query is both a standalone term and an internal prefix</text>
+  </g>
+
+  <!-- Left: The Bug (Child Subtree Only) -->
+  <g transform="translate(40, 68)">
+    <rect width="425" height="315" class="card-bug" />
+    <rect x="18" y="14" width="150" height="22" fill="#FEE2E2" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#991B1B">THE BUG: CHILD ONLY</text>
+    <text x="18" y="58" class="txt-heading" fill="#991B1B">Algorithm only visits child branches</text>
+
+    <!-- Subtree Schematic -->
+    <g transform="translate(110, 105)">
+      <!-- Self Node 'kacchi' -->
+      <circle cx="0" cy="0" r="16" class="node-bug" />
+      <text x="-4" y="4" class="txt-code" font-weight="700">'i'</text>
+      <text x="-60" y="-22" class="txt-code" font-size="10px" font-weight="700" fill="#DC2626">isEnd: true (8,500)</text>
+
+      <!-- Broken flow skipping self -->
+      <path d="M -8 16 Q -40 40 -50 65" class="flow-bug" marker-end="url(#arr-red)" />
+      <circle cx="-55" cy="78" r="13" fill="#FFFFFF" stroke="#64748B" stroke-width="1.6" />
+      <text x="-85" y="105" class="txt-code" font-size="10px">"biryani" (16.4k)</text>
+
+      <path d="M 8 16 Q 40 40 50 65" class="flow-bug" marker-end="url(#arr-red)" />
+      <circle cx="55" cy="78" r="13" fill="#FFFFFF" stroke="#64748B" stroke-width="1.6" />
+      <text x="25" y="105" class="txt-code" font-size="10px">"mutton" (9.2k)</text>
+    </g>
+
+    <!-- Dropdown Output Bug -->
+    <g transform="translate(225, 95)">
+      <rect width="182" height="185" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1.4" rx="8" />
+      <text x="14" y="24" class="txt-heading" font-size="15px" fill="#991B1B">Resulting Dropdown:</text>
+      <text x="14" y="48" class="txt-code" font-size="10px">1. kacchi biryani (16.4k)</text>
+      <text x="14" y="68" class="txt-code" font-size="10px">2. kacchi mutton (9.2k)</text>
+
+      <line x1="14" y1="84" x2="168" y2="84" stroke="#F87171" stroke-dasharray="3,3" />
+
+      <g transform="translate(14, 100)">
+        <rect width="154" height="60" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.2" rx="6" />
+        <text x="10" y="20" class="txt-heading" font-size="14px" fill="#DC2626">"kacchi" is LOST!</text>
+        <text x="10" y="36" class="txt-sub" font-size="11px" fill="#991B1B">8,500 monthly queries</text>
+        <text x="10" y="50" class="txt-sub" font-size="11px" fill="#991B1B">omitted from suggestions</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right: The Fix (Self-Ending Invariant) -->
+  <g transform="translate(495, 68)">
+    <rect width="425" height="315" class="card-fix" />
+    <rect x="18" y="14" width="160" height="22" fill="#DCFCE7" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#065F46">THE FIX: THE INVARIANT</text>
+    <text x="18" y="58" class="txt-heading" fill="#065F46">Node merges itself + child candidates</text>
+
+    <!-- Subtree Schematic -->
+    <g transform="translate(110, 105)">
+      <!-- Self Node 'kacchi' with Double Ring (Stationary) -->
+      <circle cx="0" cy="0" r="18" class="node-terminal" />
+      <circle cx="0" cy="0" r="13" fill="none" stroke="#10B981" stroke-width="1.4" />
+      <text x="-4" y="4" class="txt-code" font-weight="700" fill="#065F46">'i'</text>
+      <text x="-70" y="-24" class="txt-code" font-size="10px" font-weight="700" fill="#065F46">Self: "kacchi" (8,500)</text>
+
+      <!-- Flow lines to children -->
+      <path d="M -8 18 Q -40 42 -50 65" class="flow-fix" marker-end="url(#arr-green)" />
+      <circle cx="-55" cy="78" r="13" class="node-terminal" />
+      <text x="-85" y="105" class="txt-code" font-size="10px">"biryani" (16.4k)</text>
+
+      <path d="M 8 18 Q 40 42 50 65" class="flow-fix" marker-end="url(#arr-green)" />
+      <circle cx="55" cy="78" r="13" class="node-terminal" />
+      <text x="25" y="105" class="txt-code" font-size="10px">"mutton" (9.2k)</text>
+    </g>
+
+    <!-- Dropdown Output Fix -->
+    <g transform="translate(225, 95)">
+      <rect width="182" height="185" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.4" rx="8" />
+      <text x="14" y="24" class="txt-heading" font-size="15px" fill="#065F46">Resulting Dropdown:</text>
+      <text x="14" y="48" class="txt-code" font-size="10px">1. kacchi biryani (16.4k)</text>
+      <text x="14" y="68" class="txt-code" font-size="10px">2. kacchi mutton (9.2k)</text>
+
+      <rect x="8" y="76" width="166" height="22" fill="#ECFDF5" stroke="#10B981" rx="4" />
+      <text x="12" y="91" class="txt-code" font-size="10px" font-weight="700" fill="#047857">3. kacchi (8.5k) RETAINED!</text>
+
+      <text x="14" y="116" class="txt-code" font-size="10px">4. kacchi beef (4.6k)</text>
+      <text x="14" y="134" class="txt-code" font-size="10px">5. kacchi basmati (3.1k)</text>
+
+      <line x1="14" y1="146" x2="168" y2="146" stroke="#10B981" stroke-dasharray="3,3" />
+      <text x="14" y="162" class="txt-sub" font-size="11px" fill="#065F46">&#10003; Exact query preserved</text>
+      <text x="14" y="176" class="txt-sub" font-size="11px" fill="#065F46">&#10003; Competing fairly on volume</text>
+    </g>
+  </g>
+</svg>

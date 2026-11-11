@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowDash {
+        to { stroke-dashoffset: -28; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .sketch-card {
+        fill: #FFFFFF;
+        stroke: #334155;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-stage1 { fill: #F0F7FF; stroke: #3B82F6; }
+      .card-stage2 { fill: #FEF9C3; stroke: #EAB308; }
+      .card-stage3 { fill: #ECFDF5; stroke: #10B981; stroke-width: 2.2; }
+      .card-stage4 { fill: #FAF5FF; stroke: #A855F7; }
+      .flow-wire {
+        stroke: #94A3B8;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: flowDash 3.8s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+    </style>
+    <marker id="arr-ink" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="410" class="bg" />
+
+  <!-- Title Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">End-to-End Typeahead Pipeline &amp; Trie Architecture</text>
+    <text x="0" y="18" class="sketch-subtitle">Keystroke Stream &#8594; O(L) Pointer Navigation &#8594; O(1) Precomputed Top-5 Cache &#8594; Sub-1ms UI Paint</text>
+  </g>
+
+  <!-- Continuous Animated Signal Wire (Calm & Slow) -->
+  <path d="M 230 205 C 250 205, 255 205, 275 205" class="flow-wire" marker-end="url(#arr-ink)" />
+  <path d="M 475 205 C 495 205, 500 205, 520 205" class="flow-wire" marker-end="url(#arr-ink)" />
+  <path d="M 720 205 C 740 205, 745 205, 765 205" class="flow-wire" marker-end="url(#arr-ink)" />
+
+  <!-- Calm Traveling Particle (5.0s steady pace) -->
+  <circle r="4.5" fill="#10B981" stroke="#FFFFFF" stroke-width="1.5">
+    <animate attributeName="cx" values="135;375;620;845;920" dur="5.0s" repeatCount="indefinite" />
+    <animate attributeName="cy" values="205;205;205;205;205" dur="5.0s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;1;0" dur="5.0s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Stage 1: User Keystrokes -->
+  <g transform="translate(40, 68)">
+    <rect width="190" height="310" class="sketch-card card-stage1" />
+    <rect x="14" y="14" width="70" height="20" fill="#DBEAFE" rx="4" />
+    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#1E40AF">STAGE 1</text>
+    <text x="14" y="56" class="txt-heading">User Keystrokes</text>
+    <text x="14" y="74" class="txt-sub">Client keystroke stream</text>
+
+    <!-- Query Input Card -->
+    <rect x="14" y="95" width="162" height="60" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.5" rx="8" />
+    <text x="22" y="116" class="txt-sub">Typing Prefix:</text>
+    <text x="22" y="138" class="txt-code" font-weight="700" font-size="13px" fill="#1D4ED8">"kacchi"</text>
+
+    <!-- Budget Box -->
+    <rect x="14" y="170" width="162" height="110" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" rx="8" />
+    <text x="22" y="194" class="txt-sub" font-weight="700" fill="#0F172A">Typing Cadence:</text>
+    <text x="22" y="214" class="txt-sub">&#8226; 150ms – 200ms / char</text>
+    <text x="22" y="234" class="txt-sub">&#8226; 50ms round-trip SLA</text>
+    <rect x="22" y="246" width="144" height="20" fill="#DBEAFE" rx="4" />
+    <text x="28" y="260" class="txt-badge" font-size="10px" fill="#1E40AF">Trie SLA: &lt;= 3ms</text>
+  </g>
+
+  <!-- Stage 2: O(L) Pointer Traversal -->
+  <g transform="translate(280, 68)">
+    <rect width="195" height="310" class="sketch-card card-stage2" />
+    <rect x="14" y="14" width="70" height="20" fill="#FEF08A" rx="4" />
+    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#854D0E">STAGE 2</text>
+    <text x="14" y="56" class="txt-heading">O(L) Trie Walk</text>
+    <text x="14" y="74" class="txt-sub">Map pointer dereferences</text>
+
+    <!-- Visual Tree Stem -->
+    <g transform="translate(98, 105)">
+      <!-- Root -->
+      <circle cx="0" cy="0" r="11" fill="#FFFFFF" stroke="#334155" stroke-width="1.8" />
+      <text x="-3" y="4" class="txt-code" font-size="10px">&#8226;</text>
+
+      <path d="M 0 11 L 0 28" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
+      <circle cx="0" cy="38" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
+      <text x="-4" y="42" class="txt-code" font-size="11px">'k'</text>
+
+      <path d="M 0 48 L 0 65" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
+      <circle cx="0" cy="75" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
+      <text x="-4" y="79" class="txt-code" font-size="11px">'a'</text>
+
+      <path d="M 0 85 L 0 102" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
+      <circle cx="0" cy="112" r="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.6" />
+      <text x="-4" y="116" class="txt-code" font-size="11px">'c'</text>
+
+      <path d="M 0 122 L 0 139" stroke="#EAB308" stroke-width="2" stroke-linecap="round" />
+      <!-- Terminal Double Circle for 'i' -->
+      <circle cx="0" cy="151" r="13" fill="#DCFCE7" stroke="#10B981" stroke-width="2" />
+      <circle cx="0" cy="151" r="9" fill="none" stroke="#10B981" stroke-width="1.2" />
+      <text x="-3" y="155" class="txt-code" font-weight="700" font-size="11px" fill="#065F46">'i'</text>
+    </g>
+
+    <rect x="14" y="270" width="167" height="28" fill="#FFFFFF" stroke="#CBD5E1" rx="6" />
+    <text x="22" y="288" class="txt-badge" font-size="10px" fill="#854D0E">6 Hops strictly O(L)</text>
+  </g>
+
+  <!-- Stage 3: Node Top-K Cache (HERO) -->
+  <g transform="translate(525, 68)">
+    <rect width="195" height="310" class="sketch-card card-stage3" />
+    <rect x="14" y="14" width="70" height="20" fill="#A7F3D0" rx="4" />
+    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#065F46">STAGE 3</text>
+    <text x="14" y="56" class="txt-heading" fill="#065F46">Node Top-K Cache</text>
+    <text x="14" y="74" class="txt-sub">Precomputed at build-time</text>
+
+    <!-- Cache Card -->
+    <rect x="14" y="95" width="167" height="165" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.5" rx="8" />
+    <text x="22" y="115" class="txt-sub" font-weight="700">node.topSuggestions:</text>
+    <text x="22" y="136" class="txt-code" font-size="10px">1. kacchi biryani</text>
+    <text x="22" y="156" class="txt-code" font-size="10px">2. kacchi mutton</text>
+    <rect x="20" y="165" width="155" height="18" fill="#ECFDF5" rx="3" />
+    <text x="22" y="178" class="txt-code" font-size="10px" font-weight="700" fill="#047857">3. kacchi (Self Invariant!)</text>
+    <text x="22" y="198" class="txt-code" font-size="10px">4. kacchi beef</text>
+    <text x="22" y="218" class="txt-code" font-size="10px">5. kacchi basmati</text>
+
+    <rect x="14" y="270" width="167" height="28" fill="#A7F3D0" rx="6" />
+    <text x="22" y="288" class="txt-badge" font-size="10px" fill="#065F46">O(1) Slice: 1.29 &#181;s</text>
+  </g>
+
+  <!-- Stage 4: UI Dropdown Paint -->
+  <g transform="translate(770, 68)">
+    <rect width="150" height="310" class="sketch-card card-stage4" />
+    <rect x="14" y="14" width="70" height="20" fill="#F3E8FF" rx="4" />
+    <text x="20" y="28" class="txt-badge" font-size="10px" fill="#7E22CE">STAGE 4</text>
+    <text x="14" y="56" class="txt-heading">UI Paint</text>
+    <text x="14" y="74" class="txt-sub">Screen rendering</text>
+
+    <!-- Dropdown Mock -->
+    <rect x="12" y="95" width="126" height="150" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1.5" rx="8" />
+    <text x="20" y="115" class="txt-sub" font-size="11px" font-weight="700">Autocomplete:</text>
+    <text x="20" y="135" class="txt-sub" font-size="11px">&#8226; kacchi biryani</text>
+    <text x="20" y="155" class="txt-sub" font-size="11px">&#8226; kacchi mutton</text>
+    <text x="20" y="175" class="txt-sub" font-size="11px" font-weight="700" fill="#7E22CE">&#8226; kacchi</text>
+    <text x="20" y="195" class="txt-sub" font-size="11px">&#8226; kacchi beef</text>
+    <text x="20" y="215" class="txt-sub" font-size="11px">&#8226; kacchi basmati</text>
+
+    <rect x="12" y="270" width="126" height="28" fill="#F3E8FF" rx="6" />
+    <text x="18" y="288" class="txt-badge" font-size="10px" fill="#7E22CE">Zero UI Stutter</text>
+  </g>
+</svg>

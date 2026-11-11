@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes flowUpDash {
+        to { stroke-dashoffset: 24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #1E293B; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 14px; fill: #64748B; }
+      .sketch-box {
+        fill: #FFFFFF;
+        stroke: #CBD5E1;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        rx: 12;
+      }
+      .card-parent {
+        fill: #F0F7FF;
+        stroke: #3B82F6;
+        stroke-width: 2;
+        rx: 10;
+      }
+      .card-leaf {
+        fill: #F8FAFC;
+        stroke: #94A3B8;
+        stroke-width: 1.6;
+        rx: 8;
+      }
+      .card-merge {
+        fill: #FEF9C3;
+        stroke: #EAB308;
+        stroke-width: 1.8;
+        rx: 8;
+      }
+      .card-cached {
+        fill: #ECFDF5;
+        stroke: #10B981;
+        stroke-width: 2;
+        rx: 8;
+      }
+      .flow-up-wire {
+        stroke: #3B82F6;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 5, 5;
+        fill: none;
+        animation: flowUpDash 3.8s linear infinite;
+      }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #1E293B; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="420" class="bg" />
+
+  <!-- Global Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">Bottom-Up Post-Order Top-K Caching: Candidate Bubble Flow</text>
+    <text x="0" y="18" class="sketch-subtitle">How recursive post-order DFS aggregates, deduplicates, and caches pre-sorted suggestions directly onto each node</text>
+  </g>
+
+  <!-- Left: Visual Tree Bubble Flow -->
+  <g transform="translate(40, 68)">
+    <rect width="435" height="325" class="sketch-box" />
+    <rect x="18" y="14" width="160" height="22" fill="#DBEAFE" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#1E40AF">POST-ORDER COMPILATION</text>
+    <text x="18" y="58" class="txt-heading">Upward Candidate Flow &#8593;</text>
+
+    <!-- Parent Node 'kacchi' (Stationary) -->
+    <g transform="translate(125, 80)">
+      <rect width="185" height="65" class="card-parent" />
+      <text x="14" y="24" class="txt-code" font-weight="700">Node 'i' (Prefix "kacchi")</text>
+      <text x="14" y="42" class="txt-sub" font-size="11px">&#8226; isEnd: true ("kacchi")</text>
+      <text x="14" y="56" class="txt-sub" font-size="11px">&#8226; frequency: 8,500 (Self Term)</text>
+    </g>
+
+    <!-- Upward Calm Flow Wires -->
+    <path d="M 90 220 Q 110 180 155 152" class="flow-up-wire" marker-end="url(#arr-blue)" />
+    <path d="M 345 220 Q 325 180 280 152" class="flow-up-wire" marker-end="url(#arr-blue)" />
+
+    <!-- Child Subtree 1 -->
+    <g transform="translate(18, 225)">
+      <rect width="185" height="85" class="card-leaf" />
+      <text x="12" y="22" class="txt-code" font-weight="700">Subtree ' ' &#8594; 'b'</text>
+      <text x="12" y="42" class="txt-sub" font-size="11px">&#8226; kacchi biryani (16.4k)</text>
+      <text x="12" y="58" class="txt-sub" font-size="11px">&#8226; kacchi beef (4.6k)</text>
+      <text x="12" y="74" class="txt-badge" font-size="10px" fill="#2563EB">Bubbles upward &#8593;</text>
+    </g>
+
+    <!-- Child Subtree 2 -->
+    <g transform="translate(232, 225)">
+      <rect width="185" height="85" class="card-leaf" />
+      <text x="12" y="22" class="txt-code" font-weight="700">Subtree ' ' &#8594; 'm'</text>
+      <text x="12" y="42" class="txt-sub" font-size="11px">&#8226; kacchi mutton (9.2k)</text>
+      <text x="12" y="58" class="txt-sub" font-size="11px">&#8226; kacchi basmati (3.1k)</text>
+      <text x="12" y="74" class="txt-badge" font-size="10px" fill="#2563EB">Bubbles upward &#8593;</text>
+    </g>
+  </g>
+
+  <!-- Right: Synthesis & Ranking Breakdown -->
+  <g transform="translate(495, 68)">
+    <rect width="425" height="325" class="sketch-box" />
+    <rect x="18" y="14" width="165" height="22" fill="#FEF9C3" rx="4" />
+    <text x="24" y="29" class="txt-badge" fill="#854D0E">CANDIDATE DEDUPLICATION</text>
+    <text x="18" y="58" class="txt-heading">Node Cache Synthesis Pipeline</text>
+
+    <!-- Step 1: Gathered from Children -->
+    <rect x="18" y="75" width="389" height="50" fill="#F8FAFC" stroke="#E2E8F0" rx="8" />
+    <text x="28" y="94" class="txt-heading" font-size="15px">1. Gathered from Children (Post-Order):</text>
+    <text x="28" y="112" class="txt-code" font-size="10px">[ "kacchi biryani": 16.4k, "kacchi mutton": 9.2k, ... ]</text>
+
+    <!-- Step 2: Merge Self Invariant -->
+    <rect x="18" y="135" width="389" height="52" class="card-merge" />
+    <text x="28" y="154" class="txt-heading" font-size="15px" fill="#854D0E">2. Self-Ending Word Invariant:</text>
+    <text x="28" y="172" class="txt-sub" fill="#854D0E">Node 'i' isEnd is true! Merge self: { word: "kacchi", freq: 8500 }</text>
+
+    <!-- Step 3: Final Top-K Cache -->
+    <rect x="18" y="198" width="389" height="112" class="card-cached" />
+    <text x="28" y="218" class="txt-heading" font-size="15px" fill="#065F46">3. Final Sorted Top-K (node.topSuggestions):</text>
+    <text x="28" y="238" class="txt-code" font-size="10px">Rank 1: "kacchi biryani"  (vol: 16,400)</text>
+    <text x="28" y="254" class="txt-code" font-size="10px">Rank 2: "kacchi mutton"   (vol: 9,200)</text>
+    <text x="28" y="270" class="txt-code" font-size="10px" font-weight="700" fill="#047857">Rank 3: "kacchi"          (vol: 8,500) &#8592; RETAINED!</text>
+    <text x="28" y="286" class="txt-code" font-size="10px">Rank 4: "kacchi beef"     (vol: 4,600)</text>
+    <text x="28" y="302" class="txt-code" font-size="10px">Rank 5: "kacchi basmati"  (vol: 3,100)</text>
+  </g>
+</svg>
