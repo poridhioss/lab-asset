@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 490" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-accent { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .card-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; rx: 8px; }
+      .card-amber { fill: #FFFBEB; stroke: #F59E0B; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .label { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 600; fill: #1E293B; }
+      .desc { font-family: system-ui, sans-serif; font-size: 11px; fill: #475569; }
+      .code { font-family: ui-monospace, monospace; font-size: 11px; fill: #0F172A; }
+      .arrow { stroke: #64748B; stroke-width: 1.5; fill: none; stroke-linecap: round; }
+      .arrow-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748B" />
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563EB" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="490" class="bg" rx="12" />
+
+  <!-- Header -->
+  <text x="40" y="38" class="title">Express Search API Microservice Architecture</text>
+  <text x="40" y="58" class="subtitle">Complete request lifecycle: Query parsing, Inverted Index conjunction, BM25 scoring, and snippet generation</text>
+
+  <!-- Left: Client Request Box -->
+  <rect x="40" y="85" width="220" height="375" class="card" />
+  <text x="55" y="112" class="title" style="font-size: 14px;">1. Client Ingress</text>
+  <text x="55" y="130" class="subtitle">cURL / Browser / Frontend</text>
+
+  <rect x="55" y="145" width="190" height="65" class="card-accent" />
+  <text x="65" y="165" class="code" style="font-weight: 700; fill: #1D4ED8;">GET /search</text>
+  <text x="65" y="183" class="desc">?q=distributed+cache</text>
+  <text x="65" y="198" class="desc">&amp;mode=bm25&amp;limit=5</text>
+
+  <rect x="55" y="225" width="190" height="50" class="card" style="fill: #F1F5F9;" />
+  <text x="65" y="245" class="code" style="font-weight: 700; fill: #334155;">GET /explain</text>
+  <text x="65" y="260" class="desc">?q=distributed+cache&amp;docId=1</text>
+
+  <rect x="55" y="290" width="190" height="45" class="card" style="fill: #F1F5F9;" />
+  <text x="65" y="310" class="code" style="font-weight: 700; fill: #334155;">GET /corpus</text>
+  <text x="65" y="324" class="desc">Summary metadata list</text>
+
+  <rect x="55" y="350" width="190" height="95" class="card-green" />
+  <text x="65" y="372" class="label" style="fill: #065F46; font-size: 12px;">Latency Budget</text>
+  <text x="65" y="390" class="desc">• Index lookup: &lt; 0.05ms</text>
+  <text x="65" y="406" class="desc">• BM25 score: &lt; 0.10ms</text>
+  <text x="65" y="422" class="desc">• JSON payload: &lt; 2.0ms</text>
+  <text x="65" y="438" class="code" style="font-weight: 700; fill: #047857;">p99 Total: &lt; 5.0ms</text>
+
+  <!-- Arrow Client -> Server -->
+  <path d="M 260 177 L 295 177" class="arrow-accent" marker-end="url(#arrowhead-blue)" />
+
+  <!-- Center: Express Server Container -->
+  <rect x="295" y="85" width="370" height="375" class="card" style="stroke: #3B82F6; stroke-width: 2;" />
+  <text x="315" y="112" class="title" style="font-size: 14px;">2. Express Microservice (server.js)</text>
+  <text x="315" y="130" class="subtitle">Internal Pipeline Coordination</text>
+
+  <!-- Step A: Query Parsing & TextAnalyzer -->
+  <rect x="315" y="145" width="330" height="60" class="card-accent" />
+  <text x="330" y="167" class="label">A. TextAnalyzer (From Lab 1)</text>
+  <text x="330" y="185" class="desc">Normalizes, stems, and filters query &#8594; ["distribut", "cache"]</text>
+
+  <path d="M 480 205 L 480 220" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Step B: Candidate Retrieval -->
+  <rect x="315" y="220" width="330" height="65" class="card" style="fill: #F8FAFC;" />
+  <text x="330" y="242" class="label">B. InvertedIndex &amp; TwoPointer (Lab 2)</text>
+  <text x="330" y="260" class="desc">Fetches sorted posting lists &#8594; Candidates: [ 1, 9 ]</text>
+  <text x="330" y="275" class="desc">collection avgDocLen: 36.67 tokens</text>
+
+  <path d="M 480 285 L 480 300" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Step C: BM25 Scoring -->
+  <rect x="315" y="300" width="330" height="65" class="card-green" />
+  <text x="330" y="322" class="label">C. SearchRanker (BM25 Engine)</text>
+  <text x="330" y="340" class="desc">Computes saturated TF, length penalty &#8594; Doc 1: 2.61, Doc 9: 2.59</text>
+  <text x="330" y="355" class="desc">Sorts candidates descending by score</text>
+
+  <path d="M 480 365 L 480 380" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Step D: Snippet Highlighter -->
+  <rect x="315" y="380" width="330" height="65" class="card-amber" />
+  <text x="330" y="402" class="label">D. SnippetHighlighter</text>
+  <text x="330" y="420" class="desc">Extracts 8-word sliding window around matched terms</text>
+  <text x="330" y="435" class="desc">Wraps keywords in &lt;em&gt; tags with boundary padding</text>
+
+  <!-- Arrow Server -> JSON Payload -->
+  <path d="M 665 272 L 700 272" class="arrow-accent" marker-end="url(#arrowhead-blue)" />
+
+  <!-- Right: JSON Payload Response -->
+  <rect x="700" y="85" width="220" height="375" class="card" />
+  <text x="715" y="112" class="title" style="font-size: 14px;">3. JSON Output</text>
+  <text x="715" y="130" class="subtitle">Structured API Response</text>
+
+  <rect x="715" y="145" width="190" height="300" class="card" style="fill: #0F172A; stroke: #334155;" />
+  <text x="725" y="170" class="code" style="fill: #38BDF8; font-size: 10px;">{</text>
+  <text x="735" y="188" class="code" style="fill: #94A3B8; font-size: 10px;">"query": "distributed cache",</text>
+  <text x="735" y="206" class="code" style="fill: #94A3B8; font-size: 10px;">"mode": "bm25",</text>
+  <text x="735" y="224" class="code" style="fill: #94A3B8; font-size: 10px;">"totalHits": 2,</text>
+  <text x="735" y="242" class="code" style="fill: #94A3B8; font-size: 10px;">"tookMs": 0.42,</text>
+  <text x="735" y="260" class="code" style="fill: #38BDF8; font-size: 10px;">"hits": [</text>
+  <text x="745" y="278" class="code" style="fill: #4ADE80; font-size: 10px;">  {</text>
+  <text x="755" y="296" class="code" style="fill: #4ADE80; font-size: 10px;">    "docId": 1,</text>
+  <text x="755" y="314" class="code" style="fill: #4ADE80; font-size: 10px;">    "score": 2.6146,</text>
+  <text x="755" y="332" class="code" style="fill: #4ADE80; font-size: 10px;">    "title": "Distributed...",</text>
+  <text x="755" y="350" class="code" style="fill: #FCD34D; font-size: 10px;">    "snippet": "...&lt;em&gt;..."</text>
+  <text x="745" y="368" class="code" style="fill: #4ADE80; font-size: 10px;">  },</text>
+  <text x="745" y="386" class="code" style="fill: #94A3B8; font-size: 10px;">  { "docId": 9, ... }</text>
+  <text x="735" y="404" class="code" style="fill: #38BDF8; font-size: 10px;">]</text>
+  <text x="725" y="422" class="code" style="fill: #38BDF8; font-size: 10px;">}</text>
+</svg>

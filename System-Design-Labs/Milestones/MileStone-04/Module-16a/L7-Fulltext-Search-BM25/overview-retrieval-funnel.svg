@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-accent-blue { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .card-accent-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; rx: 8px; }
+      .card-accent-amber { fill: #FFFBEB; stroke: #F59E0B; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .label { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 600; fill: #1E293B; }
+      .desc { font-family: system-ui, -apple-system, sans-serif; font-size: 11px; fill: #475569; }
+      .code { font-family: ui-monospace, Menlo, Monaco, monospace; font-size: 11px; fill: #0F172A; }
+      .arrow { stroke: #64748B; stroke-width: 1.5; fill: none; stroke-linecap: round; }
+      .badge-blue { fill: #DBEAFE; stroke: #93C5FD; stroke-width: 1; rx: 4px; }
+      .badge-green { fill: #D1FAE5; stroke: #6EE7B7; stroke-width: 1; rx: 4px; }
+      .badge-amber { fill: #FEF3C7; stroke: #FCD34D; stroke-width: 1; rx: 4px; }
+      .badge-text-blue { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 700; fill: #1D4ED8; }
+      .badge-text-green { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 700; fill: #047857; }
+      .badge-text-amber { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 700; fill: #B45309; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" class="bg" rx="12" />
+
+  <!-- Header -->
+  <text x="40" y="42" class="title" style="font-size: 18px;">The Two-Stage Information Retrieval Funnel</text>
+  <text x="40" y="64" class="subtitle">How foundational text normalization and candidate posting intersection feed statistical Okapi BM25 ranking</text>
+
+  <!-- Step 0: User Query -->
+  <rect x="40" y="95" width="230" height="75" class="card" />
+  <text x="56" y="122" class="label">Inbound User Query</text>
+  <rect x="56" y="132" width="198" height="26" class="card-accent-blue" rx="4" />
+  <text x="68" y="149" class="code">"distributed cache"</text>
+
+  <!-- Arrow 0 -> Stage 1 -->
+  <path d="M 270 132 L 310 132" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- STAGE 1: CANDIDATE RETRIEVAL -->
+  <rect x="310" y="85" width="280" height="400" class="card" style="fill: #FFFFFF; stroke: #94A3B8; stroke-dasharray: 4 4;" />
+  <rect x="325" y="100" width="130" height="20" class="badge-blue" />
+  <text x="333" y="114" class="badge-text-blue">STAGE 1: FILTERING</text>
+  <text x="325" y="140" class="title" style="font-size: 14px;">Candidate Generation</text>
+  <text x="325" y="156" class="subtitle">Linear speed • Zero document scanning</text>
+
+  <!-- Component 1: Lab 1 TextAnalyzer -->
+  <rect x="325" y="175" width="250" height="85" class="card-accent-blue" />
+  <text x="340" y="197" class="label">Lab 1: TextAnalyzer</text>
+  <text x="340" y="215" class="desc">• Normalization &amp; Punctuation Strip</text>
+  <text x="340" y="231" class="desc">• Stopwords filter &amp; Suffix Stemming</text>
+  <text x="340" y="249" class="code">Tokens: ["distribut", "cache"]</text>
+
+  <!-- Arrow inside Stage 1 -->
+  <path d="M 450 260 L 450 285" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Component 2: Lab 2 Posting Lists & Intersection -->
+  <rect x="325" y="290" width="250" height="95" class="card-accent-blue" />
+  <text x="340" y="312" class="label">Lab 2: TwoPointerIntersector</text>
+  <text x="340" y="330" class="desc">• Inverted Index Postings Lookup</text>
+  <text x="340" y="346" class="desc">• Linear O(L1 + L2) Two-Pointer Merge</text>
+  <text x="340" y="368" class="code">Candidates: DocIDs [ 1, 9 ]</text>
+
+  <rect x="325" y="405" width="250" height="60" class="card" style="background: #F1F5F9;" />
+  <text x="340" y="427" class="label" style="font-size: 12px; fill: #475569;">Candidate Output</text>
+  <text x="340" y="447" class="code" style="fill: #2563EB; font-weight: 700;">[ 1, 9 ] (Unranked matches)</text>
+
+  <!-- Arrow Stage 1 -> Stage 2 -->
+  <path d="M 590 337 L 640 337" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- STAGE 2: RELEVANCE RANKING -->
+  <rect x="640" y="85" width="280" height="400" class="card" style="fill: #FFFFFF; stroke: #10B981; stroke-width: 2;" />
+  <rect x="655" y="100" width="130" height="20" class="badge-green" />
+  <text x="663" y="114" class="badge-text-green">STAGE 2: SCORING</text>
+  <text x="655" y="140" class="title" style="font-size: 14px;">Lab 7: Okapi BM25 Ranker</text>
+  <text x="655" y="156" class="subtitle">Statistical relevance • Guarantees Rank 1</text>
+
+  <!-- BM25 Core Box -->
+  <rect x="655" y="175" width="250" height="110" class="card-accent-green" />
+  <text x="670" y="197" class="label">BM25 Scoring Engine</text>
+  <text x="670" y="215" class="desc">• TF Saturation Asymptote (k1 = 1.2)</text>
+  <text x="670" y="231" class="desc">• Length Normalization (b = 0.75, avgdl)</text>
+  <text x="670" y="247" class="desc">• Robertson-Sparck Jones IDF Multiplier</text>
+  <text x="670" y="267" class="code">Doc 1: 2.6146 | Doc 9: 2.5928</text>
+
+  <!-- Arrow inside Stage 2 -->
+  <path d="M 780 285 L 780 310" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Final Ranked Output Card -->
+  <rect x="655" y="315" width="250" height="150" class="card-accent-green" />
+  <text x="670" y="337" class="label">Top-K Ranked Results &amp; API</text>
+  <text x="670" y="357" class="code" style="font-weight: 700; fill: #047857;">Rank 1: Doc 01 (Score: 2.6146)</text>
+  <text x="670" y="373" class="desc">"Distributed In-Memory Caching..."</text>
+  <text x="670" y="397" class="code" style="fill: #64748B;">Rank 2: Doc 09 (Score: 2.5928)</text>
+  <text x="670" y="413" class="desc">"Rambling Infrastructure Notes..."</text>
+  <text x="670" y="435" class="desc">• Contextual &lt;em&gt; snippet tags injected</text>
+  <text x="670" y="451" class="desc">• Served via Express GET /search</text>
+</svg>

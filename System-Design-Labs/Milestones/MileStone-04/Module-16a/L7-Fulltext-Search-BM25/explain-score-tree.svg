@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-accent { fill: #EFF6FF; stroke: #3B82F6; stroke-width: 1.5; rx: 8px; }
+      .card-green { fill: #ECFDF5; stroke: #10B981; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .label { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 600; fill: #1E293B; }
+      .desc { font-family: system-ui, sans-serif; font-size: 11px; fill: #475569; }
+      .code { font-family: ui-monospace, monospace; font-size: 11px; fill: #0F172A; }
+      .tree-line { stroke: #94A3B8; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="960" height="500" class="bg" rx="12" />
+
+  <!-- Header -->
+  <text x="40" y="38" class="title">Score Explainability: The Elasticsearch _explain Tree</text>
+  <text x="40" y="58" class="subtitle">Decomposing Doc 1's BM25 Score (2.6146) into Term Frequency Saturation and Document Length Normalization</text>
+
+  <!-- Left Side: Hierarchical Tree -->
+  <!-- Root Node (Total Score) -->
+  <rect x="40" y="80" width="480" height="65" class="card-green" />
+  <text x="55" y="102" class="label" style="fill: #065F46; font-size: 14px;">Total BM25 Score: 2.6146 (Doc 01)</text>
+  <text x="55" y="122" class="desc">Document Length: 35 tokens • Collection avgdl: 36.67 • lenRatio: 0.95 (Bonus applied!)</text>
+  <text x="55" y="137" class="code" style="fill: #047857; font-size: 10px;">Sum of term contributions: 1.6659 ("cache") + 0.9487 ("distribut") = 2.6146</text>
+
+  <!-- Tree Connectors -->
+  <path d="M 80 145 L 80 180 L 110 180" class="tree-line" />
+  <path d="M 80 180 L 80 320 L 110 320" class="tree-line" />
+
+  <!-- Branch 1: "cache" -->
+  <rect x="110" y="160" width="410" height="125" class="card-accent" />
+  <text x="125" y="182" class="label" style="fill: #1D4ED8;">Term: "cache" &#8594; BM25 Contribution: 1.6659</text>
+  <text x="125" y="200" class="desc">Product of: IDF(1.0498) &#215; tfNorm(1.5869)</text>
+
+  <rect x="125" y="210" width="185" height="60" class="card" />
+  <text x="135" y="228" class="code" style="font-weight: 700; fill: #D97706;">IDF = 1.0498</text>
+  <text x="135" y="244" class="desc">N = 9, df = 3</text>
+  <text x="135" y="258" class="desc">ln(1 + 6.5 / 3.5)</text>
+
+  <rect x="320" y="210" width="185" height="60" class="card" />
+  <text x="330" y="228" class="code" style="font-weight: 700; fill: #059669;">tfNorm = 1.5869</text>
+  <text x="330" y="244" class="desc">tf = 3, k1 = 1.2</text>
+  <text x="330" y="258" class="desc">lenNorm = 0.96 (Bonus!)</text>
+
+  <!-- Branch 2: "distribut" -->
+  <rect x="110" y="300" width="410" height="125" class="card" style="fill: #F8FAFC;" />
+  <text x="125" y="322" class="label" style="fill: #334155;">Term: "distribut" &#8594; BM25 Contribution: 0.9487</text>
+  <text x="125" y="340" class="desc">Product of: IDF(0.5978) &#215; tfNorm(1.5869)</text>
+
+  <rect x="125" y="350" width="185" height="60" class="card" />
+  <text x="135" y="368" class="code" style="font-weight: 700; fill: #D97706;">IDF = 0.5978</text>
+  <text x="135" y="384" class="desc">N = 9, df = 5</text>
+  <text x="135" y="398" class="desc">ln(1 + 4.5 / 5.5)</text>
+
+  <rect x="320" y="350" width="185" height="60" class="card" />
+  <text x="330" y="368" class="code" style="font-weight: 700; fill: #059669;">tfNorm = 1.5869</text>
+  <text x="330" y="384" class="desc">tf = 3, k1 = 1.2</text>
+  <text x="330" y="398" class="desc">lenNorm = 0.96 (Bonus!)</text>
+
+  <text x="40" y="455" class="desc" style="font-style: italic;">* In Doc 01, both terms get boosted because the document is shorter than the average collection length (dl &lt; avgdl).</text>
+
+  <!-- Right Side: Side-by-Side Comparison Box with Doc 9 -->
+  <rect x="550" y="80" width="370" height="385" class="card" />
+  <text x="570" y="105" class="title" style="font-size: 14px;">Why Did Doc 9 Lose?</text>
+  <text x="570" y="123" class="subtitle">Anatomy of Document 9's explain breakdown</text>
+
+  <!-- Doc 9 Summary Box -->
+  <rect x="570" y="140" width="330" height="80" class="card" style="fill: #FEF2F2; stroke: #FCA5A5;" />
+  <text x="585" y="162" class="label" style="fill: #991B1B;">Doc 09: BM25 Score = 2.5928</text>
+  <text x="585" y="180" class="desc">• Length: 96 tokens (Collection avg: 36.67)</text>
+  <text x="585" y="196" class="desc">• lenRatio: 2.62 &#8594; lenNorm = 2.21 (Heavy penalty!)</text>
+  <text x="585" y="212" class="code" style="fill: #B91C1C;">Score suppressed in denominator!</text>
+
+  <!-- Contrast Rows -->
+  <rect x="570" y="235" width="330" height="95" class="card" style="fill: #FFFBEB; stroke: #FCD34D;" />
+  <text x="585" y="255" class="label" style="font-size: 12px; fill: #92400E;">Term "cache" Comparison:</text>
+  <text x="585" y="275" class="desc">• Doc 01: tf=3 &#8594; tfNorm = 1.5869 &#8594; BM25 = 1.6659</text>
+  <text x="585" y="293" class="desc">• Doc 09: tf=8 &#8594; tfNorm = 1.6516 &#8594; BM25 = 1.7339</text>
+  <text x="585" y="313" class="callout" style="fill: #B45309; font-weight: 600;">8 mentions only gained +0.068 BM25 points over 3!</text>
+
+  <rect x="570" y="345" width="330" height="100" class="card" style="fill: #F1F5F9;" />
+  <text x="585" y="365" class="label" style="font-size: 12px; fill: #334155;">Term "distribut" Comparison:</text>
+  <text x="585" y="385" class="desc">• Doc 01: tf=3 &#8594; lenNorm=0.96 &#8594; BM25 = 0.9487</text>
+  <text x="585" y="403" class="desc">• Doc 09: tf=5 &#8594; lenNorm=2.21 &#8594; BM25 = 0.8589</text>
+  <text x="585" y="423" class="callout" style="fill: #065F46; font-weight: 700;">Doc 1 beat Doc 9 on "distribut" despite fewer mentions!</text>
+</svg>

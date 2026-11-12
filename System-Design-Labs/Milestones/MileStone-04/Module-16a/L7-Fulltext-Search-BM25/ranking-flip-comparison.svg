@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .card-red { fill: #FEF2F2; stroke: #F87171; stroke-width: 1.5; rx: 8px; }
+      .card-green { fill: #ECFDF5; stroke: #34D399; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .label { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 600; fill: #1E293B; }
+      .desc { font-family: system-ui, sans-serif; font-size: 11px; fill: #475569; }
+      .code { font-family: ui-monospace, monospace; font-size: 11px; fill: #0F172A; }
+      .badge-fail { fill: #FEE2E2; stroke: #EF4444; stroke-width: 1; rx: 4px; }
+      .badge-pass { fill: #D1FAE5; stroke: #10B981; stroke-width: 1; rx: 4px; }
+      .badge-text-fail { font-family: system-ui, sans-serif; font-size: 11px; font-weight: 700; fill: #B91C1C; }
+      .badge-text-pass { font-family: system-ui, sans-serif; font-size: 11px; font-weight: 700; fill: #047857; }
+      .arrow { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+    </style>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563EB" />
+    </marker>
+  </defs>
+
+  <rect width="960" height="520" class="bg" rx="12" />
+
+  <!-- Header -->
+  <text x="40" y="40" class="title" style="font-size: 18px;">The Empirical Ranking Flip: Classic TF-IDF vs. Okapi BM25</text>
+  <text x="40" y="62" class="subtitle">Query: "distributed cache" • How term saturation (k1 = 1.2) and length normalization (b = 0.75) rescue Rank 1</text>
+
+  <!-- Left Card: Mode A (Classic TF-IDF) -->
+  <rect x="40" y="85" width="410" height="395" class="card" style="stroke: #EF4444; stroke-width: 1.5;" />
+  <rect x="55" y="100" width="165" height="22" class="badge-fail" />
+  <text x="63" y="115" class="badge-text-fail">MODE A: CLASSIC TF-IDF</text>
+  <text x="55" y="142" class="title" style="font-size: 14px; fill: #991B1B;">Linear Scoring: Keyword Stuffing Wins</text>
+  <text x="55" y="158" class="desc">Score = sum( TF * IDF ) • No diminishing returns, no length penalty</text>
+
+  <!-- Doc 9 in TF-IDF (Rank 1 - Falsely Promoted) -->
+  <rect x="55" y="175" width="380" height="105" class="card-red" />
+  <text x="70" y="197" class="label" style="fill: #991B1B;">Rank 1: Doc 09 [Score: 11.3878]</text>
+  <text x="70" y="215" class="desc" style="font-weight: 600;">"Rambling Infrastructure Notes on Hardware &amp; Cache"</text>
+  <text x="70" y="233" class="desc">• Length: 96 tokens (2.62x longer than average)</text>
+  <text x="70" y="249" class="desc">• Mentions "cache" 8 times &#8594; TF = 8 exploited linearly</text>
+  <text x="70" y="267" class="code" style="fill: #B91C1C; font-weight: 700;">Unfair Winner: Spam/rambling dominates!</text>
+
+  <!-- Doc 1 in TF-IDF (Rank 2 - Penalized) -->
+  <rect x="55" y="295" width="380" height="95" class="card" />
+  <text x="70" y="317" class="label" style="fill: #475569;">Rank 2: Doc 01 [Score: 4.9430]</text>
+  <text x="70" y="335" class="desc" style="font-weight: 600;">"Distributed In-Memory Caching with Redis"</text>
+  <text x="70" y="353" class="desc">• Length: 35 tokens (Focused, concise guide)</text>
+  <text x="70" y="369" class="desc">• Mentions "cache" 3 times &#8594; TF = 3 scores only 4.94</text>
+
+  <rect x="55" y="405" width="380" height="60" class="badge-fail" style="rx: 6px;" />
+  <text x="70" y="428" class="badge-text-fail">System Failure:</text>
+  <text x="70" y="448" class="desc" style="fill: #7F1D1D;">Users must wade through 96 words of cooling hardware notes before finding caching!</text>
+
+  <!-- Center Arrow & Badge -->
+  <path d="M 460 282 L 495 282" class="arrow" marker-end="url(#arrow-blue)" />
+
+  <!-- Right Card: Mode B (Okapi BM25) -->
+  <rect x="510" y="85" width="410" height="395" class="card" style="stroke: #10B981; stroke-width: 2;" />
+  <rect x="525" y="100" width="165" height="22" class="badge-pass" />
+  <text x="533" y="115" class="badge-text-pass">MODE B: OKAPI BM25</text>
+  <text x="525" y="142" class="title" style="font-size: 14px; fill: #065F46;">Saturated Scoring: The Ranking Flips!</text>
+  <text x="525" y="158" class="desc">k1 = 1.2 (diminishing returns) • b = 0.75 (length normalized)</text>
+
+  <!-- Doc 1 in BM25 (Rank 1 - Promoted!) -->
+  <rect x="525" y="175" width="380" height="105" class="card-green" />
+  <text x="540" y="197" class="label" style="fill: #065F46;">Rank 1: Doc 01 [Score: 2.6146]</text>
+  <text x="540" y="215" class="desc" style="font-weight: 600;">"Distributed In-Memory Caching with Redis"</text>
+  <text x="540" y="233" class="desc">• Length: 35 tokens (0.95x avgdl &#8594; Length Bonus!)</text>
+  <text x="540" y="249" class="desc">• High keyword density in a focused explanation</text>
+  <text x="540" y="267" class="code" style="fill: #047857; font-weight: 700;">Promoted to Rank 1: Exact answer at top!</text>
+
+  <!-- Doc 9 in BM25 (Rank 2 - Penalized!) -->
+  <rect x="525" y="295" width="380" height="95" class="card" />
+  <text x="540" y="317" class="label" style="fill: #475569;">Rank 2: Doc 09 [Score: 2.5928]</text>
+  <text x="540" y="335" class="desc" style="font-weight: 600;">"Rambling Infrastructure Notes on Hardware &amp; Cache"</text>
+  <text x="540" y="353" class="desc">• Length: 96 tokens &#8594; 2.21x length penalty in denominator</text>
+  <text x="540" y="369" class="desc">• Term frequency saturates: extra "cache" words add 0 score</text>
+
+  <rect x="525" y="405" width="380" height="60" class="badge-pass" style="rx: 6px;" />
+  <text x="540" y="428" class="badge-text-pass">Search Quality Rescued:</text>
+  <text x="540" y="448" class="desc" style="fill: #064E3B;">Mathematical saturation and length penalty restored the authoritative doc to Rank 1!</text>
+</svg>

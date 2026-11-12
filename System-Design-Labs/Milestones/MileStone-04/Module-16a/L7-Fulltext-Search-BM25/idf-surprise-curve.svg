@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .axis { stroke: #94A3B8; stroke-width: 1.5; }
+      .grid { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 3 3; }
+      .axis-label { font-family: system-ui, sans-serif; font-size: 12px; font-weight: 600; fill: #475569; }
+      .tick-label { font-family: ui-monospace, monospace; font-size: 11px; fill: #64748B; }
+      .curve-idf { stroke: #D97706; stroke-width: 3; fill: none; stroke-linecap: round; }
+      .point-dot { fill: #D97706; stroke: #FFFFFF; stroke-width: 2; }
+      .callout { font-family: system-ui, sans-serif; font-size: 11px; fill: #334155; }
+      .code { font-family: ui-monospace, monospace; font-size: 11px; fill: #0F172A; }
+    </style>
+  </defs>
+
+  <rect width="920" height="480" class="bg" rx="12" />
+
+  <text x="40" y="38" class="title">Information Theory: Robertson-Sparck Jones BM25 IDF</text>
+  <text x="40" y="58" class="subtitle">IDF(t) = ln(1 + (N - df + 0.5) / (df + 0.5)) • Rewards rare technical terms, discounts common words</text>
+
+  <!-- Plot Card -->
+  <rect x="40" y="75" width="580" height="370" class="card" />
+
+  <!-- Axes: X = Document Frequency (1 to 9), Y = IDF Value (0 to 2.5) -->
+  <!-- Origin at (110, 390), Top at (110, 110) => Height 280px => 112px per 1.0 IDF unit -->
+  <line x1="110" y1="390" x2="580" y2="390" class="axis" />
+  <line x1="110" y1="390" x2="110" y2="100" class="axis" />
+
+  <!-- Horizontal Grid Lines -->
+  <line x1="110" y1="278" x2="580" y2="278" class="grid" />
+  <text x="75" y="282" class="tick-label">1.0</text>
+
+  <line x1="110" y1="166" x2="580" y2="166" class="grid" />
+  <text x="75" y="170" class="tick-label">2.0</text>
+
+  <text x="75" y="394" class="tick-label">0.0</text>
+  <text x="25" y="240" class="axis-label" transform="rotate(-90 25 240)">IDF Multiplier Value</text>
+
+  <!-- X-Axis Ticks (df from 1 to 9) -->
+  <!-- df=1 at 140, df=2 at 190, df=3 at 240, df=4 at 290, df=5 at 340, df=6 at 390, df=7 at 440, df=8 at 490, df=9 at 540 -->
+  <text x="135" y="410" class="tick-label">1</text>
+  <text x="185" y="410" class="tick-label">2</text>
+  <text x="235" y="410" class="tick-label">3</text>
+  <text x="285" y="410" class="tick-label">4</text>
+  <text x="335" y="410" class="tick-label">5</text>
+  <text x="385" y="410" class="tick-label">6</text>
+  <text x="435" y="410" class="tick-label">7</text>
+  <text x="485" y="410" class="tick-label">8</text>
+  <text x="535" y="410" class="tick-label">9</text>
+  <text x="230" y="432" class="axis-label">Document Frequency df (Total Corpus N = 9)</text>
+
+  <!-- Smooth IDF Curve: -->
+  <!-- df=1: ln(1 + 8.5/1.5) = ln(6.67) = 1.897 -> y = 390 - 1.897*112 = 177 -->
+  <!-- df=2: ln(1 + 7.5/2.5) = ln(4.0) = 1.386 -> y = 390 - 1.386*112 = 235 -->
+  <!-- df=3: ln(1 + 6.5/3.5) = ln(2.86) = 1.050 -> y = 390 - 1.050*112 = 272 -->
+  <!-- df=4: ln(1 + 5.5/4.5) = ln(2.22) = 0.799 -> y = 390 - 0.799*112 = 300 -->
+  <!-- df=5: ln(1 + 4.5/5.5) = ln(1.82) = 0.598 -> y = 390 - 0.598*112 = 323 -->
+  <!-- df=6: ln(1 + 3.5/6.5) = ln(1.54) = 0.431 -> y = 390 - 0.431*112 = 342 -->
+  <!-- df=7: ln(1 + 2.5/7.5) = ln(1.33) = 0.288 -> y = 390 - 0.288*112 = 358 -->
+  <!-- df=8: ln(1 + 1.5/8.5) = ln(1.18) = 0.162 -> y = 390 - 0.162*112 = 372 -->
+  <!-- df=9: ln(1 + 0.5/9.5) = ln(1.05) = 0.051 -> y = 390 - 0.051*112 = 384 -->
+  <path d="M 140 177 C 190 235, 240 272, 340 323 S 490 372, 540 384" class="curve-idf" />
+
+  <!-- Highlight Point 1: "raft" (df=1, IDF=1.90) -->
+  <circle cx="140" cy="177" r="6" class="point-dot" />
+  <line x1="140" y1="177" x2="170" y2="150" class="axis" />
+  <rect x="170" y="130" width="135" height="32" class="card" style="fill: #FFFBEB; stroke: #F59E0B;" />
+  <text x="178" y="145" class="code" style="font-weight: 700; fill: #B45309;">"raft" (df = 1)</text>
+  <text x="178" y="157" class="callout" style="fill: #78350F;">IDF = 1.897 (Max signal)</text>
+
+  <!-- Highlight Point 2: "cache" (df=3, IDF=1.05) -->
+  <circle cx="240" cy="272" r="6" class="point-dot" />
+  <line x1="240" y1="272" x2="270" y2="245" class="axis" />
+  <rect x="270" y="225" width="145" height="32" class="card" style="fill: #EFF6FF; stroke: #3B82F6;" />
+  <text x="278" y="240" class="code" style="font-weight: 700; fill: #1D4ED8;">"cache" (df = 3)</text>
+  <text x="278" y="252" class="callout" style="fill: #1E3A8A;">IDF = 1.050 (High signal)</text>
+
+  <!-- Highlight Point 3: "distribut" (df=5, IDF=0.60) -->
+  <circle cx="340" cy="323" r="6" class="point-dot" />
+  <line x1="340" y1="323" x2="370" y2="295" class="axis" />
+  <rect x="370" y="275" width="150" height="32" class="card" style="fill: #F1F5F9; stroke: #94A3B8;" />
+  <text x="378" y="290" class="code" style="font-weight: 700; fill: #334155;">"distribut" (df = 5)</text>
+  <text x="378" y="302" class="callout" style="fill: #475569;">IDF = 0.598 (Common)</text>
+
+  <!-- Highlight Point 4: Ubiquitous stopword (df=9, IDF=0.05) -->
+  <circle cx="540" cy="384" r="6" class="point-dot" />
+  <text x="460" y="368" class="callout" style="fill: #64748B;">df = 9 &#8594; IDF = 0.051</text>
+
+  <!-- Side Explanatory Cards -->
+  <rect x="640" y="75" width="240" height="150" class="card" style="fill: #FFFBEB; stroke: #FCD34D;" />
+  <text x="655" y="98" class="title" style="font-size: 13px; fill: #92400E;">Information Surprise</text>
+  <text x="655" y="118" class="callout">• Rare words carry high surprise.</text>
+  <text x="655" y="136" class="callout">  Matching "raft" tells you far</text>
+  <text x="655" y="152" class="callout">  more than matching "system".</text>
+  <text x="655" y="172" class="callout">• Ubiquitous words appearing</text>
+  <text x="655" y="188" class="callout">  across the corpus are discounted</text>
+  <text x="655" y="204" class="callout">  down towards zero.</text>
+
+  <rect x="640" y="240" width="240" height="145" class="card" style="fill: #F8FAFC; stroke: #CBD5E1;" />
+  <text x="655" y="263" class="title" style="font-size: 13px; fill: #0F172A;">Why Robertson-Sparck Jones?</text>
+  <text x="655" y="283" class="callout">• Classic IDF: ln(N / df)</text>
+  <text x="655" y="299" class="callout">  Can yield 0 or negative scores.</text>
+  <text x="655" y="319" class="callout">• RSJ Formula adds +0.5 smoothing:</text>
+  <text x="655" y="337" class="callout">  Always stays positive.</text>
+  <text x="655" y="355" class="callout">  Standard in Apache Lucene.</text>
+
+  <!-- Footer Tip -->
+  <rect x="640" y="400" width="240" height="45" class="card" style="fill: #ECFDF5; stroke: #6EE7B7;" />
+  <text x="650" y="426" class="callout" style="fill: #065F46; font-weight: 600;">Rare terms dominate the final score!</text>
+</svg>

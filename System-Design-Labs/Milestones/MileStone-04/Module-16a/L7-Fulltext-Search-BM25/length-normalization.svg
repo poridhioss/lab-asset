@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .axis { stroke: #94A3B8; stroke-width: 1.5; }
+      .grid { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 3 3; }
+      .axis-label { font-family: system-ui, sans-serif; font-size: 12px; font-weight: 600; fill: #475569; }
+      .tick-label { font-family: ui-monospace, monospace; font-size: 11px; fill: #64748B; }
+      .line-b075 { stroke: #2563EB; stroke-width: 3; fill: none; stroke-linecap: round; }
+      .line-b0 { stroke: #94A3B8; stroke-width: 2; stroke-dasharray: 4 3; fill: none; }
+      .line-b1 { stroke: #D97706; stroke-width: 2; stroke-dasharray: 4 3; fill: none; }
+      .neutral-line { stroke: #059669; stroke-width: 1.5; stroke-dasharray: 3 3; }
+      .callout { font-family: system-ui, sans-serif; font-size: 11px; fill: #334155; }
+      .zone-bonus { fill: #ECFDF5; fill-opacity: 0.6; }
+      .zone-penalty { fill: #FEF2F2; fill-opacity: 0.6; }
+    </style>
+  </defs>
+
+  <rect width="920" height="480" class="bg" rx="12" />
+
+  <text x="40" y="38" class="title">Document Length Normalization: The "b" Parameter</text>
+  <text x="40" y="58" class="subtitle">lenNorm = 1 - b + b * (dl / avgdl) • Penalizes long rambling text, rewards concise guides</text>
+
+  <!-- Plot Card -->
+  <rect x="40" y="75" width="580" height="370" class="card" />
+
+  <!-- Shaded Zones: Bonus vs Penalty -->
+  <!-- Origin at (110, 380), avgdl line at (266, y) [ratio = 1.0] -->
+  <rect x="110" y="100" width="156" height="280" class="zone-bonus" />
+  <rect x="266" y="100" width="314" height="280" class="zone-penalty" />
+
+  <text x="140" y="125" class="callout" style="fill: #065F46; font-weight: 700;">LENGTH BONUS ZONE</text>
+  <text x="140" y="140" class="callout" style="fill: #047857;">(Concise docs boosted)</text>
+
+  <text x="350" y="125" class="callout" style="fill: #991B1B; font-weight: 700;">LENGTH PENALTY ZONE</text>
+  <text x="350" y="140" class="callout" style="fill: #B91C1C;">(Rambling docs penalized)</text>
+
+  <!-- Axes: X = dl / avgdl (0 to 3.0), Y = lenNorm (0 to 3.0) -->
+  <line x1="110" y1="380" x2="580" y2="380" class="axis" />
+  <line x1="110" y1="380" x2="110" y2="100" class="axis" />
+
+  <!-- Neutral Line at ratio = 1.0 (X = 266) -->
+  <line x1="266" y1="100" x2="266" y2="380" class="neutral-line" />
+  <!-- Neutral Line at lenNorm = 1.0 (Y = 287) -->
+  <line x1="110" y1="287" x2="580" y2="287" class="neutral-line" />
+
+  <!-- Y-Axis Ticks -->
+  <text x="75" y="384" class="tick-label">0.0</text>
+  <text x="75" y="291" class="tick-label">1.0</text>
+  <text x="75" y="194" class="tick-label">2.0</text>
+  <text x="75" y="104" class="tick-label">3.0</text>
+  <text x="25" y="240" class="axis-label" transform="rotate(-90 25 240)">Length Norm Factor (lenNorm)</text>
+
+  <!-- X-Axis Ticks -->
+  <!-- 0 at 110, 1.0 at 266, 2.0 at 422, 3.0 at 578 -->
+  <text x="255" y="400" class="tick-label">1.0 (avgdl)</text>
+  <text x="415" y="400" class="tick-label">2.0</text>
+  <text x="568" y="400" class="tick-label">3.0</text>
+  <text x="260" y="425" class="axis-label">Document Length Ratio (dl / avgdl)</text>
+
+  <!-- b = 0.0 line: flat horizontal at y = 287 (lenNorm = 1.0 always) -->
+  <line x1="110" y1="287" x2="580" y2="287" class="line-b0" />
+
+  <!-- b = 1.0 line: lenNorm = ratio (y = 380 - ratio * 93.33) -->
+  <!-- ratio=0: 380, ratio=1: 287, ratio=2: 194, ratio=3: 101 -->
+  <line x1="110" y1="380" x2="578" y2="101" class="line-b1" />
+
+  <!-- b = 0.75 line (Default): lenNorm = 0.25 + 0.75 * ratio -->
+  <!-- ratio=0: lenNorm=0.25 -> y = 380 - 23 = 357 -->
+  <!-- ratio=1: lenNorm=1.00 -> y = 287 -->
+  <!-- ratio=2: lenNorm=1.75 -> y = 380 - 1.75*93.33 = 217 -->
+  <!-- ratio=2.62 (Doc 9): lenNorm=2.21 -> y = 380 - 2.21*93.33 = 174 -->
+  <!-- ratio=3: lenNorm=2.50 -> y = 380 - 2.50*93.33 = 147 -->
+  <line x1="110" y1="357" x2="578" y2="147" class="line-b075" />
+
+  <!-- Point Doc 1 (ratio = 0.95, lenNorm = 0.96) -->
+  <circle cx="258" cy="291" r="5" fill="#059669" />
+  <text x="180" y="275" class="callout" style="fill: #065F46; font-weight: 700;">Doc 1 (dl=35): Bonus</text>
+
+  <!-- Point Doc 9 (ratio = 2.62, lenNorm = 2.21) -->
+  <circle cx="519" cy="174" r="5" fill="#DC2626" />
+  <text x="410" y="160" class="callout" style="fill: #991B1B; font-weight: 700;">Doc 9 (dl=96): 2.2x Penalty</text>
+
+  <!-- Side Explanatory Cards -->
+  <rect x="640" y="75" width="240" height="130" class="card" style="fill: #EFF6FF; stroke: #93C5FD;" />
+  <text x="655" y="98" class="title" style="font-size: 13px; fill: #1E40AF;">The b Parameter Knob</text>
+  <text x="655" y="118" class="callout">• b = 0.75: Industry standard.</text>
+  <text x="655" y="136" class="callout">• b = 0.0: Length ignored completely.</text>
+  <text x="655" y="152" class="callout">  (Classic TF-IDF verbosity bias).</text>
+  <text x="655" y="170" class="callout">• b = 1.0: Strict normalization.</text>
+  <text x="655" y="186" class="callout">  (Relevance becomes pure density).</text>
+
+  <rect x="640" y="220" width="240" height="115" class="card" style="fill: #FFFBEB; stroke: #FCD34D;" />
+  <text x="655" y="243" class="title" style="font-size: 13px; fill: #92400E;">How It Heals Ranking</text>
+  <text x="655" y="263" class="callout">• Doc 1 (35 tokens &lt; avgdl 36.7):</text>
+  <text x="655" y="279" class="callout">  lenNorm = 0.96 &#8594; boosted!</text>
+  <text x="655" y="297" class="callout">• Doc 9 (96 tokens &gt; avgdl 36.7):</text>
+  <text x="655" y="313" class="callout">  lenNorm = 2.21 &#8594; heavily penalized!</text>
+
+  <!-- Legend Card -->
+  <rect x="640" y="350" width="240" height="95" class="card" />
+  <text x="655" y="372" class="axis-label">Legend</text>
+  <line x1="655" y1="388" x2="685" y2="388" class="line-b075" />
+  <text x="695" y="392" class="callout">b = 0.75 (Default)</text>
+  <line x1="655" y1="408" x2="685" y2="408" class="line-b1" />
+  <text x="695" y="412" class="callout">b = 1.0 (Strict)</text>
+  <line x1="655" y1="428" x2="685" y2="428" class="line-b0" />
+  <text x="695" y="432" class="callout">b = 0.0 (Disabled)</text>
+</svg>

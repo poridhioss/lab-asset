@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; rx: 8px; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
+      .axis { stroke: #94A3B8; stroke-width: 1.5; }
+      .grid { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 3 3; }
+      .axis-label { font-family: system-ui, sans-serif; font-size: 12px; font-weight: 600; fill: #475569; }
+      .tick-label { font-family: ui-monospace, monospace; font-size: 11px; fill: #64748B; }
+      .curve-linear { stroke: #DC2626; stroke-width: 2.5; stroke-dasharray: 5 4; fill: none; }
+      .curve-bm25 { stroke: #059669; stroke-width: 3; fill: none; stroke-linecap: round; }
+      .curve-bm25-low { stroke: #2563EB; stroke-width: 2; stroke-dasharray: 4 3; fill: none; }
+      .asymptote { stroke: #059669; stroke-width: 1.2; stroke-dasharray: 2 3; }
+      .callout { font-family: system-ui, sans-serif; font-size: 11px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="920" height="480" class="bg" rx="12" />
+
+  <text x="40" y="38" class="title">Term Frequency Saturation: Classic TF vs. Okapi BM25</text>
+  <text x="40" y="58" class="subtitle">Why BM25 caps diminishing returns with an asymptote (k1 + 1) to eliminate keyword stuffing</text>
+
+  <!-- Plot Card -->
+  <rect x="40" y="75" width="580" height="370" class="card" />
+
+  <!-- Y-Axis Grid & Labels (Score Multiplier from 0.0 to 3.0) -->
+  <!-- Origin at (110, 400), Top at (110, 110) => Height 290px => ~96px per 1.0 unit -->
+  <line x1="110" y1="400" x2="580" y2="400" class="axis" />
+  <line x1="110" y1="400" x2="110" y2="100" class="axis" />
+
+  <!-- Horizontal Grid Lines -->
+  <line x1="110" y1="304" x2="580" y2="304" class="grid" />
+  <text x="75" y="308" class="tick-label">1.0x</text>
+
+  <line x1="110" y1="208" x2="580" y2="208" class="grid" />
+  <text x="75" y="212" class="tick-label">2.0x</text>
+
+  <!-- Asymptote line at 2.2x (y = 400 - 2.2*96.67 = 187) -->
+  <line x1="110" y1="187" x2="580" y2="187" class="asymptote" />
+  <text x="480" y="180" class="callout" style="fill: #059669; font-weight: 700;">Asymptote (k1 + 1 = 2.2x)</text>
+
+  <line x1="110" y1="112" x2="580" y2="112" class="grid" />
+  <text x="75" y="116" class="tick-label">3.0x</text>
+
+  <text x="75" y="404" class="tick-label">0.0</text>
+
+  <!-- X-Axis Ticks (TF from 0 to 12) -->
+  <!-- 0 at 110, 2 at 188, 4 at 266, 6 at 344, 8 at 422, 10 at 500, 12 at 578 -->
+  <text x="184" y="420" class="tick-label">2</text>
+  <text x="262" y="420" class="tick-label">4</text>
+  <text x="340" y="420" class="tick-label">6</text>
+  <text x="418" y="420" class="tick-label">8</text>
+  <text x="494" y="420" class="tick-label">10</text>
+  <text x="572" y="420" class="tick-label">12</text>
+
+  <text x="280" y="438" class="axis-label">Term Frequency in Document (tf)</text>
+  <text x="20" y="240" class="axis-label" transform="rotate(-90 20 240)">Normalized TF Factor</text>
+
+  <!-- Linear TF Curve: y rises straight up (y = 400 - tf * 35) -> runaway straight line -->
+  <path d="M 110 400 L 188 322 L 266 244 L 344 166 L 400 110" class="curve-linear" />
+  <text x="330" y="145" class="callout" style="fill: #DC2626; font-weight: 700;">Classic Linear TF (Runaway)</text>
+
+  <!-- BM25 k1=1.2 Curve: (tf * 2.2) / (tf + 1.2) -->
+  <!-- tf=0: 400 -->
+  <!-- tf=1: factor = 2.2/2.2 = 1.0 -> y = 400 - 96.67 = 303 -->
+  <!-- tf=2: factor = 4.4/3.2 = 1.375 -> y = 400 - 1.375*96.67 = 267 -->
+  <!-- tf=4: factor = 8.8/5.2 = 1.692 -> y = 400 - 1.692*96.67 = 236 -->
+  <!-- tf=6: factor = 13.2/7.2 = 1.833 -> y = 400 - 1.833*96.67 = 223 -->
+  <!-- tf=8: factor = 17.6/9.2 = 1.913 -> y = 400 - 1.913*96.67 = 215 -->
+  <!-- tf=10: factor = 22.0/11.2 = 1.964 -> y = 400 - 1.964*96.67 = 210 -->
+  <!-- tf=12: factor = 26.4/13.2 = 2.000 -> y = 400 - 2.000*96.67 = 206 -->
+  <path d="M 110 400 C 145 310, 188 267, 266 236 S 422 215, 578 206" class="curve-bm25" />
+  <circle cx="188" cy="267" r="4" fill="#059669" />
+  <circle cx="418" cy="215" r="4" fill="#059669" />
+
+  <!-- BM25 k1=0.5 Curve (Faster Saturation) -->
+  <path d="M 110 400 C 130 280, 188 245, 266 220 S 422 205, 578 200" class="curve-bm25-low" />
+
+  <!-- Side Explanatory Cards -->
+  <rect x="640" y="75" width="240" height="110" class="card" style="fill: #FEF2F2; stroke: #FCA5A5;" />
+  <text x="655" y="98" class="title" style="font-size: 13px; fill: #991B1B;">The Classic TF Flaw</text>
+  <text x="655" y="118" class="callout">• Score scales linearly with tf.</text>
+  <text x="655" y="136" class="callout">• Repeating a word 50 times yields</text>
+  <text x="655" y="152" class="callout">  50x the score (Keyword Stuffing).</text>
+  <text x="655" y="168" class="callout">• Easily exploited by spammers.</text>
+
+  <rect x="640" y="200" width="240" height="135" class="card" style="fill: #ECFDF5; stroke: #6EE7B7;" />
+  <text x="655" y="223" class="title" style="font-size: 13px; fill: #065F46;">The BM25 Correction (k1 = 1.2)</text>
+  <text x="655" y="243" class="callout">• 1st mention: massive relevance boost.</text>
+  <text x="655" y="261" class="callout">• 2nd mention: moderate score gain.</text>
+  <text x="655" y="279" class="callout">• 8th+ mention: diminishing returns.</text>
+  <text x="655" y="297" class="callout">• Bounded by asymptote (k1 + 1 = 2.2x).</text>
+  <text x="655" y="315" class="callout">• Neutralizes keyword stuffing!</text>
+
+  <!-- Legend Card -->
+  <rect x="640" y="350" width="240" height="95" class="card" />
+  <text x="655" y="372" class="axis-label">Legend</text>
+  <line x1="655" y1="388" x2="685" y2="388" class="curve-linear" />
+  <text x="695" y="392" class="callout">Linear TF (Classic)</text>
+  <line x1="655" y1="408" x2="685" y2="408" class="curve-bm25" />
+  <text x="695" y="412" class="callout">Okapi BM25 (k1 = 1.2)</text>
+  <line x1="655" y1="428" x2="685" y2="428" class="curve-bm25-low" />
+  <text x="695" y="432" class="callout">Okapi BM25 (k1 = 0.5)</text>
+</svg>
