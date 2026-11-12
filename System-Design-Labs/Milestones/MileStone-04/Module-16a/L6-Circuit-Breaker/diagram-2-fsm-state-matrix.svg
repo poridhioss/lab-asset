@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 20px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .arrow-red { stroke: #DC2626; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .arrow-green { stroke: #16A34A; stroke-width: 2.2; stroke-linecap: round; fill: none; }
+      .arrow-amber { stroke: #D97706; stroke-width: 2; stroke-linecap: round; fill: none; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#DC2626" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="360" class="bg" />
+
+  <!-- STATE 1: CLOSED (Normal Operation) -->
+  <g transform="translate(40, 85)">
+    <rect width="250" height="195" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" />
+    <rect x="14" y="14" width="90" height="22" rx="4" fill="#DCFCE7" />
+    <text x="22" y="29" class="txt-badge" fill="#166534">STATE 1</text>
+    <text x="14" y="60" class="txt-title" fill="#15803D">CLOSED</text>
+    <text x="14" y="78" class="txt-sub">Normal operation: traffic allowed</text>
+
+    <rect x="14" y="94" width="222" height="40" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="22" y="111" class="txt-code" fill="#166534">canExecute(): true</text>
+    <text x="22" y="125" class="txt-sub">Requests dispatched to primary</text>
+
+    <rect x="14" y="142" width="222" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="22" y="158" class="txt-code" fill="#334155">ringBuffer.record(ok)</text>
+    <text x="22" y="171" class="txt-sub">Rolling metric window evaluated</text>
+  </g>
+
+  <!-- TRANSITION 1: CLOSED -> OPEN (Breach Threshold) -->
+  <path d="M 290 145 L 350 145" class="arrow-red" marker-end="url(#arr-red)" />
+  <rect x="282" y="112" width="76" height="24" rx="4" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+  <text x="288" y="124" class="txt-badge" fill="#991B1B">TRIP OPEN</text>
+  <text x="288" y="133" class="txt-code" fill="#DC2626" font-size="9px">err &gt; 50%</text>
+
+  <!-- STATE 2: OPEN (Quarantine / Fast-Fail) -->
+  <g transform="translate(360, 85)">
+    <rect width="250" height="195" class="sketch-box" fill="#FEF2F2" stroke="#DC2626" stroke-width="2" />
+    <rect x="14" y="14" width="90" height="22" rx="4" fill="#FEE2E2" />
+    <text x="22" y="29" class="txt-badge" fill="#991B1B">STATE 2</text>
+    <text x="14" y="60" class="txt-title" fill="#DC2626">OPEN</text>
+    <text x="14" y="78" class="txt-sub">Quarantined: zero network calls</text>
+
+    <rect x="14" y="94" width="222" height="40" rx="6" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1.2" />
+    <text x="22" y="111" class="txt-code" fill="#991B1B">canExecute(): false</text>
+    <text x="22" y="125" class="txt-sub">Fast-fail in &lt;0.001ms / fallback</text>
+
+    <rect x="14" y="142" width="222" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="22" y="158" class="txt-code" fill="#334155">recoveryCooldown: 3000ms</text>
+    <text x="22" y="171" class="txt-sub">Protects DB while recovering</text>
+  </g>
+
+  <!-- TRANSITION 2: OPEN -> HALF_OPEN (Cooldown Elapsed) -->
+  <path d="M 610 145 L 670 145" class="arrow-amber" marker-end="url(#arr-amber)" />
+  <rect x="602" y="112" width="76" height="24" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
+  <text x="608" y="124" class="txt-badge" fill="#92400E">COOLDOWN</text>
+  <text x="608" y="133" class="txt-code" fill="#B45309" font-size="9px">t &gt; 3000ms</text>
+
+  <!-- STATE 3: HALF_OPEN (Single-Flight Canary) -->
+  <g transform="translate(680, 85)">
+    <rect width="250" height="195" class="sketch-box" fill="#FFFBEB" stroke="#D97706" stroke-width="2" />
+    <rect x="14" y="14" width="105" height="22" rx="4" fill="#FEF3C7" />
+    <text x="22" y="29" class="txt-badge" fill="#92400E">STATE 3</text>
+    <text x="14" y="60" class="txt-title" fill="#B45309">HALF_OPEN</text>
+    <text x="14" y="78" class="txt-sub">Trial probe: single canary latch</text>
+
+    <rect x="14" y="94" width="222" height="40" rx="6" fill="#FFFFFF" stroke="#FCD34D" stroke-width="1.2" />
+    <text x="22" y="111" class="txt-code" fill="#92400E">canaryInFlight: true</text>
+    <text x="22" y="125" class="txt-sub">Permits strictly 1 scout probe</text>
+
+    <rect x="14" y="142" width="222" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="22" y="158" class="txt-code" fill="#334155">Concurrent Calls: Diverted</text>
+    <text x="22" y="171" class="txt-sub">No stampede allowed on DB</text>
+  </g>
+
+  <!-- TRANSITION 3: HALF_OPEN -> CLOSED (Canary Succeeded - Bottom Loop) -->
+  <path d="M 805 280 C 805 340, 165 340, 165 285" class="arrow-green" marker-end="url(#arr-green)" />
+  <rect x="400" y="318" width="180" height="22" rx="4" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1" />
+  <text x="408" y="333" class="txt-badge" fill="#166534">CANARY SUCCESS &#8594; RESET FSM</text>
+
+  <!-- TRANSITION 4: HALF_OPEN -> OPEN (Canary Failed - Top Loop) -->
+  <path d="M 805 85 C 805 35, 485 35, 485 80" class="arrow-red" marker-end="url(#arr-red)" />
+  <rect x="580" y="24" width="180" height="22" rx="4" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1" />
+  <text x="588" y="39" class="txt-badge" fill="#991B1B">CANARY FAILED &#8594; RE-TRIP OPEN</text>
+</svg>

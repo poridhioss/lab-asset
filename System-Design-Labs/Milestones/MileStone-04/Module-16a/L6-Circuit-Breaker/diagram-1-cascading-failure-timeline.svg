@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+      .timeline-axis { stroke: #64748B; stroke-width: 2; stroke-linecap: round; }
+      .timeline-tick { stroke: #94A3B8; stroke-width: 1.5; stroke-linecap: round; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="380" class="bg" />
+
+  <!-- TIMELINE 1: Without Circuit Breaker (Cascading Disaster) -->
+  <g transform="translate(25, 20)">
+    <rect width="910" height="155" class="sketch-box" fill="#FFFDFD" stroke="#EF4444" stroke-width="1.6" />
+    <rect x="14" y="12" width="220" height="20" rx="4" fill="#FEE2E2" />
+    <text x="20" y="26" class="txt-badge" fill="#991B1B">WITHOUT CIRCUIT BREAKER</text>
+    <text x="245" y="27" class="txt-title" fill="#DC2626">Slow Database Stalls &amp; Causes Cascading Outage</text>
+
+    <!-- Axis line -->
+    <line x1="40" y1="90" x2="870" y2="90" class="timeline-axis" marker-end="url(#arr)" />
+
+    <!-- Step 1: Second 0 -->
+    <line x1="80" y1="80" x2="80" y2="100" class="timeline-tick" />
+    <circle cx="80" cy="90" r="5" fill="#EF4444" />
+    <text x="65" y="68" class="txt-badge" fill="#0F172A">T = 0s</text>
+    <rect x="35" y="105" width="105" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="42" y="120" class="txt-code" fill="#0F172A">DB 15s Freeze</text>
+    <text x="42" y="131" class="txt-sub">Packets hang</text>
+
+    <!-- Step 2: Second 2 -->
+    <line x1="260" y1="80" x2="260" y2="100" class="timeline-tick" />
+    <circle cx="260" cy="90" r="5" fill="#EF4444" />
+    <text x="245" y="68" class="txt-badge" fill="#0F172A">T = 2s</text>
+    <rect x="205" y="105" width="120" height="32" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+    <text x="212" y="120" class="txt-code" fill="#991B1B">4,000 New Queries</text>
+    <text x="212" y="131" class="txt-sub">OS buffers filling</text>
+
+    <!-- Step 3: Second 5 -->
+    <line x1="470" y1="80" x2="470" y2="100" class="timeline-tick" />
+    <circle cx="470" cy="90" r="5" fill="#DC2626" />
+    <text x="455" y="68" class="txt-badge" fill="#0F172A">T = 5s</text>
+    <rect x="405" y="105" width="135" height="32" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+    <text x="412" y="120" class="txt-code" fill="#991B1B">50/50 Sockets Dead</text>
+    <text x="412" y="131" class="txt-sub">Pool exhausted</text>
+
+    <!-- Step 4: Second 8 -->
+    <line x1="680" y1="80" x2="680" y2="100" class="timeline-tick" />
+    <circle cx="680" cy="90" r="5" fill="#B91C1C" />
+    <text x="665" y="68" class="txt-badge" fill="#0F172A">T = 8s</text>
+    <rect x="615" y="105" width="135" height="32" rx="6" fill="#FEF2F2" stroke="#F87171" stroke-width="1" />
+    <text x="622" y="120" class="txt-code" fill="#991B1B">Heap Balloons</text>
+    <text x="622" y="131" class="txt-sub">100% CPU on GC</text>
+
+    <!-- Step 5: Second 12 -->
+    <circle cx="830" cy="90" r="7" fill="#7F1D1D" />
+    <text x="812" y="68" class="txt-badge" fill="#7F1D1D">T = 12s</text>
+    <rect x="765" y="105" width="130" height="32" rx="6" fill="#450A0A" />
+    <text x="775" y="120" class="txt-badge" fill="#FEF2F2">GATEWAY CRASH</text>
+    <text x="775" y="131" class="txt-sub" fill="#FCA5A5">Entire site down</text>
+  </g>
+
+  <!-- TIMELINE 2: With Circuit Breaker (Zero Downtime) -->
+  <g transform="translate(25, 195)">
+    <rect width="910" height="165" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.6" />
+    <rect x="14" y="12" width="200" height="20" rx="4" fill="#DCFCE7" />
+    <text x="20" y="26" class="txt-badge" fill="#166534">WITH CIRCUIT BREAKER</text>
+    <text x="225" y="27" class="txt-title" fill="#15803D">Fails Fast in 0.003ms &amp; Protects Upstream Systems</text>
+
+    <!-- Axis line -->
+    <line x1="40" y1="95" x2="870" y2="95" class="timeline-axis" marker-end="url(#arr)" />
+
+    <!-- Step 1: Second 0 -->
+    <line x1="80" y1="85" x2="80" y2="105" class="timeline-tick" />
+    <circle cx="80" cy="95" r="5" fill="#16A34A" />
+    <text x="65" y="73" class="txt-badge" fill="#0F172A">T = 0s</text>
+    <rect x="35" y="112" width="105" height="34" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1" />
+    <text x="42" y="127" class="txt-code" fill="#0F172A">DB 15s Freeze</text>
+    <text x="42" y="139" class="txt-sub">SLA timer active</text>
+
+    <!-- Step 2: Second 0.5 -->
+    <line x1="230" y1="85" x2="230" y2="105" class="timeline-tick" />
+    <circle cx="230" cy="95" r="5" fill="#EAB308" />
+    <text x="210" y="73" class="txt-badge" fill="#92400E">T = 0.5s</text>
+    <rect x="175" y="112" width="125" height="34" rx="6" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1" />
+    <text x="182" y="127" class="txt-code" fill="#92400E">SLA Timeout 500ms</text>
+    <text x="182" y="139" class="txt-sub">Logged in RingBuffer</text>
+
+    <!-- Step 3: Second 1.0 -->
+    <line x1="410" y1="85" x2="410" y2="105" class="timeline-tick" />
+    <circle cx="410" cy="95" r="6" fill="#DC2626" />
+    <text x="390" y="73" class="txt-badge" fill="#991B1B">T = 1.0s</text>
+    <rect x="345" y="112" width="140" height="34" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1" />
+    <text x="352" y="127" class="txt-badge" fill="#DC2626">TRIPS TO OPEN</text>
+    <text x="352" y="139" class="txt-sub">Error &gt; 50% threshold</text>
+
+    <!-- Step 4: Second 2 to 15 -->
+    <line x1="620" y1="85" x2="620" y2="105" class="timeline-tick" />
+    <circle cx="620" cy="95" r="5" fill="#7C3AED" />
+    <text x="590" y="73" class="txt-badge" fill="#6D28D9">T = 2s .. 15s</text>
+    <rect x="545" y="112" width="165" height="34" rx="6" fill="#EDE9FE" stroke="#DDD6FE" stroke-width="1" />
+    <text x="552" y="127" class="txt-badge" fill="#7C3AED">FAST-FAIL: 0.003ms</text>
+    <text x="552" y="139" class="txt-sub">Serves In-Memory Index</text>
+
+    <!-- Step 5: Second 15+ -->
+    <circle cx="830" cy="95" r="6" fill="#16A34A" />
+    <text x="805" y="73" class="txt-badge" fill="#166534">T = 15s+</text>
+    <rect x="765" y="112" width="130" height="34" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="772" y="127" class="txt-badge" fill="#166534">CANARY HEALED</text>
+    <text x="772" y="139" class="txt-sub">Traffic restored: 100%</text>
+  </g>
+</svg>

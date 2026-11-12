@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 19px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+      .arrow { stroke: #64748B; stroke-width: 1.8; stroke-linecap: round; fill: none; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="380" class="bg" />
+
+  <!-- COLUMN 1: The Naive Global Shared Pool (Disaster) -->
+  <g transform="translate(30, 30)">
+    <rect width="280" height="320" class="sketch-box" fill="#FFFDFD" stroke="#EF4444" stroke-width="1.6" />
+    <rect x="14" y="14" width="135" height="22" rx="4" fill="#FEE2E2" />
+    <text x="20" y="29" class="txt-badge" fill="#991B1B">ANTI-PATTERN</text>
+    <text x="14" y="60" class="txt-title" fill="#DC2626">Shared Connection Pool</text>
+    <text x="14" y="78" class="txt-sub">Single global pool for all APIs</text>
+
+    <!-- Global Pool Box -->
+    <rect x="14" y="96" width="252" height="110" rx="8" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="1.2" />
+    <text x="24" y="118" class="txt-badge" fill="#991B1B">GLOBAL POOL (50 SOCKETS)</text>
+
+    <!-- Stalled Search Sockets -->
+    <rect x="24" y="128" width="232" height="32" rx="4" fill="#FEE2E2" />
+    <text x="32" y="148" class="txt-code" fill="#DC2626">50 / 50 Locked by /search</text>
+
+    <!-- Blocked Checkout -->
+    <rect x="24" y="166" width="232" height="32" rx="4" fill="#450A0A" />
+    <text x="32" y="186" class="txt-code" fill="#FCA5A5">/checkout BLOCKED (0 sockets)</text>
+
+    <!-- Outcome -->
+    <rect x="14" y="218" width="252" height="88" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1" />
+    <text x="22" y="238" class="txt-badge" fill="#991B1B">CASCADING COLLAPSE</text>
+    <text x="22" y="258" class="txt-sub">&#8226; Search database freeze exhausts pool</text>
+    <text x="22" y="276" class="txt-sub">&#8226; Checkout fails &amp; users cannot pay</text>
+    <text x="22" y="294" class="txt-code" fill="#B91C1C">Entire e-commerce site dies</text>
+  </g>
+
+  <!-- COLUMN 2: Bulkhead Isolation Pattern -->
+  <g transform="translate(340, 30)">
+    <rect width="280" height="320" class="sketch-box" fill="#F8FAFC" stroke="#2563EB" stroke-width="1.6" />
+    <rect x="14" y="14" width="175" height="22" rx="4" fill="#DBEAFE" />
+    <text x="20" y="29" class="txt-badge" fill="#1E40AF">LAYER 1: BULKHEAD</text>
+    <text x="14" y="60" class="txt-title" fill="#1D4ED8">Compartmentalized Pools</text>
+    <text x="14" y="78" class="txt-sub">Isolated limits per service domain</text>
+
+    <!-- Bulkhead Sockets -->
+    <!-- Compartment A: Search -->
+    <rect x="14" y="96" width="252" height="65" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2" />
+    <text x="24" y="116" class="txt-badge" fill="#991B1B">SEARCH POOL (MAX 30)</text>
+    <text x="24" y="134" class="txt-code" fill="#DC2626">30/30 Sockets saturated</text>
+    <text x="24" y="148" class="txt-sub">Contained strictly to this box</text>
+
+    <!-- Compartment B: Checkout -->
+    <rect x="14" y="172" width="252" height="65" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="24" y="192" class="txt-badge" fill="#166534">CHECKOUT POOL (MAX 20)</text>
+    <text x="24" y="210" class="txt-code" fill="#166534">20/20 Free &amp; healthy (20ms)</text>
+    <text x="24" y="224" class="txt-sub">Zero impact from search delay</text>
+
+    <!-- Outcome -->
+    <rect x="14" y="248" width="252" height="58" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1" />
+    <text x="22" y="268" class="txt-badge" fill="#1E40AF">BLAST RADIUS ISOLATED</text>
+    <text x="22" y="286" class="txt-sub">Checkout keeps earning revenue!</text>
+  </g>
+
+  <!-- COLUMN 3: Circuit Breaker Fast-Fail (The Dynamic Shield) -->
+  <g transform="translate(650, 30)">
+    <rect width="280" height="320" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" />
+    <rect x="14" y="14" width="225" height="22" rx="4" fill="#DCFCE7" />
+    <text x="20" y="29" class="txt-badge" fill="#166534">LAYER 2: CIRCUIT BREAKER</text>
+    <text x="14" y="60" class="txt-title" fill="#15803D">Fast-Fail &amp; Heal Sockets</text>
+    <text x="14" y="78" class="txt-sub">Bypasses network calls entirely</text>
+
+    <!-- Circuit Breaker Action -->
+    <rect x="14" y="96" width="252" height="110" rx="8" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.4" />
+    <text x="24" y="118" class="txt-badge" fill="#166534">WRAPS SEARCH COMMAND</text>
+    <text x="24" y="136" class="txt-sub">&#8226; SLA timeout triggers at 500ms</text>
+    <text x="24" y="154" class="txt-sub">&#8226; Circuit trips to OPEN</text>
+    <text x="24" y="174" class="txt-code" fill="#166534">Fast-fail in 0.003ms</text>
+    <text x="24" y="192" class="txt-badge" fill="#16A34A">FREES ALL 30 SEARCH SOCKETS!</text>
+
+    <!-- Outcome -->
+    <rect x="14" y="218" width="252" height="88" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.2" />
+    <text x="22" y="238" class="txt-badge" fill="#166534">DEFENSE IN DEPTH</text>
+    <text x="22" y="258" class="txt-sub">&#8226; Bulkhead stops blast radius</text>
+    <text x="22" y="276" class="txt-sub">&#8226; Circuit Breaker heals resources</text>
+    <text x="22" y="294" class="txt-code" fill="#166534">Gateway CPU stays under 3%</text>
+  </g>
+</svg>

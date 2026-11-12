@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 19px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+      .pill-fail { fill: #FEE2E2; stroke: #DC2626; stroke-width: 1.2; rx: 6; }
+      .pill-pass { fill: #DCFCE7; stroke: #16A34A; stroke-width: 1.2; rx: 6; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="380" class="bg" />
+
+  <!-- TOP PANEL: Consecutive Failure Counter Trap -->
+  <g transform="translate(30, 20)">
+    <rect width="900" height="155" class="sketch-box" fill="#FFFDFD" stroke="#EF4444" stroke-width="1.6" />
+    <rect x="14" y="12" width="230" height="20" rx="4" fill="#FEE2E2" />
+    <text x="20" y="26" class="txt-badge" fill="#991B1B">CONSECUTIVE COUNTER TRAP</text>
+    <text x="255" y="27" class="txt-title" fill="#DC2626">Single Interleaved Success Resets Counter to Zero</text>
+
+    <!-- Request Stream Visual -->
+    <g transform="translate(30, 52)">
+      <!-- Req 1: Fail -->
+      <rect x="0" y="0" width="70" height="32" class="pill-fail" />
+      <text x="14" y="20" class="txt-code" fill="#991B1B">FAIL (1)</text>
+
+      <!-- Req 2: Fail -->
+      <rect x="80" y="0" width="70" height="32" class="pill-fail" />
+      <text x="94" y="20" class="txt-code" fill="#991B1B">FAIL (2)</text>
+
+      <!-- Req 3: Fail -->
+      <rect x="160" y="0" width="70" height="32" class="pill-fail" />
+      <text x="174" y="20" class="txt-code" fill="#991B1B">FAIL (3)</text>
+
+      <!-- Req 4: Fail -->
+      <rect x="240" y="0" width="70" height="32" class="pill-fail" />
+      <text x="254" y="20" class="txt-code" fill="#991B1B">FAIL (4)</text>
+
+      <!-- Req 5: Interleaved Success! Resets to 0 -->
+      <rect x="320" y="0" width="90" height="32" class="pill-pass" stroke-width="2" />
+      <text x="328" y="20" class="txt-code" fill="#166534">PASS &#8594; RESET</text>
+
+      <!-- Req 6: Fail -->
+      <rect x="420" y="0" width="70" height="32" class="pill-fail" />
+      <text x="434" y="20" class="txt-code" fill="#991B1B">FAIL (1)</text>
+
+      <!-- Req 7: Fail -->
+      <rect x="500" y="0" width="70" height="32" class="pill-fail" />
+      <text x="514" y="20" class="txt-code" fill="#991B1B">FAIL (2)</text>
+
+      <!-- Req 8: Fail -->
+      <rect x="580" y="0" width="70" height="32" class="pill-fail" />
+      <text x="594" y="20" class="txt-code" fill="#991B1B">FAIL (3)</text>
+
+      <!-- Req 9: Pass -->
+      <rect x="660" y="0" width="90" height="32" class="pill-pass" stroke-width="2" />
+      <text x="668" y="20" class="txt-code" fill="#166534">PASS &#8594; RESET</text>
+
+      <!-- Req 10: Fail -->
+      <rect x="760" y="0" width="70" height="32" class="pill-fail" />
+      <text x="774" y="20" class="txt-code" fill="#991B1B">FAIL (1)</text>
+    </g>
+
+    <!-- Verdict -->
+    <rect x="30" y="96" width="840" height="45" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2" />
+    <text x="42" y="115" class="txt-badge" fill="#DC2626">CATASTROPHIC FLAW: 80% OF ALL TRAFFIC IS FAILING</text>
+    <text x="42" y="131" class="txt-sub">Because errors are not strictly 5 in a row, the counter constantly resets. The circuit breaker NEVER trips!</text>
+  </g>
+
+  <!-- BOTTOM PANEL: Rolling Sliding-Window Ring Buffer -->
+  <g transform="translate(30, 195)">
+    <rect width="900" height="165" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.6" />
+    <rect x="14" y="12" width="240" height="20" rx="4" fill="#DCFCE7" />
+    <text x="20" y="26" class="txt-badge" fill="#166534">SLIDING WINDOW ERROR RATE</text>
+    <text x="265" y="27" class="txt-title" fill="#15803D">Evaluates True Statistical Error Percentage Over Capacity</text>
+
+    <!-- Window Stream -->
+    <g transform="translate(30, 50)">
+      <rect x="0" y="0" width="460" height="42" rx="8" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.4" />
+      <text x="14" y="20" class="txt-badge" fill="#166534">100-SAMPLE SLIDING WINDOW (RingBuffer)</text>
+      <text x="14" y="34" class="txt-code" fill="#334155">[ 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1 ... ]</text>
+
+      <!-- Ratio Badge -->
+      <rect x="480" y="0" width="360" height="42" rx="8" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1.4" />
+      <text x="495" y="18" class="txt-badge" fill="#991B1B">80 FAILURES / 100 SAMPLES = 80.0% ERROR</text>
+      <text x="495" y="34" class="txt-code" fill="#DC2626">Threshold: 50% &#8594; Breaker TRIPS to OPEN!</text>
+    </g>
+
+    <!-- Verdict -->
+    <rect x="30" y="104" width="840" height="45" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="42" y="123" class="txt-badge" fill="#166534">STATISTICALLY RESILIENT: UNAFFECTED BY INTERLEAVED TRAFFIC</text>
+    <text x="42" y="139" class="txt-sub">Detects degraded backends immediately while ignoring transient low-frequency blips spread over hours.</text>
+  </g>
+</svg>

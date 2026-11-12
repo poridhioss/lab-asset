@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .txt-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 19px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; }
+      .flow-arrow { stroke: #2563EB; stroke-width: 2; stroke-linecap: round; fill: none; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="960" height="360" class="bg" />
+
+  <!-- SECTION 1: Foundational Prerequisite Blocks (Left) -->
+  <!-- Block A: Lab 1 & 2 -->
+  <g transform="translate(30, 25)">
+    <rect width="250" height="92" class="sketch-box" fill="#FAF5FF" stroke="#7C3AED" stroke-width="1.4" />
+    <rect x="12" y="10" width="110" height="18" rx="4" fill="#EDE9FE" />
+    <text x="18" y="23" class="txt-badge" fill="#6D28D9">LABS 1 &amp; 2</text>
+    <text x="12" y="48" class="txt-title" fill="#6D28D9">Inverted Posting Lists</text>
+    <text x="12" y="66" class="txt-sub">Sub-millisecond keyword lookup</text>
+    <text x="12" y="80" class="txt-badge" fill="#7C3AED">&#8594; Becomes In-Memory Fallback</text>
+  </g>
+
+  <!-- Block B: Lab 3 -->
+  <g transform="translate(30, 134)">
+    <rect width="250" height="92" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.4" />
+    <rect x="12" y="10" width="80" height="18" rx="4" fill="#DCFCE7" />
+    <text x="18" y="23" class="txt-badge" fill="#166534">LAB 3</text>
+    <text x="12" y="48" class="txt-title" fill="#15803D">Prefix Trie &amp; Debounce</text>
+    <text x="12" y="66" class="txt-sub">200ms keystroke batching &amp; gating</text>
+    <text x="12" y="80" class="txt-badge" fill="#16A34A">&#8594; Traffic Shaping Layer</text>
+  </g>
+
+  <!-- Block C: Lab 6 (This Lab) -->
+  <g transform="translate(30, 243)">
+    <rect width="250" height="92" class="sketch-box" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" />
+    <rect x="12" y="10" width="140" height="18" rx="4" fill="#DBEAFE" />
+    <text x="18" y="23" class="txt-badge" fill="#1E40AF">LAB 6 (THIS LAB)</text>
+    <text x="12" y="48" class="txt-title" fill="#1D4ED8">Circuit Breaker FSM</text>
+    <text x="12" y="66" class="txt-sub">Zero-GC Uint8Array &amp; Canary Latch</text>
+    <text x="12" y="80" class="txt-badge" fill="#2563EB">&#8594; Downstream Protection Shield</text>
+  </g>
+
+  <!-- Convergence Arrows -->
+  <path d="M 285 71 C 360 71, 380 180, 420 180" class="flow-arrow" marker-end="url(#arr-blue)" />
+  <path d="M 285 180 L 420 180" class="flow-arrow" marker-end="url(#arr-blue)" />
+  <path d="M 285 289 C 360 289, 380 180, 420 180" class="flow-arrow" marker-end="url(#arr-blue)" />
+
+  <!-- SECTION 2: Applied Lab 10 Capstone Architecture (Right) -->
+  <g transform="translate(435, 25)">
+    <rect width="495" height="310" class="sketch-box" fill="#FFFFFF" stroke="#2563EB" stroke-width="2.2" />
+    <rect x="16" y="14" width="220" height="22" rx="4" fill="#DBEAFE" />
+    <text x="22" y="29" class="txt-badge" fill="#1E40AF">APPLIED CAPSTONE: LAB 10</text>
+    <text x="16" y="60" class="txt-title">The Unified Search Gateway with Live Traffic Shaping</text>
+    <text x="16" y="78" class="txt-sub">Full production search gateway running against Elasticsearch</text>
+
+    <!-- Sub-component 1: Express Server -->
+    <rect x="16" y="96" width="463" height="46" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="28" y="116" class="txt-badge" fill="#0F172A">EXPRESS GATEWAY ROUTER</text>
+    <text x="28" y="132" class="txt-sub">Handles GET /api/search and GET /api/suggest with live debouncing</text>
+
+    <!-- Sub-component 2: CircuitBreaker Integration -->
+    <rect x="16" y="150" width="463" height="52" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.4" />
+    <text x="28" y="170" class="txt-badge" fill="#1E40AF">INTEGRATED CIRCUITBREAKER.JS</text>
+    <text x="28" y="186" class="txt-sub">Wraps Elasticsearch queries: 500ms SLA timeout + In-Memory Fallback</text>
+    <text x="28" y="196" class="txt-code" fill="#2563EB" font-size="10px">CircuitBreaker.execute(() =&gt; esClient.search(), fallbackCache)</text>
+
+    <!-- Sub-component 3: Request Waterfall Latency Inspector -->
+    <rect x="16" y="210" width="463" height="50" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.4" />
+    <text x="28" y="230" class="txt-badge" fill="#166534">INTERACTIVE REQUEST WATERFALL LATENCY INSPECTOR</text>
+    <text x="28" y="248" class="txt-sub">Real-time terminal waterfall visualizing healthy vs quarantined fast-fails</text>
+
+    <!-- Sub-component 4: Zero Downtime Banner -->
+    <rect x="16" y="268" width="463" height="34" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.2" />
+    <text x="28" y="289" class="txt-badge" fill="#166534">RESULT: 99.999% SEARCH AVAILABILITY UNDER CHAOS INJECTIONS</text>
+  </g>
+</svg>
