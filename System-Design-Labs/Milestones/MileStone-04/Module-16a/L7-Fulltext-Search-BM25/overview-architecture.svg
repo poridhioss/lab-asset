@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 380" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", "Chalkboard SE", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .flow-arrow {
+        stroke: #64748B;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+      .flow-green {
+        stroke: #16A34A;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="380" class="bg" />
+
+  <!-- Top Title Header -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="0" class="sketch-title">Full-Text Search Engine: Candidate Retrieval to Smart BM25 Ranking</text>
+    <text x="0" y="18" class="sketch-subtitle">High-level architecture connecting Query Ingress, Inverted Index Candidate Generation, Okapi BM25 Ranking, and Express Serving</text>
+  </g>
+
+  <!-- SECTION 1: Client Ingress (Left) -->
+  <g transform="translate(40, 68)">
+    <rect width="190" height="282" class="sketch-box" />
+    <rect x="14" y="14" width="115" height="20" rx="4" fill="#E0F2FE" />
+    <text x="20" y="28" class="txt-badge" fill="#0369A1">1. CLIENT INGRESS</text>
+    <text x="14" y="56" class="txt-heading">User Search Box</text>
+    <text x="14" y="72" class="txt-sub">Presses Enter (&lt;50ms)</text>
+
+    <!-- Query Input Box -->
+    <rect x="14" y="88" width="162" height="42" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="22" y="105" class="txt-badge" fill="#64748B">Inbound Query</text>
+    <text x="22" y="121" class="txt-code" fill="#0F172A">"distributed cache"</text>
+
+    <!-- TextAnalyzer Processing Box -->
+    <rect x="14" y="140" width="162" height="66" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2" />
+    <text x="22" y="158" class="txt-badge" fill="#1D4ED8">TextAnalyzer Engine</text>
+    <text x="22" y="176" class="txt-sub">&#8226; Punctuation stripped</text>
+    <text x="22" y="192" class="txt-sub">&#8226; Stopwords filtered</text>
+
+    <!-- Stems Output Box -->
+    <rect x="14" y="216" width="162" height="44" rx="6" fill="#EDE9FE" stroke="#C4B5FD" stroke-width="1.2" />
+    <text x="22" y="233" class="txt-badge" fill="#6D28D9">Clean Stems</text>
+    <text x="22" y="249" class="txt-code" fill="#5B21B6">["distribut", "cache"]</text>
+  </g>
+
+  <!-- Flow 1: Client to Search & BM25 Core -->
+  <path d="M 230 195 L 275 195" class="flow-arrow" marker-end="url(#arr)" />
+  <rect x="233" y="170" width="38" height="18" rx="3" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1" />
+  <text x="252" y="183" text-anchor="middle" class="txt-badge" fill="#475569">STEMS</text>
+
+  <!-- SECTION 2: Search & Smart Ranking Core (Center Hero Container) -->
+  <g transform="translate(275, 60)">
+    <rect width="420" height="295" class="sketch-box" stroke="#2563EB" stroke-width="2" />
+    <rect x="16" y="14" width="160" height="20" rx="4" fill="#DBEAFE" />
+    <text x="22" y="28" class="txt-badge" fill="#1E40AF">2. SEARCH &amp; BM25 CORE</text>
+    <text x="16" y="52" class="txt-heading">Candidate Retrieval + Okapi BM25</text>
+    <text x="16" y="68" class="txt-sub">Two-stage pipeline: Fast boolean filtering followed by smart ranking</text>
+
+    <!-- Sub-box 1: Stage 1 Candidate Retrieval -->
+    <g transform="translate(16, 82)">
+      <rect width="388" height="82" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.4" />
+      <rect x="12" y="10" width="135" height="18" rx="3" fill="#E2E8F0" />
+      <text x="18" y="23" class="txt-badge" fill="#334155">STAGE 1: CANDIDATES</text>
+      <text x="12" y="44" class="txt-heading" font-size="14.5px">Inverted Index &amp; Two-Pointer Merge</text>
+      <text x="12" y="60" class="txt-sub">Intersect sorted Uint32Array postings &#8212; zero disk document scan</text>
+
+      <rect x="236" y="10" width="140" height="22" rx="4" fill="#EDE9FE" stroke="#C4B5FD" stroke-width="1" />
+      <text x="306" y="25" text-anchor="middle" class="txt-code" fill="#6D28D9" font-weight="700">Candidates: [Doc 1, 9]</text>
+    </g>
+
+    <!-- Down-arrow between Stage 1 and Stage 2 -->
+    <path d="M 210 165 L 210 183" class="flow-arrow" marker-end="url(#arr)" />
+
+    <!-- Sub-box 2: Stage 2 Okapi BM25 Ranking -->
+    <g transform="translate(16, 185)">
+      <rect width="388" height="94" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.4" />
+      <rect x="12" y="10" width="145" height="18" rx="3" fill="#DCFCE7" />
+      <text x="18" y="23" class="txt-badge" fill="#15803D">STAGE 2: SMART RANKING</text>
+      <text x="12" y="44" class="txt-heading" font-size="14.5px">Okapi BM25 Ranking Engine</text>
+      <text x="12" y="60" class="txt-sub">&#8226; Term Saturation (k1=1.2 ceiling) &#8226; Length Normalization (b=0.75)</text>
+      <text x="12" y="76" class="txt-sub">&#8226; Robertson-Sparck Jones IDF boosts rare technical query terms</text>
+
+      <rect x="236" y="10" width="140" height="22" rx="4" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.2" />
+      <text x="306" y="25" text-anchor="middle" class="txt-badge" fill="#166534">The Ranking Flip!</text>
+    </g>
+  </g>
+
+  <!-- Flow 2: Search Core to Serving Layer -->
+  <path d="M 695 195 L 740 195" class="flow-green" marker-end="url(#arr-green)" />
+  <rect x="698" y="170" width="38" height="18" rx="3" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1" />
+  <text x="717" y="183" text-anchor="middle" class="txt-badge" fill="#065F46">TOP-K</text>
+
+  <!-- SECTION 3: Serving & API Layer (Right) -->
+  <g transform="translate(740, 68)">
+    <rect width="200" height="282" class="sketch-box" stroke="#16A34A" stroke-width="1.8" fill="#F0FDF4" />
+    <rect x="14" y="14" width="115" height="20" rx="4" fill="#DCFCE7" />
+    <text x="20" y="28" class="txt-badge" fill="#15803D">3. SERVING LAYER</text>
+    <text x="14" y="56" class="txt-heading">Express API Hits</text>
+    <text x="14" y="72" class="txt-sub">Ranked Results &amp; Snippets</text>
+
+    <!-- Rank 1 Hit Card -->
+    <rect x="14" y="88" width="172" height="50" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.4" />
+    <circle cx="26" cy="104" r="5" fill="#22C55E" />
+    <text x="36" y="108" class="txt-badge" fill="#15803D">Rank 1: Doc 01 (2.61)</text>
+    <text x="18" y="126" class="txt-code" fill="#047857">Redis Cache (Concise)</text>
+
+    <!-- Rank 2 Hit Card -->
+    <rect x="14" y="148" width="172" height="50" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
+    <circle cx="26" cy="164" r="5" fill="#94A3B8" />
+    <text x="36" y="168" class="txt-badge" fill="#64748B">Rank 2: Doc 09 (2.59)</text>
+    <text x="18" y="186" class="txt-code" fill="#64748B">Hardware Notes (Long)</text>
+
+    <!-- Bottom API Pill -->
+    <rect x="14" y="212" width="172" height="48" rx="6" fill="#16A34A" />
+    <text x="100" y="233" text-anchor="middle" class="txt-badge" fill="#FFFFFF" font-size="10.5px">GET /search (p99 &lt; 5ms)</text>
+    <text x="100" y="248" text-anchor="middle" class="txt-code" fill="#DCFCE7" font-size="9.5px">Score explain: /explain</text>
+  </g>
+</svg>
