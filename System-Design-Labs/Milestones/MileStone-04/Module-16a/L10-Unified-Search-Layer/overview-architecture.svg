@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="100%" height="100%">
+  <defs>
+    
+    <style>
+      .main-title {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        fill: #0F172A;
+      }
+      .main-subtitle {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 13px;
+        fill: #64748B;
+      }
+      .zone-badge {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .zone-title {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .card-header {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .card-text {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 12px;
+        fill: #334155;
+      }
+      .card-subtext {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 11px;
+        fill: #64748B;
+      }
+      .pill-text {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+      .flow-label {
+        font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .flow-line {
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+    </style>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#475569" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#D97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#9333EA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arr-rose" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#E11D48" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    
+  </defs>
+
+  <!-- Background Outer Card -->
+  <rect x="10" y="10" width="1180" height="540" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 36)">
+    <text x="0" y="0" class="main-title">Fault-Tolerant Unified Search Gateway Architecture</text>
+    <text x="0" y="20" class="main-subtitle">End-to-End System Flow: Keystroke Debouncing, API Gateway, Circuit Breaker SLA, and Multi-Tier Engines</text>
+  </g>
+
+  <!-- ==================== FLOW CONNECTORS ==================== -->
+  <!-- 1. Suggest / Autocomplete Stream (Purple) -->
+  <path d="M 245 220 L 320 220" class="flow-line" stroke="#9333EA" marker-end="url(#arr-purple)" />
+  <text x="282" y="212" text-anchor="middle" class="flow-label" fill="#7E22CE">/suggest</text>
+
+  <!-- Gateway to Trie Direct RAM -->
+  <path d="M 495 190 L 540 190 L 540 155 L 870 155" class="flow-line" stroke="#9333EA" marker-end="url(#arr-purple)" />
+  <text x="690" y="145" text-anchor="middle" class="flow-label" fill="#7E22CE">Fast RAM Path (0.02ms)</text>
+
+  <!-- 2. Search Submission Stream (Amber) -->
+  <path d="M 245 255 L 320 255" class="flow-line" stroke="#D97706" marker-end="url(#arr-amber)" />
+  <text x="282" y="247" text-anchor="middle" class="flow-label" fill="#B45309">/search</text>
+
+  <!-- Gateway to Search Broker -->
+  <path d="M 495 255 L 565 255" class="flow-line" stroke="#D97706" marker-end="url(#arr-amber)" />
+  <text x="530" y="247" text-anchor="middle" class="flow-label" fill="#B45309">Dispatch</text>
+
+  <!-- Broker Primary Route to Elasticsearch (CLOSED, Blue) -->
+  <path d="M 795 240 L 835 240 L 835 255 L 870 255" class="flow-line" stroke="#2563EB" marker-end="url(#arr-blue)" />
+  <text x="835" y="230" text-anchor="middle" class="flow-label" fill="#1D4ED8">CLOSED: Primary</text>
+
+  <!-- Broker Fallback Route to In-Memory Index (OPEN / SLA Breach, Rose) -->
+  <path d="M 795 385 L 835 385 L 835 375 L 870 375" class="flow-line" stroke="#E11D48" marker-end="url(#arr-rose)" />
+  <text x="835" y="405" text-anchor="middle" class="flow-label" fill="#BE123C">OPEN: Fallback RAM</text>
+
+  <!-- 3. Telemetry Return Loop (Dashed Gray) -->
+  <path d="M 1010 460 L 1010 495 L 145 495 L 145 455" class="flow-line" stroke="#64748B" stroke-dasharray="6,4" marker-end="url(#arr-gray)" />
+  <text x="575" y="512" text-anchor="middle" class="flow-label" fill="#475569">Telemetry &amp; Degradation Envelope (latency, active engine, hits, QPS saved)</text>
+
+  <!-- ==================== ZONE 1: SEARCH SURFACE UI ==================== -->
+  
+    <g>
+      <path d="M 54 80 L 241 80 Q 255 80 255 94 L 255 441 Q 255 455 241 455 L 54 455 Q 40 455 40 441 L 40 94 Q 40 80 54 80 Z" fill="#F0FDF4" stroke="#16A34A" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 54.22308287753261 79.24001720835626 L 240.64004690939058 79.24001720835626 Q 254.64004690939058 79.24001720835626 254.64004690939058 93.24001720835626 L 254.64004690939058 440.5571371810381 Q 254.64004690939058 454.5571371810381 240.64004690939058 454.5571371810381 L 54.22308287753261 454.5571371810381 Q 40.22308287753261 454.5571371810381 40.22308287753261 440.5571371810381 L 40.22308287753261 93.24001720835626 Q 40.22308287753261 79.24001720835626 54.22308287753261 79.24001720835626 Z" fill="none" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="55" y="105" class="zone-badge" fill="#15803D">ZONE 1: CLIENT EDGE</text>
+  <text x="55" y="125" class="zone-title" fill="#166534">Search Surface UI</text>
+  <text x="55" y="140" class="card-subtext">Browser Client • Port 3001</text>
+
+  <!-- Search Input Box -->
+  
+    <g>
+      <path d="M 63 155 L 232 155 Q 240 155 240 163 L 240 202 Q 240 210 232 210 L 63 210 Q 55 210 55 202 L 55 163 Q 55 155 63 155 Z" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 63.37835394266242 155.28271917987666 L 232.62748730832774 155.28271917987666 Q 240.62748730832774 155.28271917987666 240.62748730832774 163.28271917987666 L 240.62748730832774 201.33910213220707 Q 240.62748730832774 209.33910213220707 232.62748730832774 209.33910213220707 L 63.37835394266242 209.33910213220707 Q 55.37835394266242 209.33910213220707 55.37835394266242 201.33910213220707 L 55.37835394266242 163.28271917987666 Q 55.37835394266242 155.28271917987666 63.37835394266242 155.28271917987666 Z" fill="none" stroke="#86EFAC" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="67" y="175" class="card-header" fill="#15803D">Search Input Bar</text>
+  <text x="67" y="193" class="card-subtext">Captures typing cadence</text>
+
+  <!-- 200ms Debounce & Gating -->
+  
+    <g>
+      <path d="M 63 220 L 232 220 Q 240 220 240 228 L 240 287 Q 240 295 232 295 L 63 295 Q 55 295 55 287 L 55 228 Q 55 220 63 220 Z" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 62.875074911496434 219.2476755511009 L 231.54982075968576 219.2476755511009 Q 239.54982075968576 219.2476755511009 239.54982075968576 227.2476755511009 L 239.54982075968576 287.00856846096536 Q 239.54982075968576 295.00856846096536 231.54982075968576 295.00856846096536 L 62.875074911496434 295.00856846096536 Q 54.875074911496434 295.00856846096536 54.875074911496434 287.00856846096536 L 54.875074911496434 227.2476755511009 Q 54.875074911496434 219.2476755511009 62.875074911496434 219.2476755511009 Z" fill="none" stroke="#86EFAC" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="67" y="240" class="card-header" fill="#15803D">Traffic Protection</text>
+  <text x="67" y="258" class="card-text">&#x2022; 200ms Debounce Timer</text>
+  <text x="67" y="274" class="card-text">&#x2022; Prefix Gate (&gt;= 2 chars)</text>
+  <text x="67" y="289" class="card-subtext" fill="#059669">Suppresses ~85% keystrokes</text>
+
+  <!-- Waterfall Inspector -->
+  
+    <g>
+      <path d="M 63 305 L 232 305 Q 240 305 240 313 L 240 432 Q 240 440 232 440 L 63 440 Q 55 440 55 432 L 55 313 Q 55 305 63 305 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 62.242457551494184 304.51814024109865 L 232.23981510044723 304.51814024109865 Q 240.23981510044723 304.51814024109865 240.23981510044723 312.51814024109865 L 240.23981510044723 432.07190636896513 Q 240.23981510044723 440.07190636896513 232.23981510044723 440.07190636896513 L 62.242457551494184 440.07190636896513 Q 54.242457551494184 440.07190636896513 54.242457551494184 432.07190636896513 L 54.242457551494184 312.51814024109865 Q 54.242457551494184 304.51814024109865 62.242457551494184 304.51814024109865 Z" fill="none" stroke="#94A3B8" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="67" y="325" class="card-header" fill="#334155">Waterfall Telemetry</text>
+  <text x="67" y="345" class="card-text">&#x2022; Sub-ms Request Timeline</text>
+  <text x="67" y="363" class="card-text">&#x2022; Active Engine Attribution</text>
+  <text x="67" y="381" class="card-text">&#x2022; Degraded Mode Alerts</text>
+  <text x="67" y="399" class="card-text">&#x2022; QPS &amp; Bandwidth Saved</text>
+  <text x="67" y="423" class="card-subtext" fill="#64748B">Real-time browser inspector</text>
+
+  <!-- ==================== ZONE 2: EXPRESS API GATEWAY ==================== -->
+  
+    <g>
+      <path d="M 329 80 L 491 80 Q 505 80 505 94 L 505 441 Q 505 455 491 455 L 329 455 Q 315 455 315 441 L 315 94 Q 315 80 329 80 Z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 328.5527049952651 80.14282509420146 L 491.49508873068453 80.14282509420146 Q 505.49508873068453 80.14282509420146 505.49508873068453 94.14282509420146 L 505.49508873068453 440.2103980154849 Q 505.49508873068453 454.2103980154849 491.49508873068453 454.2103980154849 L 328.5527049952651 454.2103980154849 Q 314.5527049952651 454.2103980154849 314.5527049952651 440.2103980154849 L 314.5527049952651 94.14282509420146 Q 314.5527049952651 80.14282509420146 328.5527049952651 80.14282509420146 Z" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="330" y="105" class="zone-badge" fill="#1D4ED8">ZONE 2: GATEWAY</text>
+  <text x="330" y="125" class="zone-title" fill="#1E40AF">Express Server</text>
+  <text x="330" y="140" class="card-subtext">server.js • Port 3001</text>
+
+  <!-- Router Card -->
+  
+    <g>
+      <path d="M 336 155 L 484 155 Q 492 155 492 163 L 492 222 Q 492 230 484 230 L 336 230 Q 328 230 328 222 L 328 163 Q 328 155 336 155 Z" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 336.4893108029325 155.31702303198117 L 483.7444008264288 155.31702303198117 Q 491.7444008264288 155.31702303198117 491.7444008264288 163.31702303198117 L 491.7444008264288 221.44876719969886 Q 491.7444008264288 229.44876719969886 483.7444008264288 229.44876719969886 L 336.4893108029325 229.44876719969886 Q 328.4893108029325 229.44876719969886 328.4893108029325 221.44876719969886 L 328.4893108029325 163.31702303198117 Q 328.4893108029325 155.31702303198117 336.4893108029325 155.31702303198117 Z" fill="none" stroke="#93C5FD" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="340" y="175" class="card-header" fill="#1D4ED8">Express Router</text>
+  <text x="340" y="195" class="card-text">Routes Ingress Traffic</text>
+  <text x="340" y="213" class="card-subtext">Poridhi Load Balancer</text>
+
+  <!-- API Endpoints Card -->
+  
+    <g>
+      <path d="M 336 240 L 484 240 Q 492 240 492 248 L 492 347 Q 492 355 484 355 L 336 355 Q 328 355 328 347 L 328 248 Q 328 240 336 240 Z" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 336.73154091553084 239.7385512721802 L 483.34839334940824 239.7385512721802 Q 491.34839334940824 239.7385512721802 491.34839334940824 247.7385512721802 L 491.34839334940824 346.35474620293354 Q 491.34839334940824 354.35474620293354 483.34839334940824 354.35474620293354 L 336.73154091553084 354.35474620293354 Q 328.73154091553084 354.35474620293354 328.73154091553084 346.35474620293354 L 328.73154091553084 247.7385512721802 Q 328.73154091553084 239.7385512721802 336.73154091553084 239.7385512721802 Z" fill="none" stroke="#93C5FD" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="340" y="260" class="card-header" fill="#1D4ED8">Gateway Routes</text>
+  <text x="340" y="280" class="card-text">&#x2022; GET /suggest</text>
+  <text x="340" y="298" class="card-text">&#x2022; GET /search</text>
+  <text x="340" y="316" class="card-text">&#x2022; GET /compare</text>
+  <text x="340" y="334" class="card-text">&#x2022; GET /health</text>
+
+  <!-- Profiler Card -->
+  
+    <g>
+      <path d="M 336 365 L 484 365 Q 492 365 492 373 L 492 432 Q 492 440 484 440 L 336 440 Q 328 440 328 432 L 328 373 Q 328 365 336 365 Z" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 336.55599098615596 365.165961650187 L 484.491405237239 365.165961650187 Q 492.491405237239 365.165961650187 492.491405237239 373.165961650187 L 492.491405237239 432.3675708587101 Q 492.491405237239 440.3675708587101 484.491405237239 440.3675708587101 L 336.55599098615596 440.3675708587101 Q 328.55599098615596 440.3675708587101 328.55599098615596 432.3675708587101 L 328.55599098615596 373.165961650187 Q 328.55599098615596 365.165961650187 336.55599098615596 365.165961650187 Z" fill="none" stroke="#93C5FD" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="340" y="385" class="card-header" fill="#1D4ED8">Latency Profiler</text>
+  <text x="340" y="405" class="card-text">performance.now()</text>
+  <text x="340" y="423" class="card-subtext">Microsecond timestamping</text>
+
+  <!-- ==================== ZONE 3: SEARCH BROKER ==================== -->
+  
+    <g>
+      <path d="M 574 80 L 786 80 Q 800 80 800 94 L 800 441 Q 800 455 786 455 L 574 455 Q 560 455 560 441 L 560 94 Q 560 80 574 80 Z" fill="#FFF7ED" stroke="#EA580C" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 574.0579649463275 80.75698522236699 L 785.8056550035334 80.75698522236699 Q 799.8056550035334 80.75698522236699 799.8056550035334 94.75698522236699 L 799.8056550035334 441.08326501003717 Q 799.8056550035334 455.08326501003717 785.8056550035334 455.08326501003717 L 574.0579649463275 455.08326501003717 Q 560.0579649463275 455.08326501003717 560.0579649463275 441.08326501003717 L 560.0579649463275 94.75698522236699 Q 560.0579649463275 80.75698522236699 574.0579649463275 80.75698522236699 Z" fill="none" stroke="#EA580C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="575" y="105" class="zone-badge" fill="#C2410C">ZONE 3: RESILIENCE</text>
+  <text x="575" y="125" class="zone-title" fill="#9A3412">Search Broker</text>
+  <text x="575" y="140" class="card-subtext">SearchBroker.js • SLA Coordinator</text>
+
+  <!-- Circuit Breaker FSM -->
+  
+    <g>
+      <path d="M 583 155 L 777 155 Q 785 155 785 163 L 785 272 Q 785 280 777 280 L 583 280 Q 575 280 575 272 L 575 163 Q 575 155 583 155 Z" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 583.5270474628048 155.1896316037828 L 777.5787310404972 155.1896316037828 Q 785.5787310404972 155.1896316037828 785.5787310404972 163.1896316037828 L 785.5787310404972 272.12376343241084 Q 785.5787310404972 280.12376343241084 777.5787310404972 280.12376343241084 L 583.5270474628048 280.12376343241084 Q 575.5270474628048 280.12376343241084 575.5270474628048 272.12376343241084 L 575.5270474628048 163.1896316037828 Q 575.5270474628048 155.1896316037828 583.5270474628048 155.1896316037828 Z" fill="none" stroke="#FDBA74" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="587" y="175" class="card-header" fill="#C2410C">Circuit Breaker (Lab 6)</text>
+  <text x="587" y="195" class="card-text">&#x2022; CLOSED: Normal Primary</text>
+  <text x="587" y="213" class="card-text">&#x2022; OPEN: Fast-Fail to RAM</text>
+  <text x="587" y="231" class="card-text">&#x2022; HALF_OPEN: Canary Probe</text>
+  <text x="587" y="253" class="card-subtext">Sliding RingBuffer error rate</text>
+  <text x="587" y="268" class="card-subtext">10s recovery cooldown</text>
+
+  <!-- SLA Guard Card -->
+  
+    <g>
+      <path d="M 583 290 L 777 290 Q 785 290 785 298 L 785 357 Q 785 365 777 365 L 583 365 Q 575 365 575 357 L 575 298 Q 575 290 583 290 Z" fill="#FEF2F2" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 583.3273149379439 289.27331901384906 L 776.5646372410424 289.27331901384906 Q 784.5646372410424 289.27331901384906 784.5646372410424 297.27331901384906 L 784.5646372410424 356.6630207417634 Q 784.5646372410424 364.6630207417634 776.5646372410424 364.6630207417634 L 583.3273149379439 364.6630207417634 Q 575.3273149379439 364.6630207417634 575.3273149379439 356.6630207417634 L 575.3273149379439 297.27331901384906 Q 575.3273149379439 289.27331901384906 583.3273149379439 289.27331901384906 Z" fill="none" stroke="#F87171" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="587" y="310" class="card-header" fill="#DC2626">500ms SLA Guard</text>
+  <text x="587" y="330" class="card-text">Aborts slow primary queries</text>
+  <text x="587" y="348" class="card-subtext" fill="#B91C1C">Prevents worker starvation</text>
+
+  <!-- Dynamic Router Card -->
+  
+    <g>
+      <path d="M 583 375 L 777 375 Q 785 375 785 383 L 785 432 Q 785 440 777 440 L 583 440 Q 575 440 575 432 L 575 383 Q 575 375 583 375 Z" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 582.3276671630778 374.57246541817767 L 776.3616022870556 374.57246541817767 Q 784.3616022870556 374.57246541817767 784.3616022870556 382.57246541817767 L 784.3616022870556 431.64475776497613 Q 784.3616022870556 439.64475776497613 776.3616022870556 439.64475776497613 L 582.3276671630778 439.64475776497613 Q 574.3276671630778 439.64475776497613 574.3276671630778 431.64475776497613 L 574.3276671630778 382.57246541817767 Q 574.3276671630778 374.57246541817767 582.3276671630778 374.57246541817767 Z" fill="none" stroke="#FDBA74" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="587" y="395" class="card-header" fill="#C2410C">Dynamic Engine Router</text>
+  <text x="587" y="413" class="card-text">Isolates client from outage</text>
+  <text x="587" y="428" class="card-subtext">Zero HTTP 500 errors</text>
+
+  <!-- ==================== ZONE 4: STORAGE & ENGINES ==================== -->
+  
+    <g>
+      <path d="M 869 80 L 1146 80 Q 1160 80 1160 94 L 1160 441 Q 1160 455 1146 455 L 869 455 Q 855 455 855 441 L 855 94 Q 855 80 869 80 Z" fill="#FAF5FF" stroke="#7C3AED" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 869.217095110823 79.78373148635214 L 1145.792289547387 79.78373148635214 Q 1159.792289547387 79.78373148635214 1159.792289547387 93.78373148635214 L 1159.792289547387 440.5352112492344 Q 1159.792289547387 454.5352112492344 1145.792289547387 454.5352112492344 L 869.217095110823 454.5352112492344 Q 855.217095110823 454.5352112492344 855.217095110823 440.5352112492344 L 855.217095110823 93.78373148635214 Q 855.217095110823 79.78373148635214 869.217095110823 79.78373148635214 Z" fill="none" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="870" y="105" class="zone-badge" fill="#7E22CE">ZONE 4: RETRIEVAL ENGINES</text>
+  <text x="870" y="125" class="zone-title" fill="#6B21A8">Multi-Tier Engines</text>
+  <text x="870" y="140" class="card-subtext">Converging Labs 7, 8, &amp; 9</text>
+
+  <!-- Engine 1: Autocomplete Trie -->
+  
+    <g>
+      <path d="M 878 155 L 1137 155 Q 1145 155 1145 163 L 1145 222 Q 1145 230 1137 230 L 878 230 Q 870 230 870 222 L 870 163 Q 870 155 878 155 Z" fill="#FFFFFF" stroke="#C084FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 877.6271645152785 155.69864734034 L 1137.2368566163946 155.69864734034 Q 1145.2368566163946 155.69864734034 1145.2368566163946 163.69864734034 L 1145.2368566163946 222.17460960906718 Q 1145.2368566163946 230.17460960906718 1137.2368566163946 230.17460960906718 L 877.6271645152785 230.17460960906718 Q 869.6271645152785 230.17460960906718 869.6271645152785 222.17460960906718 L 869.6271645152785 163.69864734034 Q 869.6271645152785 155.69864734034 877.6271645152785 155.69864734034 Z" fill="none" stroke="#C084FC" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="882" y="175" class="card-header" fill="#7E22CE">TrieService.js (Lab 8)</text>
+  <text x="882" y="193" class="card-text">Process RAM Heap • 176 Seed Terms</text>
+  <text x="882" y="210" class="card-subtext">Node-cached Top-K Heaps</text>
+  <!-- Latency Badge -->
+  
+    <g>
+      <path d="M 1052 163 L 1123 163 Q 1135 163 1135 175 L 1135 175 Q 1135 187 1123 187 L 1052 187 Q 1040 187 1040 175 L 1040 175 Q 1040 163 1052 163 Z" fill="#F3E8FF" stroke="#9333EA" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 1051.473821837117 163.36660287672055 L 1122.461443990019 163.36660287672055 Q 1134.461443990019 163.36660287672055 1134.461443990019 175.36660287672055 L 1134.461443990019 174.80712870681225 Q 1134.461443990019 186.80712870681225 1122.461443990019 186.80712870681225 L 1051.473821837117 186.80712870681225 Q 1039.473821837117 186.80712870681225 1039.473821837117 174.80712870681225 L 1039.473821837117 175.36660287672055 Q 1039.473821837117 163.36660287672055 1051.473821837117 163.36660287672055 Z" fill="none" stroke="#9333EA" stroke-width="0.8999999999999999" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="1087" y="175" class="pill-text" fill="#7E22CE">0.02ms RAM</text>
+
+  <!-- Engine 2: Primary Elasticsearch -->
+  
+    <g>
+      <path d="M 878 240 L 1137 240 Q 1145 240 1145 248 L 1145 327 Q 1145 335 1137 335 L 878 335 Q 870 335 870 327 L 870 248 Q 870 240 878 240 Z" fill="#FFFFFF" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 878.7832373610186 240.22399961576656 L 1137.0911195900394 240.22399961576656 Q 1145.0911195900394 240.22399961576656 1145.0911195900394 248.22399961576656 L 1145.0911195900394 327.2953828015838 Q 1145.0911195900394 335.2953828015838 1137.0911195900394 335.2953828015838 L 878.7832373610186 335.2953828015838 Q 870.7832373610186 335.2953828015838 870.7832373610186 327.2953828015838 L 870.7832373610186 248.22399961576656 Q 870.7832373610186 240.22399961576656 878.7832373610186 240.22399961576656 Z" fill="none" stroke="#38BDF8" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="882" y="260" class="card-header" fill="#0284C7">Elasticsearch 8.11.0 (Lab 9)</text>
+  <text x="882" y="278" class="card-text">Docker Cluster • Port 9200</text>
+  <text x="882" y="295" class="card-text">Lucene BM25 + Porter Stemming</text>
+  <text x="882" y="312" class="card-subtext">Multi-field match (title + content)</text>
+  <!-- Latency Badge -->
+  
+    <g>
+      <path d="M 1052 248 L 1123 248 Q 1135 248 1135 260 L 1135 260 Q 1135 272 1123 272 L 1052 272 Q 1040 272 1040 260 L 1040 260 Q 1040 248 1052 248 Z" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 1052.5485630723038 248.44159985847398 L 1122.5664769151426 248.44159985847398 Q 1134.5664769151426 248.44159985847398 1134.5664769151426 260.441599858474 L 1134.5664769151426 259.2513603902465 Q 1134.5664769151426 271.2513603902465 1122.5664769151426 271.2513603902465 L 1052.5485630723038 271.2513603902465 Q 1040.5485630723038 271.2513603902465 1040.5485630723038 259.2513603902465 L 1040.5485630723038 260.441599858474 Q 1040.5485630723038 248.44159985847398 1052.5485630723038 248.44159985847398 Z" fill="none" stroke="#0284C7" stroke-width="0.8999999999999999" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="1087" y="260" class="pill-text" fill="#0369A1">~7.5ms ES</text>
+
+  <!-- Engine 3: In-Memory Fallback Index -->
+  
+    <g>
+      <path d="M 878 345 L 1137 345 Q 1145 345 1145 353 L 1145 432 Q 1145 440 1137 440 L 878 440 Q 870 440 870 432 L 870 353 Q 870 345 878 345 Z" fill="#FFFFFF" stroke="#F43F5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 877.7047248768945 344.6283854015611 L 1136.5375725497381 344.6283854015611 Q 1144.5375725497381 344.6283854015611 1144.5375725497381 352.6283854015611 L 1144.5375725497381 432.70865554293607 Q 1144.5375725497381 440.70865554293607 1136.5375725497381 440.70865554293607 L 877.7047248768945 440.70865554293607 Q 869.7047248768945 440.70865554293607 869.7047248768945 432.70865554293607 L 869.7047248768945 352.6283854015611 Q 869.7047248768945 344.6283854015611 877.7047248768945 344.6283854015611 Z" fill="none" stroke="#F43F5E" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="882" y="365" class="card-header" fill="#E11D48">InvertedIndex.js (Lab 7)</text>
+  <text x="882" y="383" class="card-text">Process RAM Heap • 9 Documents</text>
+  <text x="882" y="400" class="card-text">Exact BM25 Token Matching</text>
+  <text x="882" y="417" class="card-subtext">Instant Fast-Fail on Breaker Trip</text>
+  <!-- Latency Badge -->
+  
+    <g>
+      <path d="M 1052 353 L 1123 353 Q 1135 353 1135 365 L 1135 365 Q 1135 377 1123 377 L 1052 377 Q 1040 377 1040 365 L 1040 365 Q 1040 353 1052 353 Z" fill="#FFE4E6" stroke="#E11D48" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 1052.6021882023563 352.70348460927755 L 1123.2487018644717 352.70348460927755 Q 1135.2487018644717 352.70348460927755 1135.2487018644717 364.70348460927755 L 1135.2487018644717 364.8330110416971 Q 1135.2487018644717 376.8330110416971 1123.2487018644717 376.8330110416971 L 1052.6021882023563 376.8330110416971 Q 1040.6021882023563 376.8330110416971 1040.6021882023563 364.8330110416971 L 1040.6021882023563 364.70348460927755 Q 1040.6021882023563 352.70348460927755 1052.6021882023563 352.70348460927755 Z" fill="none" stroke="#E11D48" stroke-width="0.8999999999999999" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+    </g>
+  <text x="1087" y="365" class="pill-text" fill="#BE123C">0.04ms RAM</text>
+
+</svg>
