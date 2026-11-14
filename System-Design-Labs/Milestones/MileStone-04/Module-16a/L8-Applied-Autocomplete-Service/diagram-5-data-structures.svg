@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .tree-line { stroke: #64748B; stroke-width: 1.5; stroke-linecap: round; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="380" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">In-Memory Physical Structure: TrieNode vs. FlatPrefixMap</text>
+    <text x="0" y="18" class="sketch-subtitle">Contrasting Deep Pointer Graph Overhead with Bounded Flat Array Storage</text>
+  </g>
+
+  <!-- LEFT: CHARACTER TRIE GRAPH -->
+  <g transform="translate(40, 68)">
+    <rect width="435" height="280" class="sketch-box" stroke="#64748B" fill="#F8FAFC" />
+    <rect x="14" y="12" width="160" height="18" rx="4" fill="#E2E8F0" />
+    <text x="20" y="25" class="txt-badge" fill="#334155">TRIENODE POINTER GRAPH</text>
+    <text x="14" y="48" class="txt-heading">Tree Walk: Root -&gt; 'k' -&gt; 'a' -&gt; 'c'</text>
+    <text x="14" y="65" class="txt-sub">Each node stores an object wrapper and child Map</text>
+
+    <!-- Node 1: Root -->
+    <rect x="20" y="82" width="100" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <text x="28" y="98" class="txt-badge" fill="#64748B">RootNode</text>
+    <text x="28" y="112" class="txt-code" fill="#0F172A">children: Map</text>
+
+    <!-- Node 2: 'k' -->
+    <rect x="150" y="82" width="100" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <text x="158" y="98" class="txt-badge" fill="#64748B">Node ('k')</text>
+    <text x="158" y="112" class="txt-code" fill="#0F172A">topK: [ ... ]</text>
+
+    <!-- Node 3: 'a' -->
+    <rect x="150" y="146" width="100" height="40" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <text x="158" y="162" class="txt-badge" fill="#64748B">Node ('a')</text>
+    <text x="158" y="176" class="txt-code" fill="#0F172A">topK: [ ... ]</text>
+
+    <!-- Node 4: 'c' (Prefix 'kac') -->
+    <rect x="280" y="146" width="135" height="56" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5" />
+    <text x="288" y="164" class="txt-badge" fill="#1D4ED8">Prefix Node ('kac')</text>
+    <text x="288" y="180" class="txt-code" fill="#1E40AF">topK: 5 items</text>
+    <text x="288" y="194" class="txt-sub">Precomputed in build</text>
+
+    <!-- Connectors -->
+    <path d="M 120 102 L 150 102" class="tree-line" />
+    <path d="M 200 122 L 200 146" class="tree-line" />
+    <path d="M 250 166 L 280 166" class="tree-line" />
+
+    <!-- Breakdown Card -->
+    <rect x="14" y="214" width="405" height="52" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1" />
+    <text x="24" y="232" class="txt-badge" fill="#DC2626">V8 HEAP POINTER TAX</text>
+    <text x="24" y="248" class="txt-sub" fill="#991B1B">Object Header (32B) + Children Map (64B) + TopK Array (96B) = ~480B / node</text>
+    <text x="24" y="260" class="txt-code" fill="#991B1B">237,734 Nodes = 124.02 MB RAM</text>
+  </g>
+
+  <!-- RIGHT: FLAT PREFIX MAP TABLE -->
+  <g transform="translate(505, 68)">
+    <rect width="435" height="280" class="sketch-box" stroke="#16A34A" fill="#F0FDF4" />
+    <rect x="14" y="12" width="170" height="18" rx="4" fill="#DCFCE7" />
+    <text x="20" y="25" class="txt-badge" fill="#15803D">FLATPREFIXMAP ARRAY BUCKETS</text>
+    <text x="14" y="48" class="txt-heading">Flat Map: Direct String Key -&gt; Top-5 Array</text>
+    <text x="14" y="65" class="txt-sub">Bounded prefix length L &lt;= 6 eliminates tree pointer chains</text>
+
+    <!-- Flat Key-Value Rows -->
+    <rect x="14" y="82" width="405" height="34" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="24" y="103" class="txt-code" fill="#15803D">"k"   -&gt; [ "kacchi biryani", "kacchi mutton", "kacchi", ... ]</text>
+
+    <rect x="14" y="122" width="405" height="34" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="24" y="143" class="txt-code" fill="#15803D">"ka"  -&gt; [ "kacchi biryani", "kacchi mutton", "kacchi", ... ]</text>
+
+    <rect x="14" y="162" width="405" height="42" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5" />
+    <text x="24" y="180" class="txt-badge" fill="#15803D">O(1) DIRECT HIT</text>
+    <text x="24" y="196" class="txt-code" fill="#15803D">"kac" -&gt; [ "kacchi biryani", "kacchi mutton", ... ] (0.04us)</text>
+
+    <!-- Breakdown Card -->
+    <rect x="14" y="214" width="405" height="52" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1" />
+    <text x="24" y="232" class="txt-badge" fill="#15803D">POINTERLESS MEMORY EFFICIENCY</text>
+    <text x="24" y="248" class="txt-sub" fill="#166534">Array-backed MinHeap discards prefixes length &gt; 6 (rarely typed)</text>
+    <text x="24" y="260" class="txt-code" fill="#15803D">44 Bounded Keys = 0.10 MB RAM (99.9% Memory Reduction!)</text>
+  </g>
+</svg>

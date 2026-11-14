@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 440" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 12; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-arrow {
+        stroke: #64748B;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+      .flow-green {
+        stroke: #16A34A;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+      .flow-amber {
+        stroke: #D97706;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+      .flow-purple {
+        stroke: #9333EA;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
+      }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333EA" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="440" class="bg" />
+
+  <!-- Top Title Header -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">High-Throughput Autocomplete &amp; Typeahead System Architecture</text>
+    <text x="0" y="18" class="sketch-subtitle">Hybrid Multi-Engine Serving (Trie + FlatPrefixMap) with Distributed L1 Cache-Aside &amp; Asynchronous Write Ingestion</text>
+  </g>
+
+  <!-- 1. CLIENT INGRESS -->
+  <g transform="translate(40, 64)">
+    <rect width="180" height="230" class="sketch-box" />
+    <rect x="12" y="12" width="115" height="18" rx="4" fill="#E0F2FE" />
+    <text x="18" y="25" class="txt-badge" fill="#0369A1">1. CLIENT INGRESS</text>
+    <text x="12" y="48" class="txt-heading">Search Input Field</text>
+    <text x="12" y="64" class="txt-sub">Typing: ~100ms rhythm</text>
+
+    <rect x="12" y="78" width="156" height="40" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="18" y="93" class="txt-badge" fill="#64748B">Active Keystroke</text>
+    <text x="18" y="108" class="txt-code" fill="#0F172A">q = "kac"</text>
+
+    <rect x="12" y="128" width="156" height="40" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1" />
+    <text x="18" y="143" class="txt-badge" fill="#D97706">Target Roundtrip</text>
+    <text x="18" y="158" class="txt-code" fill="#B45309">p99 &lt; 50ms SLA</text>
+
+    <rect x="12" y="178" width="156" height="40" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1" />
+    <text x="18" y="193" class="txt-badge" fill="#64748B">Debounce Window</text>
+    <text x="18" y="208" class="txt-code" fill="#475569">20ms Client Filter</text>
+  </g>
+
+  <!-- 2. EXPRESS SERVICE & COORDINATOR -->
+  <g transform="translate(260, 64)">
+    <rect width="210" height="230" class="sketch-box" stroke="#0284C7" />
+    <rect x="12" y="12" width="130" height="18" rx="4" fill="#E0F2FE" />
+    <text x="18" y="25" class="txt-badge" fill="#0369A1">2. HTTP COORDINATOR</text>
+    <text x="12" y="48" class="txt-heading">Express (server.js)</text>
+    <text x="12" y="64" class="txt-sub">AutocompleteService Coordinator</text>
+
+    <rect x="12" y="78" width="186" height="38" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1" />
+    <text x="18" y="93" class="txt-badge" fill="#16A34A">Internal Compute Budget</text>
+    <text x="18" y="107" class="txt-code" fill="#15803D">&lt;= 3.0ms Target</text>
+
+    <rect x="12" y="124" width="186" height="42" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="18" y="139" class="txt-badge" fill="#64748B">Routing Strategy</text>
+    <text x="18" y="154" class="txt-code" fill="#334155">Cache-Aside Read Flow</text>
+
+    <rect x="12" y="174" width="186" height="44" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1" />
+    <text x="18" y="189" class="txt-badge" fill="#DC2626">Resilient Fallback</text>
+    <text x="18" y="204" class="txt-code" fill="#991B1B">Degrades to RAM on Cache Fail</text>
+  </g>
+
+  <!-- 3. TIER 1: REDIS CACHE -->
+  <g transform="translate(510, 64)">
+    <rect width="200" height="230" class="sketch-box" stroke="#D97706" />
+    <rect x="12" y="12" width="125" height="18" rx="4" fill="#FEF3C7" />
+    <text x="18" y="25" class="txt-badge" fill="#B45309">3. L1 REDIS CACHE</text>
+    <text x="12" y="48" class="txt-heading">Distributed ACL Cache</text>
+    <text x="12" y="64" class="txt-sub">Shared Cross-Pod Prefix Cache</text>
+
+    <rect x="12" y="78" width="176" height="40" rx="6" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+    <text x="18" y="93" class="txt-badge" fill="#D97706">Cache Key Schema</text>
+    <text x="18" y="108" class="txt-code" fill="#B45309">prefix_cache:{prefix}</text>
+
+    <rect x="12" y="126" width="176" height="40" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="18" y="141" class="txt-badge" fill="#64748B">Expiration Policy</text>
+    <text x="18" y="156" class="txt-code" fill="#334155">SETEX TTL: 300s (5 min)</text>
+
+    <rect x="12" y="174" width="176" height="42" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
+    <text x="18" y="189" class="txt-badge" fill="#1D4ED8">Hit RTT Reality</text>
+    <text x="18" y="204" class="txt-code" fill="#1E40AF">0.5ms - 1.5ms Network Hop</text>
+  </g>
+
+  <!-- 4. TIER 2: IN-MEMORY ENGINES -->
+  <g transform="translate(750, 64)">
+    <rect width="190" height="230" class="sketch-box" stroke="#16A34A" />
+    <rect x="12" y="12" width="130" height="18" rx="4" fill="#DCFCE7" />
+    <text x="18" y="25" class="txt-badge" fill="#15803D">4. IN-MEMORY RAM</text>
+    <text x="12" y="48" class="txt-heading">Local Process Engines</text>
+    <text x="12" y="64" class="txt-sub">Sub-Microsecond RAM Lookup</text>
+
+    <rect x="12" y="78" width="166" height="44" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1" />
+    <text x="18" y="93" class="txt-badge" fill="#16A34A">FlatPrefixMap (Lab 4)</text>
+    <text x="18" y="108" class="txt-code" fill="#15803D">0.04 us | 0.10 MB RAM</text>
+
+    <rect x="12" y="130" width="166" height="44" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="18" y="145" class="txt-badge" fill="#64748B">Character Trie (Lab 3)</text>
+    <text x="18" y="160" class="txt-code" fill="#334155">0.08 us | 124 MB RAM</text>
+
+    <rect x="12" y="182" width="166" height="34" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1" />
+    <text x="18" y="201" class="txt-badge" fill="#B45309">99.9% Memory Reduction</text>
+  </g>
+
+  <!-- BOTTOM: ASYNCHRONOUS WRITE PATH & RCU PIPELINE -->
+  <g transform="translate(40, 314)">
+    <rect width="900" height="106" class="sketch-box" stroke="#9333EA" fill="#FAF5FF" />
+    <rect x="16" y="12" width="150" height="18" rx="4" fill="#F3E8FF" />
+    <text x="22" y="25" class="txt-badge" fill="#7E22CE">5. ASYNC WRITE PATH &amp; RCU</text>
+    <text x="16" y="48" class="txt-heading">Decoupled Query Logging &amp; Hot-Swap</text>
+    <text x="16" y="66" class="txt-sub">POST /search dispatches fire-and-forget ZINCRBY to Redis Sorted Set (zero keystroke latency)</text>
+
+    <!-- Sub-elements -->
+    <rect x="360" y="16" width="220" height="74" rx="6" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1" />
+    <text x="372" y="34" class="txt-badge" fill="#9333EA">Redis Sorted Set Counter</text>
+    <text x="372" y="52" class="txt-code" fill="#6B21A8">ZINCRBY query_frequencies</text>
+    <text x="372" y="68" class="txt-sub">Maintains real-time popularity</text>
+
+    <rect x="610" y="16" width="270" height="74" rx="6" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1" />
+    <text x="622" y="34" class="txt-badge" fill="#9333EA">RCU Atomic Pointer Hot-Swap</text>
+    <text x="622" y="52" class="txt-code" fill="#6B21A8">this.activeEngine = newEngine</text>
+    <text x="622" y="68" class="txt-sub">Zero read locks | Zero GC pauses</text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- 1 -> 2 -->
+  <path d="M 220 179 L 260 179" class="flow-arrow" marker-end="url(#arr)" />
+  <!-- 2 -> 3 -->
+  <path d="M 470 140 L 510 140" class="flow-amber" marker-end="url(#arr-amber)" />
+  <!-- 3 -> 2 (Hit) -->
+  <path d="M 510 175 L 470 175" class="flow-amber" marker-end="url(#arr-amber)" />
+  <!-- 2 -> 4 (Miss fallback) -->
+  <path d="M 470 215 C 570 240, 680 240, 750 215" class="flow-green" marker-end="url(#arr-green)" />
+  <!-- 2 -> Bottom 5 (Async search) -->
+  <path d="M 330 294 L 330 314" class="flow-purple" marker-end="url(#arr-purple)" />
+</svg>

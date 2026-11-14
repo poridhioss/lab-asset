@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 380" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="380" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Production Express Microservice Endpoints &amp; API Contract</text>
+    <text x="0" y="18" class="sketch-subtitle">REST Interface for Sub-50ms Keystroke Suggestions, Asynchronous Search Logging, and Engine Metrics</text>
+  </g>
+
+  <!-- ROUTE 1: GET /suggest (Top Left) -->
+  <g transform="translate(40, 68)">
+    <rect width="435" height="135" class="sketch-box" stroke="#0284C7" fill="#F0F9FF" />
+    <rect x="14" y="12" width="125" height="18" rx="4" fill="#E0F2FE" />
+    <text x="20" y="25" class="txt-badge" fill="#0369A1">GET /SUGGEST</text>
+    <text x="14" y="48" class="txt-heading" fill="#0284C7">Keystroke Suggestion Read Endpoint</text>
+    <text x="14" y="65" class="txt-code" fill="#0F172A">GET /suggest?q=kac&amp;engine=hash&amp;k=5</text>
+
+    <!-- Response Preview -->
+    <rect x="14" y="76" width="405" height="46" rx="6" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1" />
+    <text x="24" y="94" class="txt-code" fill="#0369A1">{ count: 5, tookMs: 0.015, source: "memory_hash",</text>
+    <text x="24" y="110" class="txt-code" fill="#0369A1">  suggestions: [ { query: "kacchi biryani", frequency: 16400 }, ... ] }</text>
+  </g>
+
+  <!-- ROUTE 2: POST /search (Top Right) -->
+  <g transform="translate(505, 68)">
+    <rect width="435" height="135" class="sketch-box" stroke="#9333EA" fill="#FAF5FF" />
+    <rect x="14" y="12" width="125" height="18" rx="4" fill="#F3E8FF" />
+    <text x="20" y="25" class="txt-badge" fill="#7E22CE">POST /SEARCH</text>
+    <text x="14" y="48" class="txt-heading" fill="#7E22CE">Asynchronous Search Write Path</text>
+    <text x="14" y="65" class="txt-code" fill="#0F172A">POST /search { "query": "kacchi biryani" }</text>
+
+    <!-- Response Preview -->
+    <rect x="14" y="76" width="405" height="46" rx="6" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1" />
+    <text x="24" y="94" class="txt-code" fill="#7E22CE">HTTP 202 Accepted { status: "recorded", query: "kacchi biryani" }</text>
+    <text x="24" y="110" class="txt-sub" fill="#6B21A8">Asynchronously runs ZINCRBY query_frequencies 1 query in Redis</text>
+  </g>
+
+  <!-- ROUTE 3: GET /metrics (Bottom Left) -->
+  <g transform="translate(40, 218)">
+    <rect width="435" height="135" class="sketch-box" stroke="#16A34A" fill="#F0FDF4" />
+    <rect x="14" y="12" width="115" height="18" rx="4" fill="#DCFCE7" />
+    <text x="20" y="25" class="txt-badge" fill="#15803D">GET /METRICS</text>
+    <text x="14" y="48" class="txt-heading" fill="#15803D">Engine Introspection &amp; Memory Telemetry</text>
+    <text x="14" y="65" class="txt-code" fill="#0F172A">GET /metrics</text>
+
+    <!-- Response Preview -->
+    <rect x="14" y="76" width="405" height="46" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="24" y="94" class="txt-code" fill="#15803D">{ cache: { hits: 142, misses: 23, ratio: 0.86 },</text>
+    <text x="24" y="110" class="txt-code" fill="#15803D">  engines: { flatMapBytes: 104857, trieBytes: 130045952 } }</text>
+  </g>
+
+  <!-- ROUTE 4: GET / (Bottom Right) -->
+  <g transform="translate(505, 218)">
+    <rect width="435" height="135" class="sketch-box" stroke="#64748B" fill="#F8FAFC" />
+    <rect x="14" y="12" width="80" height="18" rx="4" fill="#E2E8F0" />
+    <text x="20" y="25" class="txt-badge" fill="#334155">GET /</text>
+    <text x="14" y="48" class="txt-heading" fill="#334155">Container Health Check Probe</text>
+    <text x="14" y="65" class="txt-code" fill="#0F172A">GET / (Health Probe)</text>
+
+    <!-- Response Preview -->
+    <rect x="14" y="76" width="405" height="46" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="24" y="94" class="txt-code" fill="#334155">{ status: "healthy", service: "autocomplete-typeahead",</text>
+    <text x="24" y="110" class="txt-code" fill="#334155">  version: "1.0.0", runtime: "Node.js 20+ LTS" }</text>
+  </g>
+</svg>

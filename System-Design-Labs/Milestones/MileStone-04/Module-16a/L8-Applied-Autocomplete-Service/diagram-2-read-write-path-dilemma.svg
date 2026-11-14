@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 400" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .flow-blue { stroke: #0284C7; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-purple { stroke: #9333EA; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284C7" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333EA" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="400" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Read Path vs. Write Path Decoupling</text>
+    <text x="0" y="18" class="sketch-subtitle">99% Read Keystroke Path (Pure RAM &amp; Caches) vs. 1% Write Search Confirmation Path (Async Aggregation &amp; RCU)</text>
+  </g>
+
+  <!-- TOP CONTAINER: FAST READ PATH (99% TRAFFIC) -->
+  <g transform="translate(40, 64)">
+    <rect width="900" height="150" class="sketch-box" stroke="#0284C7" fill="#F0F9FF" />
+    <rect x="14" y="10" width="165" height="18" rx="4" fill="#E0F2FE" />
+    <text x="20" y="23" class="txt-badge" fill="#0369A1">FAST READ PATH (99% TRAFFIC)</text>
+    <text x="14" y="44" class="txt-heading" fill="#0369A1">Sub-Millisecond Keystroke Suggestion Serving</text>
+
+    <!-- Node 1: Keystroke Request -->
+    <rect x="14" y="58" width="170" height="76" rx="6" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.2" />
+    <text x="24" y="76" class="txt-badge" fill="#0284C7">User Keystrokes</text>
+    <text x="24" y="94" class="txt-code" fill="#0F172A">GET /suggest?q=kac</text>
+    <text x="24" y="112" class="txt-sub">50k - 100k QPS Load</text>
+
+    <!-- Node 2: Gateway & L1 Cache Check -->
+    <rect x="235" y="58" width="220" height="76" rx="6" fill="#FFFFFF" stroke="#FDE68A" stroke-width="1.2" />
+    <text x="245" y="76" class="txt-badge" fill="#D97706">Step 1: Check L1 Redis Cache</text>
+    <text x="245" y="94" class="txt-code" fill="#B45309">GET prefix_cache:kac</text>
+    <text x="245" y="112" class="txt-sub">Hit: returns top-5 in ~1.0ms</text>
+
+    <!-- Node 3: Local In-Memory RAM Engine -->
+    <rect x="505" y="58" width="210" height="76" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1.2" />
+    <text x="515" y="76" class="txt-badge" fill="#16A34A">Step 2: Fallback to Local RAM</text>
+    <text x="515" y="94" class="txt-code" fill="#15803D">FlatPrefixMap / Trie</text>
+    <text x="515" y="112" class="txt-sub">Compute: 0.04us - 0.08us</text>
+
+    <!-- Node 4: Output Suggestions -->
+    <rect x="765" y="58" width="120" height="76" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="775" y="78" class="txt-badge" fill="#15803D">Output JSON</text>
+    <text x="775" y="98" class="txt-code" fill="#15803D">Top-5 Results</text>
+    <text x="775" y="116" class="txt-sub">&lt; 3ms Compute</text>
+  </g>
+
+  <!-- BOTTOM CONTAINER: ASYNC WRITE PATH (1% TRAFFIC) -->
+  <g transform="translate(40, 228)">
+    <rect width="900" height="150" class="sketch-box" stroke="#9333EA" fill="#FAF5FF" />
+    <rect x="14" y="10" width="180" height="18" rx="4" fill="#F3E8FF" />
+    <text x="20" y="23" class="txt-badge" fill="#7E22CE">ASYNC WRITE PATH (1% TRAFFIC)</text>
+    <text x="14" y="44" class="txt-heading" fill="#7E22CE">Decoupled Search Confirmation &amp; RCU Pointer Swap</text>
+
+    <!-- Node 1: Final Search Submitted -->
+    <rect x="14" y="58" width="170" height="76" rx="6" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.2" />
+    <text x="24" y="76" class="txt-badge" fill="#9333EA">User Submits Query</text>
+    <text x="24" y="94" class="txt-code" fill="#0F172A">POST /search</text>
+    <text x="24" y="112" class="txt-sub">"kacchi biryani" submitted</text>
+
+    <!-- Node 2: HTTP 202 Instant Response -->
+    <rect x="235" y="58" width="220" height="76" rx="6" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.2" />
+    <text x="245" y="76" class="txt-badge" fill="#9333EA">Instant 202 Accepted</text>
+    <text x="245" y="94" class="txt-code" fill="#6B21A8">status: "recorded"</text>
+    <text x="245" y="112" class="txt-sub">0ms added to user experience</text>
+
+    <!-- Node 3: Redis Sorted Set Counter -->
+    <rect x="505" y="58" width="210" height="76" rx="6" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1.2" />
+    <text x="515" y="76" class="txt-badge" fill="#9333EA">Async Redis ZSET Counter</text>
+    <text x="515" y="94" class="txt-code" fill="#6B21A8">ZINCRBY frequencies</text>
+    <text x="515" y="112" class="txt-sub">Atomic global aggregation</text>
+
+    <!-- Node 4: Background RCU Swap -->
+    <rect x="765" y="58" width="120" height="76" rx="6" fill="#F3E8FF" stroke="#C084FC" stroke-width="1.2" />
+    <text x="773" y="76" class="txt-badge" fill="#7E22CE">RCU Swap</text>
+    <text x="773" y="94" class="txt-code" fill="#6B21A8">active = new</text>
+    <text x="773" y="112" class="txt-sub">Lock-free swap</text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- Top: 1 -> 2 -->
+  <path d="M 224 160 L 275 160" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Top: 2 -> 3 (Miss) -->
+  <path d="M 495 160 L 545 160" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Top: 3 -> 4 -->
+  <path d="M 755 160 L 805 160" class="flow-green" marker-end="url(#arr-green)" />
+
+  <!-- Bottom: 1 -> 2 -->
+  <path d="M 224 324 L 275 324" class="flow-purple" marker-end="url(#arr-purple)" />
+  <!-- Bottom: 2 -> 3 -->
+  <path d="M 495 324 L 545 324" class="flow-purple" marker-end="url(#arr-purple)" />
+  <!-- Bottom: 3 -> 4 -->
+  <path d="M 755 324 L 805 324" class="flow-purple" marker-end="url(#arr-purple)" />
+</svg>

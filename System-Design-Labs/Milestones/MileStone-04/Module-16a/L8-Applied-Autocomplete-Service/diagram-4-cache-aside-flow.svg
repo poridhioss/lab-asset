@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 400" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .flow-arrow { stroke: #64748B; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-amber { stroke: #D97706; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-red { stroke: #DC2626; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#DC2626" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="400" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Redis L1 Cache-Aside Flow with Resilient RAM Engine Fallback</text>
+    <text x="0" y="18" class="sketch-subtitle">How the AutocompleteService coordinates fast shared caching with zero-downtime graceful degradation</text>
+  </g>
+
+  <!-- Step 1: User Request (Left) -->
+  <g transform="translate(40, 74)">
+    <rect width="180" height="290" class="sketch-box" />
+    <rect x="12" y="12" width="125" height="18" rx="4" fill="#E0F2FE" />
+    <text x="18" y="25" class="txt-badge" fill="#0369A1">STEP 1: USER INPUT</text>
+    <text x="12" y="48" class="txt-heading">GET /suggest?q=kac</text>
+    <text x="12" y="65" class="txt-sub">Normalized prefix: "kac"</text>
+
+    <rect x="12" y="82" width="156" height="50" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="20" y="100" class="txt-badge" fill="#64748B">Parameters</text>
+    <text x="20" y="118" class="txt-code" fill="#0F172A">engine: hash, k: 5</text>
+
+    <rect x="12" y="144" width="156" height="60" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1" />
+    <text x="20" y="162" class="txt-badge" fill="#16A34A">SLA Guarantee</text>
+    <text x="20" y="180" class="txt-code" fill="#15803D">tookMs &lt;= 3.0ms</text>
+    <text x="20" y="194" class="txt-sub">High-resolution timing</text>
+
+    <rect x="12" y="216" width="156" height="60" rx="6" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1" />
+    <text x="20" y="234" class="txt-badge" fill="#D97706">Cache Target</text>
+    <text x="20" y="252" class="txt-code" fill="#B45309">prefix_cache:kac</text>
+    <text x="20" y="266" class="txt-sub">Shared across 50 pods</text>
+  </g>
+
+  <!-- Step 2: Cache Check Decision Block (Middle) -->
+  <g transform="translate(260, 74)">
+    <rect width="210" height="290" class="sketch-box" stroke="#D97706" fill="#FFFBEB" />
+    <rect x="12" y="12" width="135" height="18" rx="4" fill="#FEF3C7" />
+    <text x="18" y="25" class="txt-badge" fill="#B45309">STEP 2: CHECK CACHE</text>
+    <text x="12" y="48" class="txt-heading">Redis Probe (L1)</text>
+    <text x="12" y="65" class="txt-sub">try { redis.get(key) }</text>
+
+    <!-- Branch A: HIT -->
+    <rect x="12" y="82" width="186" height="60" rx="6" fill="#FFFFFF" stroke="#FDE68A" stroke-width="1.2" />
+    <text x="20" y="100" class="txt-badge" fill="#D97706">BRANCH A: CACHE HIT</text>
+    <text x="20" y="118" class="txt-code" fill="#B45309">returns JSON in ~1ms</text>
+    <text x="20" y="132" class="txt-sub">source: "redis_cache"</text>
+
+    <!-- Branch B: MISS -->
+    <rect x="12" y="152" width="186" height="60" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1.2" />
+    <text x="20" y="170" class="txt-badge" fill="#16A34A">BRANCH B: CACHE MISS</text>
+    <text x="20" y="188" class="txt-code" fill="#15803D">null -&gt; local RAM engine</text>
+    <text x="20" y="202" class="txt-sub">Async SETEX 300s warming</text>
+
+    <!-- Branch C: ERROR -->
+    <rect x="12" y="222" width="186" height="56" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2" />
+    <text x="20" y="240" class="txt-badge" fill="#DC2626">BRANCH C: REDIS ERROR</text>
+    <text x="20" y="258" class="txt-code" fill="#991B1B">catch (err) { cached=null }</text>
+    <text x="20" y="270" class="txt-sub">Silently bypasses Redis</text>
+  </g>
+
+  <!-- Step 3: Local In-Memory RAM Engine (Right) -->
+  <g transform="translate(510, 74)">
+    <rect width="210" height="290" class="sketch-box" stroke="#16A34A" fill="#F0FDF4" />
+    <rect x="12" y="12" width="145" height="18" rx="4" fill="#DCFCE7" />
+    <text x="18" y="25" class="txt-badge" fill="#15803D">STEP 3: RAM LOOKUP</text>
+    <text x="12" y="48" class="txt-heading">Local In-Memory Engine</text>
+    <text x="12" y="65" class="txt-sub">Always available in process RAM</text>
+
+    <rect x="12" y="82" width="186" height="85" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1.2" />
+    <text x="20" y="100" class="txt-badge" fill="#16A34A">Primary: FlatPrefixMap</text>
+    <text x="20" y="118" class="txt-code" fill="#15803D">L &lt;= 6 MinHeap Array</text>
+    <text x="20" y="136" class="txt-sub">RAM Lookup: 0.04 us</text>
+    <text x="20" y="152" class="txt-sub">Memory Footprint: 0.10 MB</text>
+
+    <rect x="12" y="180" width="186" height="85" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="20" y="198" class="txt-badge" fill="#64748B">Fallback: TrieService</text>
+    <text x="20" y="216" class="txt-code" fill="#0F172A">O(L) Edge Walk</text>
+    <text x="20" y="234" class="txt-sub">RAM Lookup: 0.08 us</text>
+    <text x="20" y="250" class="txt-sub">Memory Footprint: 124 MB</text>
+  </g>
+
+  <!-- Step 4: Final Client Response (Far Right) -->
+  <g transform="translate(760, 74)">
+    <rect width="180" height="290" class="sketch-box" stroke="#0F172A" />
+    <rect x="12" y="12" width="135" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#0F172A">STEP 4: RESPONSE</text>
+    <text x="12" y="48" class="txt-heading">HTTP 200 OK</text>
+    <text x="12" y="65" class="txt-sub">Ranked Top-K Suggestions</text>
+
+    <rect x="12" y="82" width="156" height="186" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" />
+    <text x="18" y="102" class="txt-badge" fill="#64748B">Response JSON</text>
+    <text x="18" y="120" class="txt-code" fill="#0F172A">1. kacchi biryani</text>
+    <text x="18" y="136" class="txt-code" fill="#0F172A">2. kacchi mutton</text>
+    <text x="18" y="152" class="txt-code" fill="#0F172A">3. kacchi</text>
+    <text x="18" y="168" class="txt-code" fill="#0F172A">4. kacchi beef</text>
+    <text x="18" y="184" class="txt-code" fill="#0F172A">5. kacchi basmati</text>
+
+    <text x="18" y="210" class="txt-code" fill="#16A34A">slaPass: true</text>
+    <text x="18" y="226" class="txt-code" fill="#16A34A">tookMs: 0.015ms</text>
+    <text x="18" y="244" class="txt-sub">Zero UI Jitter</text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- 1 -> 2 -->
+  <path d="M 220 180 L 260 180" class="flow-arrow" marker-end="url(#arr)" />
+  <!-- 2 (Hit) -> 4 directly -->
+  <path d="M 470 110 C 570 60, 680 60, 760 110" class="flow-amber" marker-end="url(#arr-amber)" />
+  <!-- 2 (Miss/Error) -> 3 -->
+  <path d="M 470 210 L 510 210" class="flow-green" marker-end="url(#arr-green)" />
+  <!-- 3 -> 4 -->
+  <path d="M 720 210 L 760 210" class="flow-green" marker-end="url(#arr-green)" />
+</svg>

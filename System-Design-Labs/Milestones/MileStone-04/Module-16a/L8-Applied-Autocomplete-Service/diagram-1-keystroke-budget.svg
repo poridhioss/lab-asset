@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 340" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+      .bracket { stroke: #0F172A; stroke-width: 1.8; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="340" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">The 50-Millisecond Keystroke Latency Budget</text>
+    <text x="0" y="18" class="sketch-subtitle">Deconstructing the physical latency budget between typing a character and painting the suggestion dropdown</text>
+  </g>
+
+  <!-- Visual Budget Bar Container -->
+  <g transform="translate(40, 68)">
+    <!-- 50ms Boundary Background Bar -->
+    <rect width="900" height="64" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" />
+
+    <!-- 1. Mobile Ingress: 15ms (width = 270px) -->
+    <rect x="2" y="2" width="268" height="60" rx="6" fill="#E0F2FE" />
+    <text x="14" y="24" class="txt-badge" fill="#0369A1">1. INGRESS NETWORK</text>
+    <text x="14" y="42" class="txt-code" fill="#0284C7">15 ms (Cellular RTT)</text>
+    <text x="14" y="55" class="txt-sub">Radio, DNS, TCP Handshake</text>
+
+    <!-- 2. Gateway / TLS: 2ms (width = 40px) -->
+    <rect x="272" y="2" width="46" height="60" fill="#FEF3C7" />
+    <text x="276" y="24" class="txt-badge" fill="#D97706">2. TLS</text>
+    <text x="276" y="42" class="txt-code" fill="#B45309">2ms</text>
+    <text x="276" y="55" class="txt-sub">Gate</text>
+
+    <!-- 3. Backend Compute: <=3ms (width = 70px) - HIGHLIGHTED -->
+    <rect x="320" y="2" width="80" height="60" fill="#DCFCE7" stroke="#16A34A" stroke-width="2" />
+    <text x="326" y="24" class="txt-badge" fill="#15803D">3. COMPUTE</text>
+    <text x="326" y="42" class="txt-code" fill="#16A34A">&lt;= 3 ms</text>
+    <text x="326" y="55" class="txt-sub">RAM Engine</text>
+
+    <!-- 4. JSON Serialization: 1ms (width = 30px) -->
+    <rect x="402" y="2" width="36" height="60" fill="#F3E8FF" />
+    <text x="406" y="24" class="txt-badge" fill="#7E22CE">4. JSON</text>
+    <text x="406" y="42" class="txt-code" fill="#6B21A8">1ms</text>
+
+    <!-- 5. Mobile Egress: 15ms (width = 270px) -->
+    <rect x="440" y="2" width="268" height="60" fill="#E0F2FE" />
+    <text x="452" y="24" class="txt-badge" fill="#0369A1">5. EGRESS NETWORK</text>
+    <text x="452" y="42" class="txt-code" fill="#0284C7">15 ms (Over-the-Air)</text>
+    <text x="452" y="55" class="txt-sub">Packet delivery to mobile device</text>
+
+    <!-- 6. DOM Paint: 4ms (width = 70px) -->
+    <rect x="710" y="2" width="70" height="60" fill="#FCE7F3" />
+    <text x="716" y="24" class="txt-badge" fill="#BE185D">6. PAINT</text>
+    <text x="716" y="42" class="txt-code" fill="#9D174D">4 ms</text>
+    <text x="716" y="55" class="txt-sub">DOM Tree</text>
+
+    <!-- Headroom segment: 14ms -->
+    <rect x="782" y="2" width="116" height="60" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-dasharray="4,4" />
+    <text x="792" y="26" class="txt-badge" fill="#64748B">HEADROOM</text>
+    <text x="792" y="44" class="txt-code" fill="#475569">+14 ms Buffer</text>
+    <text x="792" y="55" class="txt-sub">Mobile Jitter Margin</text>
+  </g>
+
+  <!-- Summary Bracket & Marker -->
+  <g transform="translate(40, 142)">
+    <line x1="2" y1="0" x2="780" y2="0" stroke="#0F172A" stroke-width="1.8" />
+    <line x1="2" y1="0" x2="2" y2="8" stroke="#0F172A" stroke-width="1.8" />
+    <line x1="780" y1="0" x2="780" y2="8" stroke="#0F172A" stroke-width="1.8" />
+    <text x="390" y="18" text-anchor="middle" class="txt-heading" fill="#0F172A">Total Round-Trip: 36ms (Well under the 50ms User Perception Threshold)</text>
+  </g>
+
+  <!-- COMPARISON CALLOUT CARDS -->
+  <!-- Card A: Why Relational DB Fails -->
+  <g transform="translate(40, 180)">
+    <rect width="435" height="130" class="sketch-box" stroke="#EF4444" fill="#FEF2F2" />
+    <rect x="14" y="12" width="150" height="18" rx="4" fill="#FEE2E2" />
+    <text x="20" y="25" class="txt-badge" fill="#DC2626">DISASTER: RELATIONAL DB</text>
+    <text x="14" y="48" class="txt-heading" fill="#991B1B">SELECT * FROM searches WHERE q LIKE 'kac%'</text>
+    <text x="14" y="68" class="txt-sub" fill="#7F1D1D">B-Tree range scan + disk page reads: 15ms - 40ms</text>
+    <text x="14" y="86" class="txt-sub" fill="#7F1D1D">Dynamic sorting (ORDER BY freq DESC LIMIT 5): +10ms - 30ms</text>
+    <text x="14" y="106" class="txt-code" fill="#B91C1C">Compute Time: 25ms - 70ms -&gt; EXCEEDS 50ms SLA BY 200%</text>
+  </g>
+
+  <!-- Card B: In-Memory Engine Win -->
+  <g transform="translate(505, 180)">
+    <rect width="435" height="130" class="sketch-box" stroke="#16A34A" fill="#F0FDF4" />
+    <rect x="14" y="12" width="165" height="18" rx="4" fill="#DCFCE7" />
+    <text x="20" y="25" class="txt-badge" fill="#15803D">PRODUCTION WIN: RAM ENGINE</text>
+    <text x="14" y="48" class="txt-heading" fill="#166534">FlatPrefixMap / Precomputed Top-K Trie</text>
+    <text x="14" y="68" class="txt-sub" fill="#14532D">FlatPrefixMap O(1) hash map lookup: 0.04 microseconds</text>
+    <text x="14" y="86" class="txt-sub" fill="#14532D">Character Trie O(L) pointer traversal: 0.08 microseconds</text>
+    <text x="14" y="106" class="txt-code" fill="#15803D">Compute Time: 0.0001ms -&gt; 30,000x FASTER THAN BUDGET</text>
+  </g>
+</svg>

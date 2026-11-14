@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 400" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="400" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Performance Benchmark: Character Trie (Lab 3) vs. FlatPrefixMap (Lab 4)</text>
+    <text x="0" y="18" class="sketch-subtitle">Analyzing the 99.9% Memory Reduction and Sub-Microsecond Retrieval under Zipfian Power-Law Skew</text>
+  </g>
+
+  <!-- LEFT CARD: CHARACTER TRIE (LAB 3) -->
+  <g transform="translate(40, 68)">
+    <rect width="435" height="230" class="sketch-box" stroke="#64748B" fill="#F8FAFC" />
+    <rect x="14" y="12" width="165" height="18" rx="4" fill="#E2E8F0" />
+    <text x="20" y="25" class="txt-badge" fill="#334155">CHARACTER TRIE (LAB 3)</text>
+    <text x="14" y="48" class="txt-heading" fill="#0F172A">26-Way Node Pointer Tree</text>
+    <text x="14" y="65" class="txt-sub">Full dictionary prefix walk with bottom-up caching</text>
+
+    <!-- Metrics Grid -->
+    <rect x="14" y="78" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="24" y="93" class="txt-badge" fill="#64748B">Ingestion Build Time</text>
+    <text x="24" y="110" class="txt-code" fill="#0F172A">495.37 ms</text>
+
+    <rect x="225" y="78" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="235" y="93" class="txt-badge" fill="#64748B">Total Nodes in Tree</text>
+    <text x="235" y="110" class="txt-code" fill="#0F172A">100,184 Nodes</text>
+
+    <rect x="14" y="130" width="195" height="42" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1" />
+    <text x="24" y="145" class="txt-badge" fill="#DC2626">Heap RAM Allocation</text>
+    <text x="24" y="162" class="txt-code" fill="#991B1B">45.86 MB RAM</text>
+
+    <rect x="225" y="130" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="235" y="145" class="txt-badge" fill="#64748B">p99 Retrieval Latency</text>
+    <text x="235" y="162" class="txt-code" fill="#0F172A">1.34 us (O(L) walk)</text>
+
+    <text x="14" y="200" class="txt-sub" fill="#64748B">V8 Object Pointer Overhead: ~480 bytes per character node.</text>
+    <text x="14" y="216" class="txt-sub" fill="#64748B">Supports arbitrary prefix depth (1 - 100+ characters).</text>
+  </g>
+
+  <!-- RIGHT CARD: FLAT PREFIX MAP (LAB 4) -->
+  <g transform="translate(505, 68)">
+    <rect width="435" height="230" class="sketch-box" stroke="#16A34A" fill="#F0FDF4" />
+    <rect x="14" y="12" width="175" height="18" rx="4" fill="#DCFCE7" />
+    <text x="20" y="25" class="txt-badge" fill="#15803D">FLAT PREFIX MAP (LAB 4)</text>
+    <text x="14" y="48" class="txt-heading" fill="#15803D">Pointerless Bounded Hash Map</text>
+    <text x="14" y="65" class="txt-sub">Bounded prefix length (L &lt;= 6) + Array-backed MinHeap</text>
+
+    <!-- Metrics Grid -->
+    <rect x="14" y="78" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="24" y="93" class="txt-badge" fill="#16A34A">Ingestion Build Time</text>
+    <text x="24" y="110" class="txt-code" fill="#15803D">104.09 ms (4.8x faster)</text>
+
+    <rect x="225" y="78" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="235" y="93" class="txt-badge" fill="#16A34A">Unique Prefix Keys</text>
+    <text x="235" y="110" class="txt-code" fill="#15803D">44 Bounded Keys</text>
+
+    <rect x="14" y="130" width="195" height="42" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1" />
+    <text x="24" y="145" class="txt-badge" fill="#15803D">Heap RAM Allocation</text>
+    <text x="24" y="162" class="txt-code" fill="#15803D">0.02 MB (99.9% LESS!)</text>
+
+    <rect x="225" y="130" width="195" height="42" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1" />
+    <text x="235" y="145" class="txt-badge" fill="#16A34A">p99 Retrieval Latency</text>
+    <text x="235" y="162" class="txt-code" fill="#15803D">0.42 us (O(1) map)</text>
+
+    <text x="14" y="200" class="txt-sub" fill="#15803D">Zero Pointers: Contiguous flat array storage inside V8 Map buckets.</text>
+    <text x="14" y="216" class="txt-sub" fill="#15803D">Ideal for head &amp; torso queries covering 95% of user search intent.</text>
+  </g>
+
+  <!-- BOTTOM HARDWARE REALITY BANNER -->
+  <g transform="translate(40, 314)">
+    <rect width="900" height="66" class="sketch-box" stroke="#0284C7" fill="#F0F9FF" />
+    <rect x="16" y="8" width="150" height="18" rx="4" fill="#E0F2FE" />
+    <text x="22" y="21" class="txt-badge" fill="#0369A1">CPU CACHE LOCALITY WIN</text>
+    <text x="16" y="42" class="txt-heading" fill="#0284C7">Hardware Insight: Why FlatPrefixMap Achieves 2,166,338 QPS</text>
+    <text x="16" y="58" class="txt-sub">At 0.02 MB, the entire FlatPrefixMap easily fits into the CPU's L1/L2 hardware cache, eliminating RAM bus memory stalls.</text>
+  </g>
+</svg>
