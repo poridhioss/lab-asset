@@ -2,6 +2,11 @@
   <defs>
     
     <style>
+      @keyframes dashFlow {
+        to {
+          stroke-dashoffset: -24;
+        }
+      }
       .main-title {
         font-family: "Virgil", "Caveat", "Comic Neue", "Segoe Print", -apple-system, sans-serif;
         font-size: 20px;
@@ -51,15 +56,54 @@
         font-size: 12px;
         font-weight: 600;
       }
-      .flow-line {
+      .flow-purple {
+        stroke: #9333EA;
         stroke-width: 1.8;
         stroke-linecap: round;
         stroke-linejoin: round;
+        stroke-dasharray: 6, 6;
         fill: none;
+        animation: dashFlow 3s linear infinite;
+      }
+      .flow-amber {
+        stroke: #D97706;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 3s linear infinite;
+      }
+      .flow-blue {
+        stroke: #2563EB;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 3s linear infinite;
+      }
+      .flow-rose {
+        stroke: #E11D48;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 3s linear infinite;
+      }
+      .flow-gray {
+        stroke: #64748B;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 6, 6;
+        fill: none;
+        animation: dashFlow 4s linear infinite;
       }
     </style>
     <marker id="arr-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#475569" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#64748B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
     </marker>
     <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 1 2 L 8 5 L 1 8" fill="none" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -85,33 +129,33 @@
     <text x="0" y="20" class="main-subtitle">End-to-End System Flow: Keystroke Debouncing, API Gateway, Circuit Breaker SLA, and Multi-Tier Engines</text>
   </g>
 
-  <!-- ==================== FLOW CONNECTORS ==================== -->
+  <!-- ==================== ANIMATED FLOW CONNECTORS ==================== -->
   <!-- 1. Suggest / Autocomplete Stream (Purple) -->
-  <path d="M 245 220 L 320 220" class="flow-line" stroke="#9333EA" marker-end="url(#arr-purple)" />
+  <path d="M 245 220 L 320 220" class="flow-purple" marker-end="url(#arr-purple)" />
   <text x="282" y="212" text-anchor="middle" class="flow-label" fill="#7E22CE">/suggest</text>
 
   <!-- Gateway to Trie Direct RAM -->
-  <path d="M 495 190 L 540 190 L 540 155 L 870 155" class="flow-line" stroke="#9333EA" marker-end="url(#arr-purple)" />
+  <path d="M 495 190 L 540 190 L 540 155 L 870 155" class="flow-purple" marker-end="url(#arr-purple)" />
   <text x="690" y="145" text-anchor="middle" class="flow-label" fill="#7E22CE">Fast RAM Path (0.02ms)</text>
 
   <!-- 2. Search Submission Stream (Amber) -->
-  <path d="M 245 255 L 320 255" class="flow-line" stroke="#D97706" marker-end="url(#arr-amber)" />
+  <path d="M 245 255 L 320 255" class="flow-amber" marker-end="url(#arr-amber)" />
   <text x="282" y="247" text-anchor="middle" class="flow-label" fill="#B45309">/search</text>
 
   <!-- Gateway to Search Broker -->
-  <path d="M 495 255 L 565 255" class="flow-line" stroke="#D97706" marker-end="url(#arr-amber)" />
+  <path d="M 495 255 L 565 255" class="flow-amber" marker-end="url(#arr-amber)" />
   <text x="530" y="247" text-anchor="middle" class="flow-label" fill="#B45309">Dispatch</text>
 
   <!-- Broker Primary Route to Elasticsearch (CLOSED, Blue) -->
-  <path d="M 795 240 L 835 240 L 835 255 L 870 255" class="flow-line" stroke="#2563EB" marker-end="url(#arr-blue)" />
+  <path d="M 795 240 L 835 240 L 835 255 L 870 255" class="flow-blue" marker-end="url(#arr-blue)" />
   <text x="835" y="230" text-anchor="middle" class="flow-label" fill="#1D4ED8">CLOSED: Primary</text>
 
   <!-- Broker Fallback Route to In-Memory Index (OPEN / SLA Breach, Rose) -->
-  <path d="M 795 385 L 835 385 L 835 375 L 870 375" class="flow-line" stroke="#E11D48" marker-end="url(#arr-rose)" />
+  <path d="M 795 385 L 835 385 L 835 375 L 870 375" class="flow-rose" marker-end="url(#arr-rose)" />
   <text x="835" y="405" text-anchor="middle" class="flow-label" fill="#BE123C">OPEN: Fallback RAM</text>
 
-  <!-- 3. Telemetry Return Loop (Dashed Gray) -->
-  <path d="M 1010 460 L 1010 495 L 145 495 L 145 455" class="flow-line" stroke="#64748B" stroke-dasharray="6,4" marker-end="url(#arr-gray)" />
+  <!-- 3. Telemetry Return Loop (Dashed Slate) -->
+  <path d="M 1010 460 L 1010 495 L 145 495 L 145 455" class="flow-gray" marker-end="url(#arr-gray)" />
   <text x="575" y="512" text-anchor="middle" class="flow-label" fill="#475569">Telemetry &amp; Degradation Envelope (latency, active engine, hits, QPS saved)</text>
 
   <!-- ==================== ZONE 1: SEARCH SURFACE UI ==================== -->
