@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-arrow { stroke: #64748B; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748B" />
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">System Design Decision Tree: Embedded In-Memory Index vs. Elasticsearch</text>
+    <text x="0" y="18" class="sketch-subtitle">Principled architectural heuristics for choosing between custom embedded search and distributed clusters</text>
+  </g>
+
+  <!-- 1. STARTING REQUIREMENT (Left, X: 40) -->
+  <g transform="translate(40, 150)">
+    <rect width="190" height="150" class="sketch-box" />
+    <rect x="12" y="12" width="145" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">STARTING POINT</text>
+    <text x="12" y="48" class="txt-heading">Search Workload</text>
+    <text x="12" y="65" class="txt-sub">Evaluate 2 core dimensions:</text>
+
+    <rect x="12" y="78" width="166" height="56" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="18" y="96" class="txt-code" fill="#0369A1">1. Latency SLA Target</text>
+    <text x="18" y="118" class="txt-code" fill="#B45309">2. Corpus Volume &amp; Durability</text>
+  </g>
+
+  <!-- 2. CRITERIA EVALUATION (Center, X: 270) -->
+  <g transform="translate(270, 68)">
+    <!-- Branch 1: Latency SLA -->
+    <g transform="translate(0, 0)">
+      <rect width="320" height="150" class="sketch-box" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.5" />
+      <rect x="12" y="10" width="170" height="18" rx="4" fill="#DBEAFE" />
+      <text x="18" y="23" class="txt-badge" fill="#1D4ED8">CRITERION 1: LATENCY SLA</text>
+      <text x="12" y="44" class="txt-heading" fill="#0369A1">What is the P99 Latency SLA?</text>
+
+      <rect x="12" y="54" width="296" height="40" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="18" y="70" class="txt-code" fill="#1D4ED8">Sub-millisecond (&lt; 1 ms):</text>
+      <text x="18" y="85" class="txt-sub">Strict in-memory process RAM constraint</text>
+
+      <rect x="12" y="100" width="296" height="40" rx="4" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="18" y="116" class="txt-code" fill="#475569">Standard Web API (10ms - 50ms):</text>
+      <text x="18" y="131" class="txt-sub">External distributed cluster network hop ok</text>
+    </g>
+
+    <!-- Branch 2: Data & Scale -->
+    <g transform="translate(0, 172)">
+      <rect width="320" height="158" class="sketch-box" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5" />
+      <rect x="12" y="10" width="180" height="18" rx="4" fill="#FEF3C7" />
+      <text x="18" y="23" class="txt-badge" fill="#B45309">CRITERION 2: DATA &amp; SCALE</text>
+      <text x="12" y="44" class="txt-heading" fill="#B45309">Corpus Size &amp; Durability?</text>
+
+      <rect x="12" y="54" width="296" height="42" rx="4" fill="#FFFFFF" stroke="#FDE68A" />
+      <text x="18" y="70" class="txt-code" fill="#B45309">Fits in RAM (&lt; 500 MB), Read-Heavy:</text>
+      <text x="18" y="85" class="txt-sub">Local heap or memory-mapped file</text>
+
+      <rect x="12" y="104" width="296" height="44" rx="4" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="18" y="120" class="txt-code" fill="#15803D">Millions of Docs, Multi-TB, Writes:</text>
+      <text x="18" y="136" class="txt-sub">Sharded distributed cluster required</text>
+    </g>
+  </g>
+
+  <!-- 3. ARCHITECTURAL DECISIONS (Right, X: 630) -->
+  <g transform="translate(630, 68)">
+    <!-- Decision A: Embedded In-Memory Engine -->
+    <g transform="translate(0, 0)">
+      <rect width="310" height="150" class="sketch-box" fill="#F0F9FF" stroke="#0284C7" stroke-width="2" />
+      <rect x="12" y="10" width="200" height="18" rx="4" fill="#E0F2FE" />
+      <text x="18" y="23" class="txt-badge" fill="#0369A1">CHOICE A: EMBEDDED IN-MEMORY</text>
+      <text x="12" y="44" class="txt-heading" fill="#0369A1">Handcrafted Index / SQLite FTS</text>
+      <text x="12" y="64" class="txt-sub">* IDE symbol lookup &amp; code autocomplete</text>
+      <text x="12" y="82" class="txt-sub">* Edge device &amp; client-side browser search</text>
+      <text x="12" y="100" class="txt-sub">* In-process L1 query cache (Zero IPC)</text>
+      <rect x="12" y="112" width="286" height="26" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="18" y="129" class="txt-code" fill="#0284C7">Latency: 0.02ms - 0.1ms | Zero Ops</text>
+    </g>
+
+    <!-- Decision B: Distributed Elasticsearch -->
+    <g transform="translate(0, 172)">
+      <rect width="310" height="158" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" />
+      <rect x="12" y="10" width="220" height="18" rx="4" fill="#DCFCE7" />
+      <text x="18" y="23" class="txt-badge" fill="#15803D">CHOICE B: DISTRIBUTED ELASTICSEARCH</text>
+      <text x="12" y="44" class="txt-heading" fill="#15803D">Elasticsearch / OpenSearch</text>
+      <text x="12" y="64" class="txt-sub">* Enterprise e-commerce catalog search</text>
+      <text x="12" y="82" class="txt-sub">* Multi-field stemming &amp; typo tolerance</text>
+      <text x="12" y="100" class="txt-sub">* High availability, replicas &amp; sharding</text>
+      <rect x="12" y="112" width="286" height="30" rx="4" fill="#FFFFFF" stroke="#BBF7D0" />
+      <text x="18" y="128" class="txt-code" fill="#166534">Latency: 2ms - 15ms | Multi-TB Scale</text>
+    </g>
+  </g>
+
+  <!-- Flow Paths -->
+  <!-- Start -> Criterion 1 -->
+  <path d="M 230 200 Q 250 143 270 143" class="flow-arrow" marker-end="url(#arr)" />
+  <!-- Start -> Criterion 2 -->
+  <path d="M 230 250 Q 250 251 270 251" class="flow-arrow" marker-end="url(#arr)" />
+
+  <!-- Criterion 1 -> Choice A -->
+  <path d="M 590 143 L 630 143" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Criterion 2 -> Choice B -->
+  <path d="M 590 251 L 630 251" class="flow-green" marker-end="url(#arr-green)" />
+</svg>

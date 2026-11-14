@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-purple { stroke: #9333EA; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333EA" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">BM25 Length Normalization: IEEE 754 Float vs. Lucene 1-Byte Quantized Norm</text>
+    <text x="0" y="18" class="sketch-subtitle">How Apache Lucene trades tiny precision tolerances (&lt;0.1%) for 8x RAM savings and SIMD vectorization</text>
+  </g>
+
+  <!-- TOP INPUT: Document Length Metric -->
+  <g transform="translate(320, 56)">
+    <rect width="340" height="36" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="170" y="22" text-anchor="middle" class="txt-code" fill="#0F172A">INPUT: docLen = 26 words | avgDL = 36.67 words | b = 0.75</text>
+  </g>
+
+  <!-- LEFT: Handcrafted Exact Float Math (X: 40) -->
+  <g transform="translate(40, 106)">
+    <rect width="430" height="300" class="sketch-box" fill="#F8FAFC" stroke="#2563EB" stroke-width="1.8" />
+    <rect x="14" y="12" width="220" height="18" rx="4" fill="#DBEAFE" />
+    <text x="20" y="25" class="txt-badge" fill="#1D4ED8">HANDCRAFTED (EXACT IEEE 754)</text>
+    <text x="14" y="48" class="txt-heading" fill="#1E40AF">Double-Precision Floating Point</text>
+
+    <!-- Formula Box -->
+    <rect x="14" y="58" width="402" height="74" rx="6" fill="#FFFFFF" stroke="#93C5FD" />
+    <text x="22" y="78" class="txt-code" fill="#0F172A">lenNorm = 1.0 - b + b * (docLen / avgDL)</text>
+    <text x="22" y="98" class="txt-code" fill="#2563EB">Exact Factor: 0.78181818... (64-bit Float)</text>
+    <text x="22" y="116" class="txt-sub">Exact mathematical division in JavaScript</text>
+
+    <!-- Flow into Memory -->
+    <path d="M 215 132 L 215 152" class="flow-blue" marker-end="url(#arr-blue)" />
+
+    <!-- Storage Footprint Box -->
+    <rect x="14" y="156" width="402" height="66" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+    <text x="22" y="174" class="txt-badge" fill="#64748B">V8 HEAP MEMORY FOOTPRINT</text>
+    <text x="22" y="194" class="txt-sub">Stored as 8 bytes (64 bits) per field in RAM</text>
+    <text x="22" y="210" class="txt-code" fill="#DC2626">100M docs * 8 bytes = 800 MB RAM for norms alone!</text>
+
+    <!-- Query Character Box -->
+    <rect x="14" y="230" width="402" height="56" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+    <text x="22" y="248" class="txt-sub" fill="#1E40AF">* Crisp float IDF separation on small benchmark corpora</text>
+    <text x="22" y="268" class="txt-code" fill="#1D4ED8">Zero quantization loss | High memory pressure</text>
+  </g>
+
+  <!-- RIGHT: Lucene 1-Byte Quantized Norm (X: 510) -->
+  <g transform="translate(510, 106)">
+    <rect width="430" height="300" class="sketch-box" fill="#FAF5FF" stroke="#9333EA" stroke-width="1.8" />
+    <rect x="14" y="12" width="240" height="18" rx="4" fill="#F3E8FF" />
+    <text x="20" y="25" class="txt-badge" fill="#7E22CE">LUCENE 1-BYTE QUANTIZED NORM (.dvd)</text>
+    <text x="14" y="48" class="txt-heading" fill="#6B21A8">8-Bit Small-Float Compression</text>
+
+    <!-- Compression Box -->
+    <rect x="14" y="58" width="402" height="74" rx="6" fill="#FFFFFF" stroke="#D8B4FE" />
+    <text x="22" y="78" class="txt-code" fill="#0F172A">Encoded byte: [3 bits mantissa | 5 bits exponent]</text>
+    <text x="22" y="98" class="txt-code" fill="#7E22CE">Decoded Norm: ~0.7812 (Delta &lt; 0.1%)</text>
+    <text x="22" y="116" class="txt-sub">Precomputed 256-entry byte lookup table</text>
+
+    <!-- Flow into Disk -->
+    <path d="M 215 132 L 215 152" class="flow-purple" marker-end="url(#arr-purple)" />
+
+    <!-- Storage Footprint Box -->
+    <rect x="14" y="156" width="402" height="66" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+    <text x="22" y="174" class="txt-badge" fill="#64748B">DOC VALUES DISK FOOTPRINT</text>
+    <text x="22" y="194" class="txt-sub">Stored in column-stride Doc Values (.dvd) file</text>
+    <text x="22" y="210" class="txt-code" fill="#15803D">100M docs * 1 byte = 100 MB RAM (8x memory savings!)</text>
+
+    <!-- Query Character Box -->
+    <rect x="14" y="230" width="402" height="56" rx="6" fill="#FAF5FF" stroke="#E9D5FF" />
+    <text x="22" y="248" class="txt-sub" fill="#6B21A8">* Enables SIMD AVX-512 byte vector scoring</text>
+    <text x="22" y="268" class="txt-code" fill="#7E22CE">Columnar streaming directly from OS Page Cache</text>
+  </g>
+
+  <!-- Connectors from Input to Engines -->
+  <path d="M 400 92 Q 300 92 255 106" class="flow-blue" marker-end="url(#arr-blue)" />
+  <path d="M 580 92 Q 680 92 725 106" class="flow-purple" marker-end="url(#arr-purple)" />
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-red { stroke: #DC2626; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#DC2626" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Candidate Retrieval: The Conjunctive Cliff vs. Block-Max WAND Pruning</text>
+    <text x="0" y="18" class="sketch-subtitle">Query: "redis cache clustering and sharding" (Doc 1 has redis/cache/cluster; Doc 3 has sharding)</text>
+  </g>
+
+  <!-- LEFT: Conjunctive Cliff (Boolean AND) (X: 40) -->
+  <g transform="translate(40, 68)">
+    <rect width="430" height="330" class="sketch-box" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.8" />
+    <rect x="14" y="12" width="220" height="18" rx="4" fill="#FEE2E2" />
+    <text x="20" y="25" class="txt-badge" fill="#991B1B">CONJUNCTIVE CLIFF (BOOLEAN AND)</text>
+    <text x="14" y="48" class="txt-heading" fill="#991B1B">Strict Two-Pointer Intersection</text>
+
+    <!-- Postings List Box -->
+    <rect x="14" y="58" width="402" height="92" rx="6" fill="#FFFFFF" stroke="#FCA5A5" />
+    <text x="22" y="76" class="txt-badge" fill="#991B1B">POSTINGS INPUT</text>
+    <text x="22" y="93" class="txt-code" fill="#475569">Postings("redis")      -&gt; [Doc 1, Doc 9]</text>
+    <text x="22" y="108" class="txt-code" fill="#475569">Postings("cache")      -&gt; [Doc 1, Doc 5, Doc 9]</text>
+    <text x="22" y="123" class="txt-code" fill="#475569">Postings("clustering") -&gt; [Doc 1]</text>
+    <text x="22" y="138" class="txt-code" fill="#475569">Postings("sharding")   -&gt; [Doc 3]</text>
+
+    <!-- Flow into Cliff -->
+    <path d="M 215 150 L 215 170" class="flow-red" marker-end="url(#arr-red)" />
+
+    <!-- Cliff Barrier Box -->
+    <rect x="14" y="174" width="402" height="66" rx="6" fill="#FFFFFF" stroke="#F87171" stroke-width="1.5" />
+    <text x="22" y="192" class="txt-badge" fill="#DC2626">INTERSECTION CLIFF: 0 CANDIDATES</text>
+    <text x="22" y="210" class="txt-code" fill="#DC2626">[1, 9] ∩ [1, 5, 9] ∩ [1] ∩ [3] = EMPTY SET (Ø)</text>
+    <text x="22" y="226" class="txt-sub" fill="#7F1D1D">Recall = 0.00! Both relevant documents dropped.</text>
+
+    <!-- Failure Box -->
+    <rect x="14" y="250" width="402" height="64" rx="6" fill="#FFF1F2" stroke="#FDA4AF" />
+    <text x="22" y="268" class="txt-heading" fill="#9F1239">The Production Failure Mode</text>
+    <text x="22" y="286" class="txt-sub" fill="#881337">Long queries drop recall to 0: all terms required</text>
+    <text x="22" y="302" class="txt-code" fill="#9F1239">Latency: 0.01 ms (Fast), but User sees: "0 Results"</text>
+  </g>
+
+  <!-- RIGHT: Disjunctive OR + Block-Max WAND (X: 510) -->
+  <g transform="translate(510, 68)">
+    <rect width="430" height="330" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.8" />
+    <rect x="14" y="12" width="235" height="18" rx="4" fill="#DCFCE7" />
+    <text x="20" y="25" class="txt-badge" fill="#15803D">DISJUNCTIVE OR + BLOCK-MAX WAND</text>
+    <text x="14" y="48" class="txt-heading" fill="#15803D">Posting List Union + Dynamic Pruning</text>
+
+    <!-- Union Box -->
+    <rect x="14" y="58" width="402" height="92" rx="6" fill="#FFFFFF" stroke="#86EFAC" />
+    <text x="22" y="76" class="txt-badge" fill="#15803D">POSTINGS UNION</text>
+    <text x="22" y="93" class="txt-code" fill="#475569">Candidates = [1, 9] ∪ [1, 5, 9] ∪ [1] ∪ [3]</text>
+    <text x="22" y="112" class="txt-code" fill="#166534">Candidate Set = {Doc 1, Doc 3, Doc 5, Doc 9}</text>
+    <text x="22" y="132" class="txt-sub" fill="#166534">Both relevant docs (Doc 1 &amp; Doc 3) retrieved!</text>
+
+    <!-- Flow into WAND -->
+    <path d="M 215 150 L 215 170" class="flow-green" marker-end="url(#arr-green)" />
+
+    <!-- WAND Pruning Box -->
+    <rect x="14" y="174" width="402" height="66" rx="6" fill="#FFFFFF" stroke="#4ADE80" stroke-width="1.5" />
+    <text x="22" y="192" class="txt-badge" fill="#15803D">BLOCK-MAX WAND PRUNING</text>
+    <text x="22" y="210" class="txt-sub">Stores max impact score per 128-doc block</text>
+    <text x="22" y="226" class="txt-code" fill="#14532D">If (block_max &lt; top_k_threshold) -&gt; SKIP BLOCK!</text>
+
+    <!-- Outcome Box -->
+    <rect x="14" y="250" width="402" height="64" rx="6" fill="#ECFDF5" stroke="#A7F3D0" />
+    <text x="22" y="268" class="txt-heading" fill="#065F46">The Production Outcome</text>
+    <text x="22" y="286" class="txt-sub" fill="#047857">* Rank 1: Doc 1 (Score=5.77) - Covers redis &amp; cluster</text>
+    <text x="22" y="302" class="txt-sub" fill="#047857">* Rank 2: Doc 3 (Score=2.83) - Covers database sharding</text>
+  </g>
+</svg>

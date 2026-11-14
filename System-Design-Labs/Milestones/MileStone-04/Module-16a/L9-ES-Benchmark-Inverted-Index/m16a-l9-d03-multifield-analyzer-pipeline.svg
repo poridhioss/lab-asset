@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-purple { stroke: #9333EA; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333EA" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Industrial Multi-Field Text Analysis Pipeline</text>
+    <text x="0" y="18" class="sketch-subtitle">Indexing the same raw content into 3 specialized Lucene fields to balance recall and precision</text>
+  </g>
+
+  <!-- 1. SOURCE DOCUMENT (Left, X: 40) -->
+  <g transform="translate(40, 140)">
+    <rect width="195" height="180" class="sketch-box" />
+    <rect x="12" y="12" width="135" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">SOURCE DOCUMENT</text>
+    <text x="12" y="48" class="txt-heading">Field: "content"</text>
+    <text x="12" y="65" class="txt-sub">Raw string payload</text>
+
+    <!-- Content Snippet -->
+    <rect x="12" y="78" width="171" height="52" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="20" y="98" class="txt-badge" fill="#64748B">RAW TEXT</text>
+    <text x="20" y="118" class="txt-code" fill="#0F172A">"in-memory replicating"</text>
+
+    <text x="12" y="152" class="txt-sub" fill="#2563EB">Multi-Field Fan-Out</text>
+    <text x="12" y="168" class="txt-code" fill="#64748B">3 parallel token streams</text>
+  </g>
+
+  <!-- 2. ANALYZER PIPELINES (Center, X: 270) -->
+  <g transform="translate(270, 68)">
+    <!-- Branch 1: Standard Analyzer -->
+    <g transform="translate(0, 0)">
+      <rect width="425" height="96" class="sketch-box" fill="#F0F9FF" stroke="#2563EB" stroke-width="1.5" />
+      <rect x="12" y="8" width="165" height="18" rx="4" fill="#DBEAFE" />
+      <text x="18" y="21" class="txt-badge" fill="#1D4ED8">1. STANDARD ANALYZER</text>
+      <text x="200" y="21" class="txt-code" fill="#2563EB">field: content</text>
+      <text x="12" y="44" class="txt-sub">Unicode segmentation -&gt; lowercase -&gt; punctuation strip</text>
+      <rect x="12" y="54" width="401" height="30" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="20" y="73" class="txt-code" fill="#1E40AF">Tokens: ["in", "memory", "replicating"] (Hyphen split)</text>
+    </g>
+
+    <!-- Branch 2: English Porter Stemmer -->
+    <g transform="translate(0, 110)">
+      <rect width="425" height="96" class="sketch-box" fill="#FAF5FF" stroke="#9333EA" stroke-width="1.5" />
+      <rect x="12" y="8" width="185" height="18" rx="4" fill="#F3E8FF" />
+      <text x="18" y="21" class="txt-badge" fill="#7E22CE">2. ENGLISH ANALYZER (STEM)</text>
+      <text x="220" y="21" class="txt-code" fill="#7E22CE">field: content.english</text>
+      <text x="12" y="44" class="txt-sub">Porter Stemmer + Stopwords elimination ("in" dropped)</text>
+      <rect x="12" y="54" width="401" height="30" rx="4" fill="#FFFFFF" stroke="#E9D5FF" />
+      <text x="20" y="73" class="txt-code" fill="#6B21A8">Tokens: ["memori", "replic"] (Matches 'replication')</text>
+    </g>
+
+    <!-- Branch 3: Custom Exact Hyphen Analyzer -->
+    <g transform="translate(0, 220)">
+      <rect width="425" height="96" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5" />
+      <rect x="12" y="8" width="195" height="18" rx="4" fill="#DCFCE7" />
+      <text x="18" y="21" class="txt-badge" fill="#15803D">3. EXACT PATTERN ANALYZER</text>
+      <text x="230" y="21" class="txt-code" fill="#16A34A">field: content.exact</text>
+      <text x="12" y="44" class="txt-sub">Pattern: [^a-zA-Z0-9_-]+ (Preserves compound tokens)</text>
+      <rect x="12" y="54" width="401" height="30" rx="4" fill="#FFFFFF" stroke="#BBF7D0" />
+      <text x="20" y="73" class="txt-code" fill="#14532D">Tokens: ["in-memory", "replicating"] (Preserved hyphen)</text>
+    </g>
+  </g>
+
+  <!-- 3. LUCENE SEGMENT POSTINGS (Right, X: 730) -->
+  <g transform="translate(730, 68)">
+    <rect width="210" height="316" class="sketch-box" />
+    <rect x="12" y="12" width="145" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">3. SEGMENT POSTINGS</text>
+    <text x="12" y="48" class="txt-heading">Inverted Index Fields</text>
+
+    <!-- Field 1 -->
+    <rect x="12" y="60" width="186" height="68" rx="6" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1.2" />
+    <text x="20" y="78" class="txt-badge" fill="#0369A1">FIELD: content</text>
+    <text x="20" y="96" class="txt-code" fill="#0369A1">"memory" -&gt; [Doc 1, 9]</text>
+    <text x="20" y="114" class="txt-sub">Standard exact tokens</text>
+
+    <!-- Field 2 -->
+    <rect x="12" y="140" width="186" height="68" rx="6" fill="#FAF5FF" stroke="#E9D5FF" stroke-width="1.2" />
+    <text x="20" y="158" class="txt-badge" fill="#7E22CE">FIELD: content.english</text>
+    <text x="20" y="176" class="txt-code" fill="#6B21A8">"replic" -&gt; [Doc 1, 2, 7]</text>
+    <text x="20" y="194" class="txt-sub">Stemmed root terms</text>
+
+    <!-- Field 3 -->
+    <rect x="12" y="220" width="186" height="68" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.2" />
+    <text x="20" y="238" class="txt-badge" fill="#15803D">FIELD: content.exact</text>
+    <text x="20" y="256" class="txt-code" fill="#14532D">"in-memory" -&gt; [Doc 1, 9]</text>
+    <text x="20" y="274" class="txt-sub">Compound exact matches</text>
+  </g>
+
+  <!-- Flow Paths -->
+  <!-- Source -> Standard -->
+  <path d="M 235 190 Q 250 116 270 116" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Source -> English -->
+  <path d="M 235 230 L 270 230" class="flow-purple" marker-end="url(#arr-purple)" />
+  <!-- Source -> Exact -->
+  <path d="M 235 270 Q 250 336 270 336" class="flow-green" marker-end="url(#arr-green)" />
+
+  <!-- Standard -> Postings -->
+  <path d="M 695 116 L 730 116" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- English -> Postings -->
+  <path d="M 695 230 L 730 230" class="flow-purple" marker-end="url(#arr-purple)" />
+  <!-- Exact -> Postings -->
+  <path d="M 695 336 L 730 336" class="flow-green" marker-end="url(#arr-green)" />
+</svg>

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      @keyframes pulseRing {
+        0% { r: 7; opacity: 0.9; }
+        50% { r: 15; opacity: 0.3; }
+        100% { r: 22; opacity: 0; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .axis-line { stroke: #64748B; stroke-width: 1.8; stroke-linecap: round; }
+      .grid-line { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 4, 4; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .pulse-blue { animation: pulseRing 2s cubic-bezier(0.2, 0, 0, 1) infinite; fill: none; stroke: #2563EB; stroke-width: 1.8; }
+      .pulse-green { animation: pulseRing 2s cubic-bezier(0.2, 0, 0, 1) infinite; fill: none; stroke: #16A34A; stroke-width: 1.8; }
+      .pulse-amber { animation: pulseRing 2s cubic-bezier(0.2, 0, 0, 1) infinite; fill: none; stroke: #D97706; stroke-width: 1.8; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Performance Benchmark Tradeoff Quadrant: Latency vs. Mean Average Precision (MAP)</text>
+    <text x="0" y="18" class="sketch-subtitle">Plotting the performance frontier: in-memory microsecond speed vs. distributed linguistic recall</text>
+  </g>
+
+  <!-- LEFT: Quadrant Chart Container (X: 40) -->
+  <g transform="translate(40, 68)">
+    <rect width="530" height="330" class="sketch-box" fill="#FFFFFF" />
+
+    <!-- Grid Lines -->
+    <line x1="40" y1="230" x2="500" y2="230" class="grid-line" />
+    <line x1="40" y1="150" x2="500" y2="150" class="grid-line" />
+    <line x1="40" y1="70" x2="500" y2="70" class="grid-line" />
+
+    <line x1="150" y1="30" x2="150" y2="280" class="grid-line" />
+    <line x1="270" y1="30" x2="270" y2="280" class="grid-line" />
+    <line x1="390" y1="30" x2="390" y2="280" class="grid-line" />
+
+    <!-- Axes -->
+    <line x1="60" y1="280" x2="500" y2="280" class="axis-line" />
+    <line x1="60" y1="280" x2="60" y2="30" class="axis-line" />
+
+    <!-- X Axis Labels (Log Latency) -->
+    <text x="490" y="300" text-anchor="end" class="txt-badge" fill="#64748B">MEAN LATENCY (ms) - LOG SCALE</text>
+    <text x="75" y="296" class="txt-code" fill="#64748B">0.01ms</text>
+    <text x="175" y="296" class="txt-code" fill="#64748B">0.1ms</text>
+    <text x="305" y="296" class="txt-code" fill="#64748B">1.0ms</text>
+    <text x="435" y="296" class="txt-code" fill="#64748B">5.0ms</text>
+
+    <!-- Y Axis Labels (MAP) -->
+    <text x="25" y="25" class="txt-badge" fill="#64748B">MAP</text>
+    <text x="35" y="284" class="txt-code" fill="#64748B">0.0</text>
+    <text x="30" y="205" class="txt-code" fill="#64748B">0.33</text>
+    <text x="30" y="130" class="txt-code" fill="#64748B">0.66</text>
+    <text x="30" y="55" class="txt-code" fill="#64748B">1.0</text>
+
+    <!-- Point 1: Handcrafted Engine (0.03ms, MAP 0.4167) -->
+    <g transform="translate(100, 185)">
+      <circle cx="0" cy="0" r="16" class="pulse-blue" />
+      <circle cx="0" cy="0" r="7" fill="#2563EB" />
+      <rect x="12" y="-18" width="165" height="34" rx="4" fill="#F0F9FF" stroke="#BAE6FD" />
+      <text x="18" y="-4" class="txt-badge" fill="#0369A1">IN-MEMORY (LAB 7)</text>
+      <text x="18" y="10" class="txt-code" fill="#0284C7">0.03 ms | MAP: 0.4167</text>
+    </g>
+
+    <!-- Point 2: Elasticsearch Standard (3.14ms, MAP 0.7731) -->
+    <g transform="translate(420, 105)">
+      <circle cx="0" cy="0" r="14" class="pulse-amber" />
+      <circle cx="0" cy="0" r="6" fill="#D97706" />
+      <rect x="-170" y="-16" width="158" height="32" rx="4" fill="#FEF3C7" stroke="#FDE68A" />
+      <text x="-162" y="-2" class="txt-badge" fill="#B45309">ES (STANDARD)</text>
+      <text x="-162" y="10" class="txt-code" fill="#B45309">3.14 ms | MAP: 0.7731</text>
+    </g>
+
+    <!-- Point 3: Elasticsearch English Stemmed (2.52ms, MAP 0.8472) -->
+    <g transform="translate(390, 68)">
+      <circle cx="0" cy="0" r="18" class="pulse-green" />
+      <circle cx="0" cy="0" r="8" fill="#16A34A" />
+      <rect x="-185" y="-18" width="172" height="36" rx="4" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5" />
+      <text x="-177" y="-4" class="txt-badge" fill="#15803D">ES (ENGLISH STEMMED)</text>
+      <text x="-177" y="11" class="txt-code" fill="#15803D">2.52 ms | MAP: 0.8472 (WIN)</text>
+    </g>
+  </g>
+
+  <!-- RIGHT: Architectural Breakdown Cards (X: 600) -->
+  <g transform="translate(600, 68)">
+    <!-- Card 1: Linguistic Dividend (Green) -->
+    <g transform="translate(0, 0)">
+      <rect width="340" height="155" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.8" />
+      <rect x="14" y="12" width="165" height="18" rx="4" fill="#DCFCE7" />
+      <text x="20" y="25" class="txt-badge" fill="#15803D">THE LINGUISTIC DIVIDEND</text>
+      <text x="14" y="48" class="txt-heading" fill="#15803D">Elasticsearch: +0.4305 MAP Gain</text>
+      <text x="14" y="68" class="txt-sub">* Porter Stemming: 'replicating' -&gt; 'replic'</text>
+      <text x="14" y="86" class="txt-sub">* Disjunctive OR retrieves union documents</text>
+      <text x="14" y="104" class="txt-sub">* Stopwords removed from conversational queries</text>
+      <rect x="14" y="116" width="312" height="24" rx="4" fill="#FFFFFF" stroke="#86EFAC" />
+      <text x="22" y="132" class="txt-code" fill="#14532D">Result: Superior Recall &amp; Precision for Humans</text>
+    </g>
+
+    <!-- Card 2: Network Tax (Blue) -->
+    <g transform="translate(0, 172)">
+      <rect width="340" height="158" class="sketch-box" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.8" />
+      <rect x="14" y="12" width="150" height="18" rx="4" fill="#E0F2FE" />
+      <text x="20" y="25" class="txt-badge" fill="#0369A1">THE NETWORK TAX</text>
+      <text x="14" y="48" class="txt-heading" fill="#0369A1">In-Memory Engine: ~80x Faster!</text>
+      <text x="14" y="68" class="txt-sub">* In-Memory: 0.03 ms (Zero IPC in RAM)</text>
+      <text x="14" y="86" class="txt-sub">* Elasticsearch: 2.52 ms (HTTP, Netty, JSON)</text>
+      <text x="14" y="104" class="txt-sub">* Ideal for IDE autocomplete, edge &amp; L1 caches</text>
+      <rect x="14" y="116" width="312" height="26" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="22" y="132" class="txt-code" fill="#0284C7">Zero serialization overhead | Sub-millisecond SLA</text>
+    </g>
+  </g>
+
+  <!-- Connectors from Quadrant Points to Right Cards -->
+  <path d="M 430 136 Q 515 136 600 136" class="flow-green" marker-end="url(#arr-green)" />
+  <path d="M 275 253 Q 437 310 600 310" class="flow-blue" marker-end="url(#arr-blue)" />
+</svg>

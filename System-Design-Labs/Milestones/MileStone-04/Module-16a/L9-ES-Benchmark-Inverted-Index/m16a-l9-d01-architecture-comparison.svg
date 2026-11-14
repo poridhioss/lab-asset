@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Dual-Engine Architecture: Handcrafted In-Memory Node.js vs. Distributed Elasticsearch</text>
+    <text x="0" y="18" class="sketch-subtitle">Contrasting zero-IPC local RAM execution against a containerized Apache Lucene cluster</text>
+  </g>
+
+  <!-- 1. CLIENT QUERY INGRESS (Left, X: 40) -->
+  <g transform="translate(40, 68)">
+    <rect width="180" height="330" class="sketch-box" />
+    <rect x="12" y="12" width="125" height="18" rx="4" fill="#E0F2FE" />
+    <text x="18" y="25" class="txt-badge" fill="#0369A1">1. QUERY INGRESS</text>
+    <text x="12" y="48" class="txt-heading">Search Client</text>
+    <text x="12" y="64" class="txt-sub">Parallel dispatch</text>
+
+    <!-- Query Input Box -->
+    <rect x="12" y="80" width="156" height="52" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="20" y="98" class="txt-badge" fill="#64748B">USER QUERY</text>
+    <text x="20" y="118" class="txt-code" fill="#0F172A">q = "raft consensus"</text>
+
+    <!-- Dispatch Mode -->
+    <rect x="12" y="145" width="156" height="74" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.2" />
+    <text x="20" y="163" class="txt-badge" fill="#1D4ED8">TARGET ENGINES</text>
+    <text x="20" y="183" class="txt-code" fill="#1E40AF">* In-Memory Node.js</text>
+    <text x="20" y="201" class="txt-code" fill="#15803D">* Docker Elasticsearch</text>
+
+    <!-- High-res Timer -->
+    <rect x="12" y="232" width="156" height="74" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.2" />
+    <text x="20" y="250" class="txt-badge" fill="#475569">MEASUREMENT</text>
+    <text x="20" y="268" class="txt-sub">performance.now()</text>
+    <text x="20" y="286" class="txt-code" fill="#334155">High-resolution clock</text>
+  </g>
+
+  <!-- 2. SERVING ENGINES (Center, X: 255) -->
+  <g transform="translate(255, 68)">
+    <!-- Sub-Card A: Handcrafted Engine (Lab 7) -->
+    <g transform="translate(0, 0)">
+      <rect width="455" height="155" class="sketch-box" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.8" />
+      <rect x="14" y="12" width="200" height="18" rx="4" fill="#E0F2FE" />
+      <text x="20" y="25" class="txt-badge" fill="#0369A1">ENGINE A: IN-MEMORY (LAB 7)</text>
+      <text x="14" y="48" class="txt-heading" fill="#0369A1">Single-Process Node.js V8 Heap</text>
+      <text x="14" y="66" class="txt-sub">Pipeline: TextAnalyzer -&gt; PostingList -&gt; SearchRanker</text>
+
+      <rect x="14" y="78" width="425" height="64" rx="6" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="22" y="96" class="txt-sub" fill="#15803D">* Microsecond Speed: ~0.03 ms latency (Zero IPC in RAM)</text>
+      <text x="22" y="114" class="txt-sub" fill="#DC2626">* Conjunctive Cliff: Strict Boolean AND drops to 0 hits</text>
+      <text x="22" y="130" class="txt-code" fill="#0369A1">Scoring: Exact 64-bit IEEE 754 Floating Point BM25</text>
+    </g>
+
+    <!-- Sub-Card B: Production Elasticsearch 8.11 -->
+    <g transform="translate(0, 172)">
+      <rect width="455" height="158" class="sketch-box" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.8" />
+      <rect x="14" y="12" width="215" height="18" rx="4" fill="#DCFCE7" />
+      <text x="20" y="25" class="txt-badge" fill="#15803D">ENGINE B: ELASTICSEARCH 8.11</text>
+      <text x="14" y="48" class="txt-heading" fill="#15803D">Containerized Apache Lucene (Docker)</text>
+      <text x="14" y="66" class="txt-sub">REST / HTTP (:9200) -&gt; Multi-Field Analyzers -&gt; WAND</text>
+
+      <rect x="14" y="78" width="425" height="66" rx="6" fill="#FFFFFF" stroke="#BBF7D0" />
+      <text x="22" y="96" class="txt-sub" fill="#15803D">* Robust Recall: Disjunctive OR + Porter stemming (+68.7% MAP)</text>
+      <text x="22" y="114" class="txt-sub" fill="#B45309">* Network Tax: ~2.5 ms HTTP, Netty &amp; JSON round-trip</text>
+      <text x="22" y="130" class="txt-code" fill="#166534">Storage: Immutable disk segments (.tim, .doc, .dvd) in OS Cache</text>
+    </g>
+  </g>
+
+  <!-- 3. QUERY RESULTS (Right, X: 745) -->
+  <g transform="translate(745, 68)">
+    <rect width="195" height="330" class="sketch-box" />
+    <rect x="12" y="12" width="135" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">3. RANKED RESULTS</text>
+    <text x="12" y="48" class="txt-heading">Search Responses</text>
+    <text x="12" y="64" class="txt-sub">Dual engine output</text>
+
+    <!-- Result A -->
+    <rect x="12" y="78" width="171" height="105" rx="6" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#0369A1">IN-MEMORY HITS</text>
+    <text x="20" y="116" class="txt-code" fill="#0369A1">Hits: [Doc 7, Doc 8]</text>
+    <text x="20" y="134" class="txt-sub">Latency: ~0.03 ms</text>
+    <text x="20" y="152" class="txt-code" fill="#15803D">Speed SLA: PASSED</text>
+    <text x="20" y="170" class="txt-sub">Pure RAM traversal</text>
+
+    <!-- Result B -->
+    <rect x="12" y="196" width="171" height="110" rx="6" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.2" />
+    <text x="20" y="214" class="txt-badge" fill="#15803D">ELASTICSEARCH HITS</text>
+    <text x="20" y="234" class="txt-code" fill="#15803D">Hits: [Doc 7, Doc 8, Doc 2]</text>
+    <text x="20" y="252" class="txt-sub">Latency: ~2.52 ms</text>
+    <text x="20" y="270" class="txt-code" fill="#15803D">Recall: +68.7% MAP</text>
+    <text x="20" y="288" class="txt-sub">Disjunctive WAND union</text>
+  </g>
+
+  <!-- Flow Paths -->
+  <!-- Query -> Engine A -->
+  <path d="M 220 120 Q 235 90 255 90" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Query -> Engine B -->
+  <path d="M 220 250 Q 235 300 255 300" class="flow-green" marker-end="url(#arr-green)" />
+  <!-- Engine A -> Result A -->
+  <path d="M 710 130 Q 725 130 745 130" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Engine B -> Result B -->
+  <path d="M 710 260 Q 725 260 745 260" class="flow-green" marker-end="url(#arr-green)" />
+</svg>

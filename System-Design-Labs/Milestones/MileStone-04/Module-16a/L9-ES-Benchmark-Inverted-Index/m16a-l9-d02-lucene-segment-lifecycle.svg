@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 11.5px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-amber { stroke: #D97706; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97706" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">Lucene Segment Ingestion Lifecycle &amp; Near-Real-Time (NRT) Refresh</text>
+    <text x="0" y="18" class="sketch-subtitle">Deconstructing the dual write path: Memory Buffer, Translog WAL, OS Page Cache, and Tiered Merges</text>
+  </g>
+
+  <!-- STAGE 1: INGRESS (X: 40) -->
+  <g transform="translate(40, 68)">
+    <rect width="200" height="330" class="sketch-box" fill="#F8FAFC" />
+    <rect x="12" y="12" width="125" height="18" rx="4" fill="#E2E8F0" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">1. WRITE INGRESS</text>
+    <text x="12" y="48" class="txt-heading">Bulk Document Write</text>
+    <text x="12" y="64" class="txt-sub">Dual Ingestion Path</text>
+
+    <!-- Path A: In-Memory Buffer -->
+    <rect x="12" y="78" width="176" height="98" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#1D4ED8">IN-MEMORY BUFFER</text>
+    <text x="20" y="114" class="txt-sub">Mutable Doc Buffer</text>
+    <text x="20" y="130" class="txt-sub">Indexed in JVM RAM</text>
+    <rect x="20" y="142" width="156" height="22" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+    <text x="26" y="157" class="txt-code" fill="#1E40AF">Not Searchable Yet!</text>
+
+    <!-- Path B: Translog WAL -->
+    <rect x="12" y="190" width="176" height="118" rx="6" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1.2" />
+    <text x="20" y="208" class="txt-badge" fill="#B45309">TRANSLOG (WAL)</text>
+    <text x="20" y="226" class="txt-sub">Append-Only Write Log</text>
+    <text x="20" y="242" class="txt-sub">fsynced to disk storage</text>
+    <text x="20" y="258" class="txt-sub">Guarantees durability</text>
+    <rect x="20" y="272" width="156" height="22" rx="4" fill="#FFFFFF" stroke="#FDE68A" />
+    <text x="26" y="287" class="txt-code" fill="#B45309">Crash Recovery Guard</text>
+  </g>
+
+  <!-- STAGE 2: NRT REFRESH GATE (X: 270) -->
+  <g transform="translate(270, 68)">
+    <rect width="200" height="330" class="sketch-box" stroke="#2563EB" fill="#F8FAFC" />
+    <rect x="12" y="12" width="135" height="18" rx="4" fill="#DBEAFE" />
+    <text x="18" y="25" class="txt-badge" fill="#1D4ED8">2. NRT REFRESH</text>
+    <text x="12" y="48" class="txt-heading">1s Refresh Cycle</text>
+    <text x="12" y="64" class="txt-sub">Flushes buffer to OS cache</text>
+
+    <!-- OS Page Cache Box -->
+    <rect x="12" y="78" width="176" height="230" rx="6" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#1E40AF">OS PAGE CACHE (mmap)</text>
+
+    <!-- Segment A -->
+    <rect x="20" y="108" width="160" height="42" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+    <text x="26" y="124" class="txt-badge" fill="#15803D">SEGMENT A</text>
+    <text x="26" y="139" class="txt-code" fill="#15803D">Searchable in RAM</text>
+
+    <!-- Segment B -->
+    <rect x="20" y="156" width="160" height="42" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+    <text x="26" y="172" class="txt-badge" fill="#15803D">SEGMENT B</text>
+    <text x="26" y="187" class="txt-code" fill="#15803D">Searchable in RAM</text>
+
+    <!-- Segment C -->
+    <rect x="20" y="204" width="160" height="42" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+    <text x="26" y="220" class="txt-badge" fill="#15803D">SEGMENT C</text>
+    <text x="26" y="235" class="txt-code" fill="#15803D">Searchable in RAM</text>
+
+    <text x="20" y="272" class="txt-sub" fill="#0369A1">* Zero Disk fsync!</text>
+    <text x="20" y="292" class="txt-sub" fill="#0369A1">* Immediate NRT visibility</text>
+  </g>
+
+  <!-- STAGE 3: FLUSH & COMMIT (X: 500) -->
+  <g transform="translate(500, 68)">
+    <rect width="200" height="330" class="sketch-box" stroke="#D97706" fill="#F8FAFC" />
+    <rect x="12" y="12" width="140" height="18" rx="4" fill="#FEF3C7" />
+    <text x="18" y="25" class="txt-badge" fill="#B45309">3. FLUSH &amp; COMMIT</text>
+    <text x="12" y="48" class="txt-heading">Periodic Disk Flush</text>
+    <text x="12" y="64" class="txt-sub">Trigger: 30m / 512MB log</text>
+
+    <!-- Persistent Disk Box -->
+    <rect x="12" y="78" width="176" height="230" rx="6" fill="#FFFFFF" stroke="#FCD34D" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#B45309">PERSISTENT DISK</text>
+
+    <text x="20" y="120" class="txt-sub">* Segments fsynced to disk</text>
+    <text x="20" y="140" class="txt-sub">* Commit point recorded</text>
+    <text x="20" y="160" class="txt-sub">* Translog truncated</text>
+    <text x="20" y="180" class="txt-sub">* Safe against power loss</text>
+
+    <rect x="20" y="204" width="160" height="42" rx="4" fill="#FEF3C7" stroke="#FDE68A" />
+    <text x="26" y="220" class="txt-badge" fill="#B45309">LUCENE FILES</text>
+    <text x="26" y="235" class="txt-code" fill="#78350F">.tim, .doc, .dvd files</text>
+
+    <text x="20" y="272" class="txt-sub" fill="#78350F">* Immutable file locks</text>
+    <text x="20" y="292" class="txt-sub" fill="#78350F">* Old translog purged</text>
+  </g>
+
+  <!-- STAGE 4: TIERED MERGE (X: 730) -->
+  <g transform="translate(730, 68)">
+    <rect width="210" height="330" class="sketch-box" stroke="#16A34A" fill="#F8FAFC" />
+    <rect x="12" y="12" width="145" height="18" rx="4" fill="#DCFCE7" />
+    <text x="18" y="25" class="txt-badge" fill="#15803D">4. TIERED MERGE</text>
+    <text x="12" y="48" class="txt-heading">TieredMergePolicy</text>
+    <text x="12" y="64" class="txt-sub">Background merge threads</text>
+
+    <!-- Merge Box -->
+    <rect x="12" y="78" width="186" height="230" rx="6" fill="#FFFFFF" stroke="#86EFAC" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#15803D">CONSOLIDATED SEGMENT</text>
+
+    <text x="20" y="120" class="txt-sub">* Merges Segments A, B, C</text>
+    <text x="20" y="140" class="txt-sub">* Purges deleted records</text>
+    <text x="20" y="160" class="txt-sub">* Reduces file descriptors</text>
+
+    <rect x="20" y="184" width="170" height="58" rx="4" fill="#F0FDF4" stroke="#86EFAC" />
+    <text x="26" y="202" class="txt-badge" fill="#15803D">LARGE COMPACT SEGMENT</text>
+    <text x="26" y="220" class="txt-code" fill="#14532D">1 Clean Merged Segment</text>
+    <text x="26" y="233" class="txt-sub" fill="#15803D">High query efficiency</text>
+
+    <text x="20" y="272" class="txt-sub" fill="#15803D">* Prevents FD exhaustion</text>
+    <text x="20" y="292" class="txt-sub" fill="#15803D">* Keeps search fast</text>
+  </g>
+
+  <!-- Flow Paths -->
+  <!-- Flow 1 (Blue): Buffer -> NRT Refresh -->
+  <path d="M 240 178 L 270 178" class="flow-blue" marker-end="url(#arr-blue)" />
+
+  <!-- Flow 2 (Amber): Translog -> Flush & Commit -->
+  <path d="M 240 310 Q 370 360 500 310" class="flow-amber" marker-end="url(#arr-amber)" />
+
+  <!-- Flow 3 (Green): Refresh Segments -> Merge Policy -->
+  <path d="M 470 200 Q 600 150 730 200" class="flow-green" marker-end="url(#arr-green)" />
+</svg>

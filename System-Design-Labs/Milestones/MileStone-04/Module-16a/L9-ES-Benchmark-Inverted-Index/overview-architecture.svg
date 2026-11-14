@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -24; }
+      }
+      .bg { fill: #FFFDF8; }
+      .sketch-title { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 21px; font-weight: 700; fill: #0F172A; }
+      .sketch-subtitle { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 13.5px; fill: #64748B; }
+      .sketch-box { fill: #FFFFFF; stroke: #334155; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; rx: 10; }
+      .txt-badge { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 700; }
+      .txt-heading { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .txt-sub { font-family: "Caveat", "Virgil", "Comic Neue", -apple-system, sans-serif; font-size: 12px; fill: #475569; }
+      .txt-code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10.5px; }
+      .flow-blue { stroke: #2563EB; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-green { stroke: #16A34A; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+      .flow-purple { stroke: #9333EA; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 6, 6; fill: none; animation: dashFlow 4s linear infinite; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16A34A" />
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333EA" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="980" height="430" class="bg" />
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="0" class="sketch-title">First Principles vs. Elasticsearch in Production: System Overview</text>
+    <text x="0" y="18" class="sketch-subtitle">Comparative evaluation contrasting in-memory JavaScript heap execution against containerized Apache Lucene</text>
+  </g>
+
+  <!-- 1. INPUT WORKLOAD (Left) -->
+  <g transform="translate(40, 68)">
+    <rect width="200" height="330" class="sketch-box" />
+    <rect x="12" y="12" width="130" height="18" rx="4" fill="#F1F5F9" />
+    <text x="18" y="25" class="txt-badge" fill="#334155">1. SHARED WORKLOAD</text>
+    <text x="12" y="48" class="txt-heading">Benchmark Suite</text>
+    <text x="12" y="65" class="txt-sub">Identical data &amp; query set</text>
+
+    <!-- Corpus Box -->
+    <rect x="12" y="80" width="176" height="68" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
+    <text x="20" y="98" class="txt-badge" fill="#64748B">SHARED CORPUS</text>
+    <text x="20" y="116" class="txt-code" fill="#0F172A">corpus.js (9 Docs)</text>
+    <text x="20" y="132" class="txt-sub">Distributed systems texts</text>
+
+    <!-- Queries Box -->
+    <rect x="12" y="160" width="176" height="138" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.2" />
+    <text x="20" y="178" class="txt-badge" fill="#1D4ED8">6 BENCHMARK QUERIES</text>
+    <text x="20" y="198" class="txt-code" fill="#1E40AF">Category A (1-3):</text>
+    <text x="20" y="214" class="txt-sub">Stemming &amp; Disjunction</text>
+    <text x="20" y="240" class="txt-code" fill="#1E40AF">Category B (4-6):</text>
+    <text x="20" y="256" class="txt-sub">Hyphens &amp; Microsecond Latency</text>
+    <text x="20" y="282" class="txt-code" fill="#0369A1">Dual Parallel Dispatch</text>
+  </g>
+
+  <!-- 2. DUAL SERVING ENGINES (Center) -->
+  <g transform="translate(270, 68)">
+    <rect width="400" height="330" class="sketch-box" stroke="#475569" />
+    <rect x="14" y="12" width="165" height="18" rx="4" fill="#E2E8F0" />
+    <text x="20" y="25" class="txt-badge" fill="#334155">2. DUAL SERVING ENGINES</text>
+
+    <!-- Sub-Card A: Handcrafted Engine (Lab 7) -->
+    <g transform="translate(14, 42)">
+      <rect width="372" height="126" rx="8" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.5" />
+      <rect x="10" y="8" width="180" height="18" rx="4" fill="#E0F2FE" />
+      <text x="16" y="21" class="txt-badge" fill="#0369A1">IN-MEMORY HEAP (LAB 7)</text>
+      <text x="10" y="44" class="txt-heading" fill="#0369A1">Node.js V8 Process RAM</text>
+      <text x="10" y="62" class="txt-sub">TextAnalyzer -> PostingList -> SearchRanker</text>
+      <text x="10" y="80" class="txt-sub">Conjunctive Boolean AND | Exact 64-bit BM25</text>
+      <rect x="10" y="92" width="352" height="24" rx="4" fill="#FFFFFF" stroke="#BAE6FD" />
+      <text x="18" y="108" class="txt-code" fill="#0284C7">Latency: ~0.03 ms (Zero IPC) | Volatile Heap</text>
+    </g>
+
+    <!-- Sub-Card B: Production Elasticsearch 8.11 -->
+    <g transform="translate(14, 180)">
+      <rect width="372" height="136" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5" />
+      <rect x="10" y="8" width="200" height="18" rx="4" fill="#DCFCE7" />
+      <text x="16" y="21" class="txt-badge" fill="#15803D">ELASTICSEARCH 8.11 (DOCKER)</text>
+      <text x="10" y="44" class="txt-heading" fill="#15803D">Apache Lucene Distributed Node</text>
+      <text x="10" y="62" class="txt-sub">Multi-Fields: standard | english stem | exact hyphen</text>
+      <text x="10" y="80" class="txt-sub">Disjunctive OR + WAND Pruning | 1-Byte Quantized BM25</text>
+      <rect x="10" y="94" width="352" height="30" rx="4" fill="#FFFFFF" stroke="#BBF7D0" />
+      <text x="18" y="108" class="txt-code" fill="#166534">Latency: ~2.5 ms (Network Tax via HTTP :9200)</text>
+      <text x="18" y="120" class="txt-code" fill="#166534">Storage: Durable Segments (.tim, .doc, .dvd)</text>
+    </g>
+  </g>
+
+  <!-- 3. CRANFIELD REFEREE (Right) -->
+  <g transform="translate(700, 68)">
+    <rect width="240" height="330" class="sketch-box" stroke="#9333EA" fill="#FAF5FF" />
+    <rect x="12" y="12" width="155" height="18" rx="4" fill="#F3E8FF" />
+    <text x="18" y="25" class="txt-badge" fill="#7E22CE">3. CRANFIELD REFEREE</text>
+    <text x="12" y="48" class="txt-heading">IREvaluator.js (Lab 5)</text>
+    <text x="12" y="65" class="txt-sub">Objective scoring benchmark</text>
+
+    <!-- Ground Truth Box -->
+    <rect x="12" y="78" width="216" height="48" rx="6" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.2" />
+    <text x="20" y="96" class="txt-badge" fill="#6B21A8">GROUND TRUTH</text>
+    <text x="20" y="114" class="txt-code" fill="#4A044E">relevance_judgments.json</text>
+
+    <!-- Metrics Box -->
+    <rect x="12" y="136" width="216" height="98" rx="6" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.2" />
+    <text x="20" y="154" class="txt-badge" fill="#6B21A8">IR METRICS COMPUTED</text>
+    <text x="20" y="174" class="txt-code" fill="#6B21A8">* Precision@1, Precision@3</text>
+    <text x="20" y="192" class="txt-code" fill="#6B21A8">* Recall@3</text>
+    <text x="20" y="210" class="txt-code" fill="#6B21A8">* Mean Average Precision (MAP)</text>
+    <text x="20" y="226" class="txt-code" fill="#6B21A8">* Mean Reciprocal Rank (MRR)</text>
+
+    <!-- Outcome Box -->
+    <rect x="12" y="244" width="216" height="74" rx="6" fill="#FFFFFF" stroke="#D8B4FE" stroke-width="1.2" />
+    <text x="20" y="262" class="txt-badge" fill="#7E22CE">OUTCOME SCORECARD</text>
+    <text x="20" y="282" class="txt-sub" fill="#1D4ED8">* Speed: In-Memory wins (~80x)</text>
+    <text x="20" y="302" class="txt-sub" fill="#15803D">* Quality: ES wins (+68.7% MAP)</text>
+  </g>
+
+  <!-- Flow Arrows -->
+  <!-- Workload to Handcrafted -->
+  <path d="M 240 170 Q 255 125 270 125" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Workload to Elasticsearch -->
+  <path d="M 240 270 Q 255 295 270 295" class="flow-green" marker-end="url(#arr-green)" />
+  <!-- Handcrafted to Referee -->
+  <path d="M 670 125 Q 685 125 700 175" class="flow-blue" marker-end="url(#arr-blue)" />
+  <!-- Elasticsearch to Referee -->
+  <path d="M 670 295 Q 685 295 700 240" class="flow-green" marker-end="url(#arr-green)" />
+</svg>
