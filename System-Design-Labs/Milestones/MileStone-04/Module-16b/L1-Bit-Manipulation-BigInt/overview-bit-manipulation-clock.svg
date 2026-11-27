@@ -134,63 +134,66 @@
   <!-- Metallic Pin Legs extending from chip -->
   <g filter="url(#hand-drawn)" stroke="#38bdf8" stroke-width="1.6">
     <!-- Top pins -->
-    <line x1="490" y1="265" x2="490" y2="280" />
-    <line x1="530" y1="265" x2="530" y2="280" />
-    <line x1="570" y1="265" x2="570" y2="280" />
-    <line x1="610" y1="265" x2="610" y2="280" />
-    <line x1="650" y1="265" x2="650" y2="280" />
+    <line x1="480" y1="260" x2="480" y2="275" />
+    <line x1="520" y1="260" x2="520" y2="275" />
+    <line x1="560" y1="260" x2="560" y2="275" />
+    <line x1="600" y1="260" x2="600" y2="275" />
+    <line x1="640" y1="260" x2="640" y2="275" />
+    <line x1="680" y1="260" x2="680" y2="275" />
     <!-- Bottom pins -->
-    <line x1="490" y1="395" x2="490" y2="410" />
-    <line x1="530" y1="395" x2="530" y2="410" />
-    <line x1="570" y1="395" x2="570" y2="410" />
-    <line x1="610" y1="395" x2="610" y2="410" />
-    <line x1="650" y1="395" x2="650" y2="410" />
+    <line x1="480" y1="400" x2="480" y2="415" />
+    <line x1="520" y1="400" x2="520" y2="415" />
+    <line x1="560" y1="400" x2="560" y2="415" />
+    <line x1="600" y1="400" x2="600" y2="415" />
+    <line x1="640" y1="400" x2="640" y2="415" />
+    <line x1="680" y1="400" x2="680" y2="415" />
     <!-- Left pins -->
-    <line x1="440" y1="315" x2="455" y2="315" />
-    <line x1="440" y1="345" x2="455" y2="345" />
-    <line x1="440" y1="375" x2="455" y2="375" />
+    <line x1="425" y1="305" x2="440" y2="305" />
+    <line x1="425" y1="335" x2="440" y2="335" />
+    <line x1="425" y1="365" x2="440" y2="365" />
     <!-- Right pins -->
-    <line x1="685" y1="315" x2="700" y2="315" />
-    <line x1="685" y1="345" x2="700" y2="345" />
-    <line x1="685" y1="375" x2="700" y2="375" />
+    <line x1="720" y1="305" x2="735" y2="305" />
+    <line x1="720" y1="335" x2="735" y2="335" />
+    <line x1="720" y1="365" x2="735" y2="365" />
   </g>
 
-  <!-- CPU Chip Body -->
+  <!-- CPU Chip Body (Wider 280px & Centered at x=580) -->
   <g filter="url(#hand-drawn)">
-    <rect x="455" y="280" width="230" height="115" rx="14" fill="#0284c7" opacity="0.16" stroke="none" />
-    <path d="M 469 280 Q 570 278, 671 280 Q 685 280, 685 294 Q 687 337, 685 381 Q 685 395, 671 395 Q 570 397, 469 395 Q 455 395, 455 381 Q 453 337, 455 294 Q 455 280, 469 280 Z" fill="none" stroke="#38bdf8" stroke-width="2.0" />
-    <path d="M 471 278 Q 572 282, 669 281 Q 683 281, 684 294 Q 683 337, 684 379 Q 683 393, 669 394 Q 572 393, 471 396 Q 457 393, 456 379 Q 457 337, 456 294 Q 457 281, 471 278 Z" fill="none" stroke="#38bdf8" stroke-width="2.0" />
+    <rect x="440" y="275" width="280" height="125" rx="14" fill="#0284c7" opacity="0.16" stroke="none" />
+    <path d="M 454 275 Q 580 273, 706 275 Q 720 275, 720 289 Q 722 337, 720 386 Q 720 400, 706 400 Q 580 402, 454 400 Q 440 400, 440 386 Q 438 337, 440 289 Q 440 275, 454 275 Z" fill="none" stroke="#38bdf8" stroke-width="2.0" />
+    <path d="M 456 273 Q 582 277, 704 276 Q 718 276, 719 289 Q 718 337, 719 384 Q 718 398, 704 399 Q 582 398, 456 401 Q 442 398, 441 384 Q 442 337, 441 289 Q 442 276, 456 273 Z" fill="none" stroke="#38bdf8" stroke-width="2.0" />
   </g>
 
   <!-- Corner Notch on Silicon Die -->
-  <circle cx="475" cy="300" r="4" fill="#38bdf8" opacity="0.6" />
+  <circle cx="460" cy="295" r="4" fill="#38bdf8" opacity="0.6" />
 
-  <text x="570" y="318" text-anchor="middle" fill="#93c5fd" class="node-title">64-Bit BitTwiddler</text>
-  <text x="570" y="348" text-anchor="middle" fill="#f8fafc" class="code-font">(Time &lt;&lt; 22n) | (ID &lt;&lt; 12n) | Seq</text>
-  <text x="570" y="375" text-anchor="middle" fill="#38bdf8" class="node-sub">Guaranteed Positive Bit 63</text>
+  <text x="580" y="305" text-anchor="middle" fill="#93c5fd" class="node-title">64-Bit BitTwiddler</text>
+  <text x="580" y="332" text-anchor="middle" fill="#f8fafc" class="node-sub">Time | Machine ID | Sequence</text>
+  <text x="580" y="358" text-anchor="middle" fill="#facc15" class="code-font">&lt;&lt; 22n  |  &lt;&lt; 12n  |  4095n</text>
+  <text x="580" y="384" text-anchor="middle" fill="#38bdf8" class="node-sub">Bit 63 Positive Sign Lock</text>
 
   <!-- Internal Connectors inside Worker -->
   <!-- Clock -> BitTwiddler -->
   <g filter="url(#hand-drawn)">
-    <path d="M 465 215 Q 465 248, 510 278" fill="none" stroke="#4ade80" stroke-width="1.8" />
-    <path d="M 500 274 L 512 280 L 507 268" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 465 215 Q 465 245, 510 275" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 500 270 L 512 277 L 507 264" fill="none" stroke="#4ade80" stroke-width="1.8" />
   </g>
-  <path d="M 465 215 Q 465 248, 510 278" fill="none" stroke="#86efac" stroke-width="2" class="flow-line" />
+  <path d="M 465 215 Q 465 245, 510 275" fill="none" stroke="#86efac" stroke-width="2" class="flow-line" />
 
   <!-- Drift Guard -> BitTwiddler -->
   <g filter="url(#hand-drawn)">
-    <path d="M 700 215 Q 700 248, 630 278" fill="none" stroke="#facc15" stroke-width="1.8" />
-    <path d="M 633 268 L 628 280 L 640 274" fill="none" stroke="#facc15" stroke-width="1.8" />
+    <path d="M 700 215 Q 700 245, 650 275" fill="none" stroke="#facc15" stroke-width="1.8" />
+    <path d="M 653 264 L 648 277 L 660 270" fill="none" stroke="#facc15" stroke-width="1.8" />
   </g>
-  <path d="M 700 215 Q 700 248, 630 278" fill="none" stroke="#fde047" stroke-width="2" class="flow-line" />
+  <path d="M 700 215 Q 700 245, 650 275" fill="none" stroke="#fde047" stroke-width="2" class="flow-line" />
 
   <!-- ==================== 3. OUTPUT: 64-BIT SNOWFLAKE ID CAPSULE (CENTER-RIGHT) ==================== -->
   <!-- Connector: Worker Chip -> Snowflake Capsule -->
   <g filter="url(#hand-drawn)">
-    <path d="M 700 338 Q 770 338, 840 338" fill="none" stroke="#a1a1aa" stroke-width="1.8" />
+    <path d="M 735 338 Q 790 338, 840 338" fill="none" stroke="#a1a1aa" stroke-width="1.8" />
     <path d="M 830 332 L 842 338 L 830 344" fill="none" stroke="#a1a1aa" stroke-width="1.8" />
   </g>
-  <path d="M 700 338 Q 770 338, 840 338" fill="none" stroke="#4ade80" stroke-width="2" class="flow-line" />
+  <path d="M 735 338 Q 790 338, 840 338" fill="none" stroke="#4ade80" stroke-width="2" class="flow-line" />
 
   <!-- Snowflake ID Capsule Pill -->
   <g filter="url(#hand-drawn)">
