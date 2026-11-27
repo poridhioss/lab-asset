@@ -13,6 +13,22 @@
       .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
       .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
       .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+
+      @keyframes flow {
+        from { stroke-dashoffset: 28; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-fill {
+        0%, 100% { opacity: 0.14; }
+        50% { opacity: 0.28; }
+      }
+      .flow-line {
+        stroke-dasharray: 8 6;
+        animation: flow 1.2s linear infinite;
+      }
+      .pulse-node {
+        animation: pulse-fill 3s ease-in-out infinite;
+      }
     </style>
   </defs>
 
@@ -94,9 +110,14 @@
     <path d="M 970 360 L 970 400 Q 970 415, 900 415 L 860 415" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
   </g>
 
+  <!-- Animated flow lines streaming down into merge -->
+  <path d="M 230 360 L 230 400 Q 230 415, 300 415 L 340 415" fill="none" stroke="#60a5fa" stroke-width="2" class="flow-line" />
+  <path d="M 600 360 L 600 415" fill="none" stroke="#fb923c" stroke-width="2" class="flow-line" />
+  <path d="M 970 360 L 970 400 Q 970 415, 900 415 L 860 415" fill="none" stroke="#4ade80" stroke-width="2" class="flow-line" />
+
   <!-- Final Merged BigInt Result Box -->
   <g filter="url(#hand-drawn)">
-    <rect x="350" y="390" width="500" height="85" rx="14" fill="#4ade80" opacity="0.16" stroke="none" />
+    <rect x="350" y="390" width="500" height="85" rx="14" fill="#4ade80" class="pulse-node" stroke="none" />
     <path d="M 348 390 Q 600 388, 852 390 Q 851 432, 850 475 Q 600 477, 350 474 Q 349 432, 348 390 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
   </g>
   <text x="600" y="420" text-anchor="middle" fill="#86efac" class="node-title">Bitwise OR Merge: (Time | Worker | Seq)</text>

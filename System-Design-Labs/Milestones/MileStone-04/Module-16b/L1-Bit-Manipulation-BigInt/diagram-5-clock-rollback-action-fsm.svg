@@ -13,6 +13,22 @@
       .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
       .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
       .edge-text { font-family: 'Caveat', cursive; font-size: 15px; fill: #d4d4d8; font-weight: 600; }
+
+      @keyframes flow {
+        from { stroke-dashoffset: 28; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-fill {
+        0%, 100% { opacity: 0.14; }
+        50% { opacity: 0.28; }
+      }
+      .flow-line {
+        stroke-dasharray: 8 6;
+        animation: flow 1.2s linear infinite;
+      }
+      .pulse-node {
+        animation: pulse-fill 3s ease-in-out infinite;
+      }
     </style>
   </defs>
 
@@ -31,7 +47,7 @@
 
   <!-- ==================== NODE 2: FORWARD NORMAL (RIGHT) ==================== -->
   <g filter="url(#hand-drawn)">
-    <rect x="870" y="170" width="270" height="110" rx="14" fill="#4ade80" opacity="0.16" stroke="none" />
+    <rect x="870" y="170" width="270" height="110" rx="14" fill="#4ade80" class="pulse-node" stroke="none" />
     <path d="M 868 170 Q 1005 168, 1142 170 Q 1141 225, 1140 280 Q 1005 282, 870 279 Q 869 225, 868 170 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
   </g>
   <text x="1005" y="202" text-anchor="middle" fill="#86efac" class="node-title">Action: PROCEED</text>
@@ -71,6 +87,8 @@
     <path d="M 740 112 Q 870 112, 870 170" fill="none" stroke="#4ade80" stroke-width="1.8" />
     <path d="M 864 160 L 870 172 L 876 160" fill="none" stroke="#4ade80" stroke-width="1.8" />
   </g>
+  <!-- Animated flow on proceed -->
+  <path d="M 740 112 Q 870 112, 870 170" fill="none" stroke="#86efac" stroke-width="2" class="flow-line" />
   <text x="825" y="105" text-anchor="middle" fill="#86efac" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">currentMs ≥ lastMs</text>
 
   <!-- Check -> Backward Detected (Straight down) -->
@@ -78,6 +96,8 @@
     <path d="M 600 155 L 600 205" fill="none" stroke="#fb923c" stroke-width="1.8" />
     <path d="M 594 196 L 600 207 L 606 196" fill="none" stroke="#fb923c" stroke-width="1.8" />
   </g>
+  <!-- Animated flow on backward skew -->
+  <path d="M 600 155 L 600 205" fill="none" stroke="#fdba74" stroke-width="2" class="flow-line" />
   <text x="600" y="185" text-anchor="middle" fill="#fdba74" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">currentMs &lt; lastMs</text>
 
   <!-- Backward -> PAUSE_AND_WAIT (Down-Left) -->
@@ -85,6 +105,8 @@
     <path d="M 520 305 Q 420 330, 380 365" fill="none" stroke="#facc15" stroke-width="1.8" />
     <path d="M 380 353 L 378 367 L 388 360" fill="none" stroke="#facc15" stroke-width="1.8" />
   </g>
+  <!-- Animated flow on spin-wait -->
+  <path d="M 520 305 Q 420 330, 380 365" fill="none" stroke="#fde047" stroke-width="2" class="flow-line" />
   <text x="400" y="335" text-anchor="middle" fill="#fde047" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">skew ≤ 5ms</text>
 
   <!-- Backward -> THROW & HALT (Down-Right) -->
@@ -92,5 +114,7 @@
     <path d="M 680 305 Q 780 330, 820 365" fill="none" stroke="#ef4444" stroke-width="1.8" />
     <path d="M 812 360 L 822 367 L 820 353" fill="none" stroke="#ef4444" stroke-width="1.8" />
   </g>
+  <!-- Animated flow on halt -->
+  <path d="M 680 305 Q 780 330, 820 365" fill="none" stroke="#f87171" stroke-width="2" class="flow-line" />
   <text x="800" y="335" text-anchor="middle" fill="#fca5a5" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">skew &gt; 5ms</text>
 </svg>

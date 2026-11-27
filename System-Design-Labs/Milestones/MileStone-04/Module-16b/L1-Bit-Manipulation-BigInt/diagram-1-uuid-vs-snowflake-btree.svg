@@ -12,6 +12,22 @@
       .node-title { font-family: 'Caveat', cursive; font-size: 19px; font-weight: 700; }
       .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
       .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+
+      @keyframes flow {
+        from { stroke-dashoffset: 28; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-fill {
+        0%, 100% { opacity: 0.14; }
+        50% { opacity: 0.28; }
+      }
+      .flow-line {
+        stroke-dasharray: 8 6;
+        animation: flow 1.2s linear infinite;
+      }
+      .pulse-node {
+        animation: pulse-fill 3s ease-in-out infinite;
+      }
     </style>
   </defs>
 
@@ -28,6 +44,8 @@
     <path d="M 300 90 L 300 130" fill="none" stroke="#fb923c" stroke-width="1.8" />
     <path d="M 294 122 L 300 133 L 306 122" fill="none" stroke="#fb923c" stroke-width="1.8" />
   </g>
+  <!-- Animated flow overlay -->
+  <path d="M 300 90 L 300 130" fill="none" stroke="#fdba74" stroke-width="2" class="flow-line" />
   <text x="300" y="112" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Random Insert "e4a7b..."</text>
 
   <!-- Internal Root Node -->
@@ -43,14 +61,18 @@
     <path d="M 300 190 L 300 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
     <path d="M 360 190 L 460 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
   </g>
+  <path d="M 240 190 L 140 260" fill="none" stroke="#f87171" stroke-width="1.8" class="flow-line" />
 
   <!-- Leaf Page 1 (Splitting) -->
   <g filter="url(#hand-drawn)">
     <rect x="70" y="260" width="140" height="90" rx="8" fill="#fb923c" opacity="0.18" stroke="none" />
     <path d="M 68 260 Q 140 258, 212 260 Q 211 305, 210 350 Q 140 352, 70 349 Q 69 305, 68 260 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
     <!-- Split Jagged Line in Center -->
-    <path d="M 140 260 L 145 285 L 135 315 L 140 350" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4 3" />
+    <path d="M 140 260 L 145 285 L 135 315 L 140 350" fill="none" stroke="#ef4444" stroke-width="1.8" />
   </g>
+  <!-- Animated crack split -->
+  <path d="M 140 260 L 145 285 L 135 315 L 140 350" fill="none" stroke="#fca5a5" stroke-width="2" class="flow-line" />
+
   <text x="140" y="290" text-anchor="middle" fill="#fca5a5" class="node-title">50% Page Split</text>
   <text x="140" y="325" text-anchor="middle" fill="#f8fafc" class="node-sub">8 KB Leaf Page Full</text>
 
@@ -90,6 +112,8 @@
     <path d="M 900 90 L 900 130" fill="none" stroke="#4ade80" stroke-width="1.8" />
     <path d="M 894 122 L 900 133 L 906 122" fill="none" stroke="#4ade80" stroke-width="1.8" />
   </g>
+  <!-- Animated flow overlay -->
+  <path d="M 900 90 L 900 130" fill="none" stroke="#86efac" stroke-width="2" class="flow-line" />
   <text x="900" y="112" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Sequential Insert (time &gt; prev)</text>
 
   <!-- Internal Root Node -->
@@ -105,6 +129,8 @@
     <path d="M 900 190 L 900 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
     <path d="M 960 190 L 1060 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
   </g>
+  <!-- Animated branch flow straight into rightmost leaf -->
+  <path d="M 960 190 L 1060 260" fill="none" stroke="#4ade80" stroke-width="2" class="flow-line" />
 
   <!-- Leaf Page 1 (Full & Frozen) -->
   <g filter="url(#hand-drawn)">
@@ -124,7 +150,7 @@
 
   <!-- Leaf Page 3 (Active Append Target) -->
   <g filter="url(#hand-drawn)">
-    <rect x="990" y="260" width="140" height="90" rx="8" fill="#4ade80" opacity="0.22" stroke="none" />
+    <rect x="990" y="260" width="140" height="90" rx="8" fill="#4ade80" class="pulse-node" stroke="none" />
     <path d="M 988 260 Q 1060 258, 1132 260 Q 1131 305, 1130 350 Q 1060 352, 990 349 Q 989 305, 988 260 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
   </g>
   <text x="1060" y="295" text-anchor="middle" fill="#86efac" class="node-title">Rightmost Leaf</text>
