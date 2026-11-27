@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .header-title { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># 64-Bit Binary Layout &amp; Bitwise Shift/Mask Packing Pipeline</text>
+
+  <!-- ==================== 64-BIT REGISTER TOP ==================== -->
+  <text x="600" y="70" text-anchor="middle" fill="#60a5fa" class="header-title">The 64-Bit Snowflake Integer Anatomy (Twitter Specification)</text>
+
+  <g filter="url(#hand-drawn)">
+    <!-- Sign Bit: Bit 63 -->
+    <rect x="60" y="90" width="90" height="70" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 58 90 Q 105 88, 152 90 Q 151 125, 150 160 Q 105 162, 60 159 Q 59 125, 58 90 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+
+    <!-- 41-bit Timestamp: Bits 62 down to 22 -->
+    <rect x="160" y="90" width="560" height="70" rx="8" fill="#60a5fa" opacity="0.16" stroke="none" />
+    <path d="M 158 90 Q 440 88, 722 90 Q 721 125, 720 160 Q 440 162, 160 159 Q 159 125, 158 90 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+
+    <!-- 10-bit Worker ID: Bits 21 down to 12 -->
+    <rect x="730" y="90" width="220" height="70" rx="8" fill="#fb923c" opacity="0.16" stroke="none" />
+    <path d="M 728 90 Q 840 88, 952 90 Q 951 125, 950 160 Q 840 162, 730 159 Q 729 125, 728 90 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+
+    <!-- 12-bit Sequence Counter: Bits 11 down to 0 -->
+    <rect x="960" y="90" width="180" height="70" rx="8" fill="#4ade80" opacity="0.16" stroke="none" />
+    <path d="M 958 90 Q 1050 88, 1142 90 Q 1141 125, 1140 160 Q 1050 162, 960 159 Q 959 125, 958 90 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+
+  <!-- Labels on Register -->
+  <text x="105" y="122" text-anchor="middle" fill="#cbd5e1" class="node-title">Sign 0</text>
+  <text x="105" y="148" text-anchor="middle" fill="#94a3b8" class="node-sub">Bit 63</text>
+
+  <text x="440" y="122" text-anchor="middle" fill="#93c5fd" class="node-title">Delta Timestamp (41 bits)</text>
+  <text x="440" y="148" text-anchor="middle" fill="#e2e8f0" class="node-sub">Bits 62 – 22 (69.7 Years Lifespan)</text>
+
+  <text x="840" y="122" text-anchor="middle" fill="#fdba74" class="node-title">Machine ID (10 bits)</text>
+  <text x="840" y="148" text-anchor="middle" fill="#e2e8f0" class="node-sub">Bits 21 – 12 (1024 Nodes)</text>
+
+  <text x="1050" y="122" text-anchor="middle" fill="#86efac" class="node-title">Sequence (12 bits)</text>
+  <text x="1050" y="148" text-anchor="middle" fill="#e2e8f0" class="node-sub">Bits 11 – 0 (4096 / ms)</text>
+
+  <!-- ==================== THREE PARALLEL PACKING PIPELINES ==================== -->
+  <!-- Pipeline 1: Timestamp Input & Shift -->
+  <g filter="url(#hand-drawn)">
+    <rect x="60" y="210" width="340" height="150" rx="12" fill="#60a5fa" opacity="0.12" stroke="none" />
+    <path d="M 58 210 Q 230 208, 402 210 Q 401 285, 400 360 Q 230 362, 60 359 Q 59 285, 58 210 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+  </g>
+  <text x="230" y="240" text-anchor="middle" fill="#93c5fd" class="node-title">1. Timestamp Pipeline</text>
+  <text x="230" y="270" text-anchor="middle" fill="#f8fafc" class="code-font">delta = currentMs - epoch</text>
+  <text x="230" y="300" text-anchor="middle" fill="#cbd5e1" class="code-font">masked = delta &amp; 0x1FFFFFFFFFFn</text>
+  <text x="230" y="335" text-anchor="middle" fill="#facc15" class="code-font">shifted = masked &lt;&lt; 22n</text>
+
+  <!-- Pipeline 2: Worker ID Input & Shift -->
+  <g filter="url(#hand-drawn)">
+    <rect x="430" y="210" width="340" height="150" rx="12" fill="#fb923c" opacity="0.12" stroke="none" />
+    <path d="M 428 210 Q 600 208, 772 210 Q 771 285, 770 360 Q 600 362, 430 359 Q 429 285, 428 210 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="600" y="240" text-anchor="middle" fill="#fdba74" class="node-title">2. Worker ID Pipeline</text>
+  <text x="600" y="270" text-anchor="middle" fill="#f8fafc" class="code-font">worker = 42n (Server ID)</text>
+  <text x="600" y="300" text-anchor="middle" fill="#cbd5e1" class="code-font">masked = worker &amp; 1023n</text>
+  <text x="600" y="335" text-anchor="middle" fill="#facc15" class="code-font">shifted = masked &lt;&lt; 12n</text>
+
+  <!-- Pipeline 3: Sequence Input & Mask -->
+  <g filter="url(#hand-drawn)">
+    <rect x="800" y="210" width="340" height="150" rx="12" fill="#4ade80" opacity="0.12" stroke="none" />
+    <path d="M 798 210 Q 970 208, 1142 210 Q 1141 285, 1140 360 Q 970 362, 800 359 Q 799 285, 798 210 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="970" y="240" text-anchor="middle" fill="#86efac" class="node-title">3. Sequence Counter</text>
+  <text x="970" y="270" text-anchor="middle" fill="#f8fafc" class="code-font">seq = counter++ (0..4095)</text>
+  <text x="970" y="300" text-anchor="middle" fill="#cbd5e1" class="code-font">masked = seq &amp; 4095n</text>
+  <text x="970" y="335" text-anchor="middle" fill="#facc15" class="code-font">shifted = masked &lt;&lt; 0n</text>
+
+  <!-- ==================== MERGE OPERATION (OR) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <!-- Downward arrows to merge -->
+    <path d="M 230 360 L 230 400 Q 230 415, 300 415 L 340 415" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 600 360 L 600 415" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 970 360 L 970 400 Q 970 415, 900 415 L 860 415" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+
+  <!-- Final Merged BigInt Result Box -->
+  <g filter="url(#hand-drawn)">
+    <rect x="350" y="390" width="500" height="85" rx="14" fill="#4ade80" opacity="0.16" stroke="none" />
+    <path d="M 348 390 Q 600 388, 852 390 Q 851 432, 850 475 Q 600 477, 350 474 Q 349 432, 348 390 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
+  </g>
+  <text x="600" y="420" text-anchor="middle" fill="#86efac" class="node-title">Bitwise OR Merge: (Time | Worker | Seq)</text>
+  <text x="600" y="452" text-anchor="middle" fill="#f8fafc" class="code-font">packed &amp;= ~(1n &lt;&lt; 63n); // Guarantee Positive Signed 64-Bit</text>
+
+  <!-- Sign Guard callout -->
+  <text x="600" y="498" text-anchor="middle" fill="#94a3b8" class="node-sub">Guarantees safe storage in PostgreSQL BIGINT and Java long without sign inversion.</text>
+</svg>

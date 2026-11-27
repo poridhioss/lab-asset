@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .header-title { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># Wall-Clock NTP Backward Drift vs. POSIX Monotonic Hardware Ticks</text>
+
+  <!-- ==================== TOP TRACK: WALL CLOCK (Date.now) ==================== -->
+  <text x="600" y="70" text-anchor="middle" fill="#ef4444" class="header-title">Operating System Wall Clock: CLOCK_REALTIME (Date.now())</text>
+
+  <!-- Timeline Axis 1 -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 80 140 L 1120 140" fill="none" stroke="#ef4444" stroke-width="2" />
+    <path d="M 1110 134 L 1122 140 L 1110 146" fill="none" stroke="#ef4444" stroke-width="2" />
+  </g>
+
+  <!-- Normal Tick Points on Top Timeline -->
+  <circle cx="200" cy="140" r="5" fill="#ef4444" />
+  <text x="200" y="120" text-anchor="middle" fill="#fca5a5" class="node-title">12:00:00.100</text>
+
+  <circle cx="450" cy="140" r="5" fill="#ef4444" />
+  <text x="450" y="120" text-anchor="middle" fill="#fca5a5" class="node-title">12:00:00.250</text>
+
+  <!-- NTP Step Regression Event -->
+  <circle cx="700" cy="140" r="7" fill="#f87171" stroke="#fca5a5" stroke-width="2" />
+  <text x="700" y="115" text-anchor="middle" fill="#fca5a5" class="node-title">NTP Step Event!</text>
+
+  <!-- Backward Arc Arrow -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 700 140 Q 570 190, 440 140" fill="none" stroke="#f87171" stroke-width="2.2" stroke-dasharray="4 3" />
+    <path d="M 450 146 L 438 140 L 448 132" fill="none" stroke="#f87171" stroke-width="2.2" />
+  </g>
+  <text x="570" y="195" text-anchor="middle" fill="#fca5a5" class="node-title" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">← Clock steps backward (-150ms)</text>
+
+  <!-- Duplicate Colliding Zone -->
+  <g filter="url(#hand-drawn)">
+    <rect x="420" y="210" width="310" height="40" rx="8" fill="#ef4444" opacity="0.22" stroke="none" />
+    <path d="M 418 210 Q 575 208, 732 210 Q 731 230, 730 250 Q 575 252, 420 249 Q 419 230, 418 210 Z" fill="none" stroke="#ef4444" stroke-width="1.8" />
+  </g>
+  <text x="575" y="235" text-anchor="middle" fill="#fca5a5" class="node-sub">Catastrophic Duplicate Timestamp Collision Zone</text>
+
+  <!-- ==================== BOTTOM TRACK: MONOTONIC CLOCK ==================== -->
+  <text x="600" y="300" text-anchor="middle" fill="#4ade80" class="header-title">POSIX Monotonic Clock: CLOCK_MONOTONIC_RAW (process.hrtime.bigint())</text>
+
+  <!-- Timeline Axis 2 -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 80 370 L 1120 370" fill="none" stroke="#4ade80" stroke-width="2.2" />
+    <path d="M 1110 364 L 1122 370 L 1110 376" fill="none" stroke="#4ade80" stroke-width="2.2" />
+  </g>
+
+  <!-- Tick 1 -->
+  <circle cx="200" cy="370" r="5" fill="#4ade80" />
+  <text x="200" y="350" text-anchor="middle" fill="#86efac" class="node-title">T0: 104,200,100 ns</text>
+
+  <!-- Tick 2 -->
+  <circle cx="450" cy="370" r="5" fill="#4ade80" />
+  <text x="450" y="350" text-anchor="middle" fill="#86efac" class="node-title">T1: 254,800,400 ns</text>
+
+  <!-- Tick 3 -->
+  <circle cx="700" cy="370" r="5" fill="#4ade80" />
+  <text x="700" y="350" text-anchor="middle" fill="#86efac" class="node-title">T2: 410,120,900 ns</text>
+
+  <!-- Forward Monotonic Arrow (No regression possible) -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 700 370 Q 825 330, 950 370" fill="none" stroke="#4ade80" stroke-width="2.2" />
+    <path d="M 940 364 L 952 370 L 940 376" fill="none" stroke="#4ade80" stroke-width="2.2" />
+  </g>
+  <text x="825" y="335" text-anchor="middle" fill="#86efac" class="node-title" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">→ Hardware ticks strictly increase</text>
+
+  <!-- Tick 4 -->
+  <circle cx="950" cy="370" r="5" fill="#4ade80" />
+  <text x="950" y="350" text-anchor="middle" fill="#86efac" class="node-title">T3: 560,950,200 ns</text>
+
+  <!-- Monotonic Guarantee Box -->
+  <g filter="url(#hand-drawn)">
+    <rect x="250" y="420" width="700" height="65" rx="12" fill="#4ade80" opacity="0.14" stroke="none" />
+    <path d="M 248 420 Q 600 418, 952 420 Q 951 452, 950 485 Q 600 487, 250 484 Q 249 452, 248 420 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="600" y="448" text-anchor="middle" fill="#86efac" class="node-title">Monotonic Invariant: calculatedMs = initialWallMs + (elapsedNs / 1,000,000n)</text>
+  <text x="600" y="472" text-anchor="middle" fill="#e2e8f0" class="node-sub">Because elapsedNs never decreases, calculatedMs can never travel backward in time.</text>
+</svg>

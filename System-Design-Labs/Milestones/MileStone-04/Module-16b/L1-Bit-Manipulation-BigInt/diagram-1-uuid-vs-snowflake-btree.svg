@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .header-title { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 19px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># Primary Key Index Locality: Random UUIDv4 Page Splits vs. Snowflake Sequential Appends</text>
+
+  <!-- ==================== LEFT HALF: RANDOM UUIDv4 ==================== -->
+  <text x="300" y="75" text-anchor="middle" fill="#fb923c" class="header-title">Random UUIDv4 (128-Bit String)</text>
+  
+  <!-- Incoming write arrow -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 300 90 L 300 130" fill="none" stroke="#fb923c" stroke-width="1.8" />
+    <path d="M 294 122 L 300 133 L 306 122" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="300" y="112" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Random Insert "e4a7b..."</text>
+
+  <!-- Internal Root Node -->
+  <g filter="url(#hand-drawn)">
+    <rect x="200" y="140" width="200" height="50" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 198 140 Q 300 138, 402 140 Q 401 165, 400 190 Q 300 192, 200 189 Q 199 165, 198 140 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="300" y="170" text-anchor="middle" fill="#cbd5e1" class="node-title">B+ Tree Root Page</text>
+
+  <!-- Tree Branch Lines -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 240 190 L 140 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+    <path d="M 300 190 L 300 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+    <path d="M 360 190 L 460 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+  </g>
+
+  <!-- Leaf Page 1 (Splitting) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="70" y="260" width="140" height="90" rx="8" fill="#fb923c" opacity="0.18" stroke="none" />
+    <path d="M 68 260 Q 140 258, 212 260 Q 211 305, 210 350 Q 140 352, 70 349 Q 69 305, 68 260 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+    <!-- Split Jagged Line in Center -->
+    <path d="M 140 260 L 145 285 L 135 315 L 140 350" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4 3" />
+  </g>
+  <text x="140" y="290" text-anchor="middle" fill="#fca5a5" class="node-title">50% Page Split</text>
+  <text x="140" y="325" text-anchor="middle" fill="#f8fafc" class="node-sub">8 KB Leaf Page Full</text>
+
+  <!-- Leaf Page 2 (Fragmented) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="230" y="260" width="140" height="90" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 228 260 Q 300 258, 372 260 Q 371 305, 370 350 Q 300 352, 230 349 Q 229 305, 228 260 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="300" y="295" text-anchor="middle" fill="#cbd5e1" class="node-title">Leaf Page B</text>
+  <text x="300" y="325" text-anchor="middle" fill="#94a3b8" class="node-sub">50% Empty Space</text>
+
+  <!-- Leaf Page 3 (Cold Disk Fetch) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="390" y="260" width="140" height="90" rx="8" fill="#fb923c" opacity="0.14" stroke="none" />
+    <path d="M 388 260 Q 460 258, 532 260 Q 531 305, 530 350 Q 460 352, 390 349 Q 389 305, 388 260 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="460" y="295" text-anchor="middle" fill="#fdba74" class="node-title">Leaf Page C</text>
+  <text x="460" y="325" text-anchor="middle" fill="#e2e8f0" class="node-sub">Cold Disk Read</text>
+
+  <!-- Outcome Box Left -->
+  <g filter="url(#hand-drawn)">
+    <rect x="70" y="380" width="460" height="100" rx="12" fill="#ef4444" opacity="0.12" stroke="none" />
+    <path d="M 68 380 Q 300 378, 532 380 Q 531 430, 530 480 Q 300 482, 70 479 Q 69 430, 68 380 Z" fill="none" stroke="#ef4444" stroke-width="1.8" />
+  </g>
+  <text x="300" y="412" text-anchor="middle" fill="#fca5a5" class="node-title">Production Failure Mode:</text>
+  <text x="300" y="440" text-anchor="middle" fill="#e2e8f0" class="node-sub">High write latency (&gt; 40% drop in IOPS)</text>
+  <text x="300" y="465" text-anchor="middle" fill="#e2e8f0" class="node-sub">Buffer pool cache thrashing &amp; 35% index bloat</text>
+
+  <!-- ==================== VERTICAL DIVIDER ==================== -->
+  <path d="M 600 60 L 600 480" stroke="#334155" stroke-width="1.5" stroke-dasharray="6 6" />
+
+  <!-- ==================== RIGHT HALF: SNOWFLAKE SEQUENTIAL ==================== -->
+  <text x="900" y="75" text-anchor="middle" fill="#4ade80" class="header-title">Snowflake ID (Roughly Time-Ordered 64-Bit)</text>
+
+  <!-- Incoming write arrow -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 900 90 L 900 130" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 894 122 L 900 133 L 906 122" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="900" y="112" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Sequential Insert (time &gt; prev)</text>
+
+  <!-- Internal Root Node -->
+  <g filter="url(#hand-drawn)">
+    <rect x="800" y="140" width="200" height="50" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 798 140 Q 900 138, 1002 140 Q 1001 165, 1000 190 Q 900 192, 800 189 Q 799 165, 798 140 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="900" y="170" text-anchor="middle" fill="#cbd5e1" class="node-title">B+ Tree Root Page</text>
+
+  <!-- Tree Branch Lines -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 840 190 L 740 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+    <path d="M 900 190 L 900 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+    <path d="M 960 190 L 1060 260" fill="none" stroke="#a1a1aa" stroke-width="1.5" />
+  </g>
+
+  <!-- Leaf Page 1 (Full & Frozen) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="670" y="260" width="140" height="90" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 668 260 Q 740 258, 812 260 Q 811 305, 810 350 Q 740 352, 670 349 Q 669 305, 668 260 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="740" y="295" text-anchor="middle" fill="#cbd5e1" class="node-title">Leaf Page 1</text>
+  <text x="740" y="325" text-anchor="middle" fill="#4ade80" class="node-sub">100% Full (Frozen)</text>
+
+  <!-- Leaf Page 2 (Full & Frozen) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="830" y="260" width="140" height="90" rx="8" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 828 260 Q 900 258, 972 260 Q 971 305, 970 350 Q 900 352, 830 349 Q 829 305, 828 260 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="900" y="295" text-anchor="middle" fill="#cbd5e1" class="node-title">Leaf Page 2</text>
+  <text x="900" y="325" text-anchor="middle" fill="#4ade80" class="node-sub">100% Full (Frozen)</text>
+
+  <!-- Leaf Page 3 (Active Append Target) -->
+  <g filter="url(#hand-drawn)">
+    <rect x="990" y="260" width="140" height="90" rx="8" fill="#4ade80" opacity="0.22" stroke="none" />
+    <path d="M 988 260 Q 1060 258, 1132 260 Q 1131 305, 1130 350 Q 1060 352, 990 349 Q 989 305, 988 260 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
+  </g>
+  <text x="1060" y="295" text-anchor="middle" fill="#86efac" class="node-title">Rightmost Leaf</text>
+  <text x="1060" y="325" text-anchor="middle" fill="#f8fafc" class="node-sub">Append Only (Cached)</text>
+
+  <!-- Outcome Box Right -->
+  <g filter="url(#hand-drawn)">
+    <rect x="670" y="380" width="460" height="100" rx="12" fill="#4ade80" opacity="0.12" stroke="none" />
+    <path d="M 668 380 Q 900 378, 1132 380 Q 1131 430, 1130 480 Q 900 482, 670 479 Q 669 430, 668 380 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="900" y="412" text-anchor="middle" fill="#86efac" class="node-title">Production Engineering Result:</text>
+  <text x="900" y="440" text-anchor="middle" fill="#e2e8f0" class="node-sub">Maximum disk sequential write throughput</text>
+  <text x="900" y="465" text-anchor="middle" fill="#e2e8f0" class="node-sub">Zero internal page splits &amp; 100% buffer cache hit rate</text>
+</svg>

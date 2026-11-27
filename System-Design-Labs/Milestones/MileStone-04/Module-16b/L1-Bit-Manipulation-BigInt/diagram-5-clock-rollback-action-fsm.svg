@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .header-title { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 15px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># ClockDriftDetector Policy: State Transition &amp; Backward Skew Recovery</text>
+
+  <!-- ==================== NODE 1: ENTRY CHECK (TOP CENTER) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <rect x="460" y="70" width="280" height="85" rx="14" fill="#60a5fa" opacity="0.14" stroke="none" />
+    <path d="M 458 70 Q 600 68, 742 70 Q 741 112, 740 155 Q 600 157, 460 154 Q 459 112, 458 70 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+  </g>
+  <text x="600" y="102" text-anchor="middle" fill="#93c5fd" class="node-title">Evaluate Clock Reading</text>
+  <text x="600" y="132" text-anchor="middle" fill="#f8fafc" class="code-font">check(currentMs, lastMs)</text>
+
+  <!-- ==================== NODE 2: FORWARD NORMAL (RIGHT) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <rect x="870" y="170" width="270" height="110" rx="14" fill="#4ade80" opacity="0.16" stroke="none" />
+    <path d="M 868 170 Q 1005 168, 1142 170 Q 1141 225, 1140 280 Q 1005 282, 870 279 Q 869 225, 868 170 Z" fill="none" stroke="#4ade80" stroke-width="2.2" />
+  </g>
+  <text x="1005" y="202" text-anchor="middle" fill="#86efac" class="node-title">Action: PROCEED</text>
+  <text x="1005" y="232" text-anchor="middle" fill="#e2e8f0" class="node-sub">Current time ≥ last recorded time</text>
+  <text x="1005" y="258" text-anchor="middle" fill="#4ade80" class="node-sub">Generate ID with zero delay</text>
+
+  <!-- ==================== NODE 3: BACKWARD DETECTED (CENTER) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <rect x="460" y="210" width="280" height="95" rx="14" fill="#fb923c" opacity="0.14" stroke="none" />
+    <path d="M 458 210 Q 600 208, 742 210 Q 741 258, 740 305 Q 600 307, 460 304 Q 459 258, 458 210 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="600" y="242" text-anchor="middle" fill="#fdba74" class="node-title">Backward Skew Detected!</text>
+  <text x="600" y="272" text-anchor="middle" fill="#f8fafc" class="code-font">skewMs = lastMs - currentMs</text>
+  <text x="600" y="295" text-anchor="middle" fill="#e2e8f0" class="node-sub">Evaluate against tolerance threshold</text>
+
+  <!-- ==================== NODE 4: TOLERABLE SKEW (BOTTOM-LEFT) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <rect x="180" y="370" width="340" height="115" rx="14" fill="#facc15" opacity="0.16" stroke="none" />
+    <path d="M 178 370 Q 350 368, 522 370 Q 521 428, 520 485 Q 350 487, 180 484 Q 179 428, 178 370 Z" fill="none" stroke="#facc15" stroke-width="2.0" />
+  </g>
+  <text x="350" y="405" text-anchor="middle" fill="#fde047" class="node-title">Action: PAUSE_AND_WAIT</text>
+  <text x="350" y="435" text-anchor="middle" fill="#f8fafc" class="code-font">skewMs ≤ toleranceMs (5 ms)</text>
+  <text x="350" y="465" text-anchor="middle" fill="#e2e8f0" class="node-sub">Spin-wait loop until clock catches up</text>
+
+  <!-- ==================== NODE 5: CATASTROPHIC REGRESSION (BOTTOM-RIGHT) ==================== -->
+  <g filter="url(#hand-drawn)">
+    <rect x="680" y="370" width="340" height="115" rx="14" fill="#ef4444" opacity="0.16" stroke="none" />
+    <path d="M 678 370 Q 850 368, 1022 370 Q 1021 428, 1020 485 Q 850 487, 680 484 Q 679 428, 678 370 Z" fill="none" stroke="#ef4444" stroke-width="2.2" />
+  </g>
+  <text x="850" y="405" text-anchor="middle" fill="#fca5a5" class="node-title">Action: THROW &amp; HALT</text>
+  <text x="850" y="435" text-anchor="middle" fill="#f8fafc" class="code-font">skewMs &gt; 5 ms</text>
+  <text x="850" y="465" text-anchor="middle" fill="#fca5a5" class="node-sub">Throw ClockBackwardSkewError (Crash pod)</text>
+
+  <!-- ==================== CONNECTORS & EDGES ==================== -->
+  <!-- Check -> PROCEED (Turn right) -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 740 112 Q 870 112, 870 170" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 864 160 L 870 172 L 876 160" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="825" y="105" text-anchor="middle" fill="#86efac" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">currentMs ≥ lastMs</text>
+
+  <!-- Check -> Backward Detected (Straight down) -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 600 155 L 600 205" fill="none" stroke="#fb923c" stroke-width="1.8" />
+    <path d="M 594 196 L 600 207 L 606 196" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="600" y="185" text-anchor="middle" fill="#fdba74" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">currentMs &lt; lastMs</text>
+
+  <!-- Backward -> PAUSE_AND_WAIT (Down-Left) -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 520 305 Q 420 330, 380 365" fill="none" stroke="#facc15" stroke-width="1.8" />
+    <path d="M 380 353 L 378 367 L 388 360" fill="none" stroke="#facc15" stroke-width="1.8" />
+  </g>
+  <text x="400" y="335" text-anchor="middle" fill="#fde047" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">skew ≤ 5ms</text>
+
+  <!-- Backward -> THROW & HALT (Down-Right) -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 680 305 Q 780 330, 820 365" fill="none" stroke="#ef4444" stroke-width="1.8" />
+    <path d="M 812 360 L 822 367 L 820 353" fill="none" stroke="#ef4444" stroke-width="1.8" />
+  </g>
+  <text x="800" y="335" text-anchor="middle" fill="#fca5a5" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">skew &gt; 5ms</text>
+</svg>

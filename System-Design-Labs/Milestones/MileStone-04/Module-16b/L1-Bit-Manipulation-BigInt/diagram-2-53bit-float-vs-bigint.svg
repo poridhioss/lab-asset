@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .header-title { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .code-font { font-family: ui-monospace, Menlo, monospace; font-size: 14px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># JavaScript 53-Bit Float Precision Limit vs. V8 Engine Native BigInt Limbs</text>
+
+  <!-- ==================== TOP: IEEE 754 FLOAT 64 ==================== -->
+  <text x="600" y="70" text-anchor="middle" fill="#fb923c" class="header-title">JavaScript Standard Number: IEEE 754 Double-Precision Float (64 Bits)</text>
+
+  <!-- Float Register Graphic -->
+  <g filter="url(#hand-drawn)">
+    <!-- Sign bit: 1 bit -->
+    <rect x="100" y="90" width="80" height="60" rx="8" fill="#ef4444" opacity="0.16" stroke="none" />
+    <path d="M 98 90 Q 140 88, 182 90 Q 181 120, 180 150 Q 140 152, 100 149 Q 99 120, 98 90 Z" fill="none" stroke="#ef4444" stroke-width="1.8" />
+
+    <!-- Exponent: 11 bits -->
+    <rect x="190" y="90" width="220" height="60" rx="8" fill="#facc15" opacity="0.14" stroke="none" />
+    <path d="M 188 90 Q 300 88, 412 90 Q 411 120, 410 150 Q 300 152, 190 149 Q 189 120, 188 90 Z" fill="none" stroke="#facc15" stroke-width="1.8" />
+
+    <!-- Mantissa / Fraction: 52 bits (+1 implied = 53 bits safe integer) -->
+    <rect x="420" y="90" width="580" height="60" rx="8" fill="#60a5fa" opacity="0.14" stroke="none" />
+    <path d="M 418 90 Q 710 88, 1002 90 Q 1001 120, 1000 150 Q 710 152, 420 149 Q 419 120, 418 90 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+
+    <!-- Truncated Bits Overflow Boundary -->
+    <rect x="1010" y="90" width="90" height="60" rx="8" fill="#ef4444" opacity="0.22" stroke="none" />
+    <path d="M 1008 90 Q 1055 88, 1102 90 Q 1101 120, 1100 150 Q 1055 152, 1010 149 Q 1009 120, 1008 90 Z" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4 3" />
+  </g>
+
+  <!-- Labels on Float Register -->
+  <text x="140" y="125" text-anchor="middle" fill="#fca5a5" class="node-title">Sign (1b)</text>
+  <text x="300" y="125" text-anchor="middle" fill="#fde047" class="node-title">Exponent (11 bits)</text>
+  <text x="710" y="125" text-anchor="middle" fill="#93c5fd" class="node-title">Mantissa Fraction (52 bits) → Safe Limit: 2^53 - 1 (9,007,199,254,740,991)</text>
+  <text x="1055" y="125" text-anchor="middle" fill="#fca5a5" class="node-title">Lost Bits</text>
+
+  <!-- The Code Demonstration Box -->
+  <g filter="url(#hand-drawn)">
+    <rect x="150" y="170" width="900" height="70" rx="12" fill="#ef4444" opacity="0.10" stroke="none" />
+    <path d="M 148 170 Q 600 168, 1052 170 Q 1051 205, 1050 240 Q 600 242, 150 239 Q 149 205, 148 170 Z" fill="none" stroke="#ef4444" stroke-width="1.6" />
+  </g>
+  <text x="600" y="198" text-anchor="middle" fill="#f8fafc" class="code-font">let max = Number.MAX_SAFE_INTEGER; // 9007199254740991</text>
+  <text x="600" y="224" text-anchor="middle" fill="#fca5a5" class="code-font">max + 1 === max + 2; // Returns TRUE! Precision silently destroyed</text>
+
+  <!-- ==================== BOTTOM: V8 BIGINT ARCHITECTURE ==================== -->
+  <text x="600" y="280" text-anchor="middle" fill="#4ade80" class="header-title">Node.js Native BigInt: V8 Heap Multi-Precision Limbs (Arbitrary Precision)</text>
+
+  <!-- V8 Heap Object Shell -->
+  <g filter="url(#hand-drawn)">
+    <rect x="100" y="300" width="1000" height="150" rx="16" fill="#1e293b" opacity="0.4" stroke="none" />
+    <path d="M 98 300 Q 600 298, 1102 300 Q 1101 375, 1100 450 Q 600 452, 100 449 Q 99 375, 98 300 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="130" y="330" fill="#86efac" class="node-title">V8 Heap BigInt Object:</text>
+
+  <!-- Limb 0: Lower 32-bit chunk -->
+  <g filter="url(#hand-drawn)">
+    <rect x="140" y="345" width="280" height="85" rx="10" fill="#4ade80" opacity="0.14" stroke="none" />
+    <path d="M 138 345 Q 280 343, 422 345 Q 421 387, 420 430 Q 280 432, 140 429 Q 139 387, 138 345 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="280" y="380" text-anchor="middle" fill="#86efac" class="node-title">Limb 0 (Bits 0 – 31)</text>
+  <text x="280" y="410" text-anchor="middle" fill="#e2e8f0" class="node-sub">uint32: Sequence &amp; Machine ID</text>
+
+  <!-- Limb 1: Upper 32-bit chunk -->
+  <g filter="url(#hand-drawn)">
+    <rect x="460" y="345" width="280" height="85" rx="10" fill="#4ade80" opacity="0.14" stroke="none" />
+    <path d="M 458 345 Q 600 343, 742 345 Q 741 387, 740 430 Q 600 432, 460 429 Q 459 387, 458 345 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="600" y="380" text-anchor="middle" fill="#86efac" class="node-title">Limb 1 (Bits 32 – 63)</text>
+  <text x="600" y="410" text-anchor="middle" fill="#e2e8f0" class="node-sub">uint32: Timestamp High &amp; Sign Bit</text>
+
+  <!-- Additional limbs if needed -->
+  <g filter="url(#hand-drawn)">
+    <rect x="780" y="345" width="280" height="85" rx="10" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 778 345 Q 920 343, 1062 345 Q 1061 387, 1060 430 Q 920 432, 780 429 Q 779 387, 778 345 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4 4" />
+  </g>
+  <text x="920" y="380" text-anchor="middle" fill="#cbd5e1" class="node-title">Limb 2... N (Dynamic)</text>
+  <text x="920" y="410" text-anchor="middle" fill="#94a3b8" class="node-sub">Expands arbitrarily without overflow</text>
+
+  <!-- Bottom Outcome Note -->
+  <text x="600" y="485" text-anchor="middle" fill="#86efac" class="node-title">Result: Exact 64-bit arithmetic in Node.js 20+ without integer truncation or data corruption.</text>
+</svg>

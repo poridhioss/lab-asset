@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" height="100%">
+  <defs>
+    <!-- jojopen sketchy wobble filter -->
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap');
+      .title-text { font-family: 'Caveat', cursive; font-size: 18px; fill: #71717a; font-weight: 600; }
+      .node-title { font-family: 'Caveat', cursive; font-size: 20px; font-weight: 700; }
+      .node-sub { font-family: 'Caveat', cursive; font-size: 15px; font-weight: 600; }
+      .edge-text { font-family: 'Caveat', cursive; font-size: 14px; fill: #d4d4d8; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="520" fill="#121212" />
+  <rect x="10" y="10" width="1180" height="500" fill="none" stroke="#2e2e2e" stroke-width="1.2" rx="6" />
+  <text x="30" y="38" class="title-text"># 64-Bit Snowflake ID Generation &amp; Hardware Monotonic Clock Pipeline</text>
+
+  <!-- ==================== COLUMN 1: TIME SOURCES ==================== -->
+  <!-- Node 1: Wall Clock Baseline -->
+  <g filter="url(#hand-drawn)">
+    <rect x="50" y="80" width="220" height="85" rx="14" fill="#60a5fa" opacity="0.14" stroke="none" />
+    <path d="M 48 80 Q 160 78, 272 80 Q 271 122, 270 165 Q 160 167, 50 164 Q 49 122, 48 80 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+    <path d="M 52 78 Q 162 82, 268 81 Q 272 125, 271 163 Q 158 163, 49 166 Q 51 120, 52 78 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+  </g>
+  <text x="160" y="115" text-anchor="middle" fill="#93c5fd" class="node-title">Date.now()</text>
+  <text x="160" y="142" text-anchor="middle" fill="#e2e8f0" class="node-sub">UTC Wall Time Baseline (ms)</text>
+
+  <!-- Node 2: Monotonic Hardware Clock -->
+  <g filter="url(#hand-drawn)">
+    <rect x="50" y="220" width="220" height="85" rx="14" fill="#4ade80" opacity="0.14" stroke="none" />
+    <path d="M 49 220 Q 160 218, 271 219 Q 272 262, 270 305 Q 160 307, 49 304 Q 48 262, 49 220 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 51 218 Q 162 222, 269 221 Q 268 265, 271 303 Q 158 303, 52 306 Q 50 260, 51 218 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="160" y="255" text-anchor="middle" fill="#86efac" class="node-title">process.hrtime.bigint()</text>
+  <text x="160" y="282" text-anchor="middle" fill="#e2e8f0" class="node-sub">Hardware Nanoseconds (Never backwards)</text>
+
+  <!-- Node 3: Worker Node Configuration -->
+  <g filter="url(#hand-drawn)">
+    <rect x="50" y="360" width="220" height="85" rx="14" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 48 360 Q 160 358, 272 360 Q 271 402, 270 445 Q 160 447, 50 444 Q 49 402, 48 360 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+    <path d="M 52 358 Q 162 362, 268 361 Q 272 405, 271 443 Q 158 443, 49 446 Q 51 400, 52 358 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="160" y="395" text-anchor="middle" fill="#cbd5e1" class="node-title">Worker ID &amp; Sequence</text>
+  <text x="160" y="422" text-anchor="middle" fill="#e2e8f0" class="node-sub">Node: 10 bits | Seq: 12 bits</text>
+
+  <!-- ==================== COLUMN 2: SAFETY & CLOCK CONTROLLER ==================== -->
+  <!-- Node 4: MonotonicClock & Drift Detector -->
+  <g filter="url(#hand-drawn)">
+    <rect x="360" y="140" width="250" height="120" rx="16" fill="#fb923c" opacity="0.14" stroke="none" />
+    <path d="M 358 140 Q 485 138, 612 140 Q 611 200, 610 260 Q 485 262, 360 259 Q 359 200, 358 140 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+    <path d="M 362 138 Q 487 142, 608 141 Q 612 202, 611 258 Q 483 258, 359 261 Q 361 198, 362 138 Z" fill="none" stroke="#fb923c" stroke-width="1.8" />
+  </g>
+  <text x="485" y="175" text-anchor="middle" fill="#fdba74" class="node-title">ClockDriftDetector</text>
+  <text x="485" y="202" text-anchor="middle" fill="#f8fafc" class="node-sub">Evaluates Time Regression</text>
+  <text x="485" y="226" text-anchor="middle" fill="#e2e8f0" class="node-sub">≤ 5ms: PAUSE | &gt; 5ms: HALT</text>
+  <text x="485" y="248" text-anchor="middle" fill="#4ade80" class="node-sub">Monotonic Elapsed Calculation</text>
+
+  <!-- Node 5: Epoch Subtraction -->
+  <g filter="url(#hand-drawn)">
+    <rect x="360" y="320" width="250" height="95" rx="16" fill="#facc15" opacity="0.14" stroke="none" />
+    <path d="M 358 320 Q 485 318, 612 320 Q 611 368, 610 415 Q 485 417, 360 414 Q 359 368, 358 320 Z" fill="none" stroke="#facc15" stroke-width="1.8" />
+    <path d="M 362 318 Q 487 322, 608 321 Q 612 370, 611 413 Q 483 413, 359 416 Q 361 366, 362 318 Z" fill="none" stroke="#facc15" stroke-width="1.8" />
+  </g>
+  <text x="485" y="355" text-anchor="middle" fill="#fde047" class="node-title">Epoch Offset Calculation</text>
+  <text x="485" y="382" text-anchor="middle" fill="#f8fafc" class="node-sub">delta = currentMs - layout.epoch</text>
+  <text x="485" y="404" text-anchor="middle" fill="#e2e8f0" class="node-sub">Fits into 41 bits (69.7 years)</text>
+
+  <!-- ==================== COLUMN 3: BIT TWIDDLER PACKING ==================== -->
+  <!-- Node 6: BitTwiddler Module -->
+  <g filter="url(#hand-drawn)">
+    <rect x="710" y="160" width="230" height="210" rx="16" fill="#60a5fa" opacity="0.14" stroke="none" />
+    <path d="M 708 160 Q 825 158, 942 160 Q 941 265, 940 370 Q 825 372, 710 369 Q 709 265, 708 160 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+    <path d="M 712 158 Q 827 162, 938 161 Q 942 268, 941 368 Q 823 368, 709 371 Q 711 262, 712 158 Z" fill="none" stroke="#60a5fa" stroke-width="1.8" />
+  </g>
+  <text x="825" y="195" text-anchor="middle" fill="#93c5fd" class="node-title">BitTwiddler.pack()</text>
+  <text x="825" y="225" text-anchor="middle" fill="#e2e8f0" class="node-sub">Mask: (1n &lt;&lt; bits) - 1n</text>
+  <text x="825" y="255" text-anchor="middle" fill="#cbd5e1" class="node-sub">Shift Time: &lt;&lt; 22n</text>
+  <text x="825" y="285" text-anchor="middle" fill="#cbd5e1" class="node-sub">Shift Worker: &lt;&lt; 12n</text>
+  <text x="825" y="315" text-anchor="middle" fill="#cbd5e1" class="node-sub">Shift Seq: &lt;&lt; 0n</text>
+  <text x="825" y="350" text-anchor="middle" fill="#4ade80" class="node-sub">Lock Bit 63 to 0 (Sign Guard)</text>
+
+  <!-- ==================== COLUMN 4: 64-BIT OUTPUT ==================== -->
+  <!-- Node 7: 64-Bit Integer Result -->
+  <g filter="url(#hand-drawn)">
+    <rect x="1010" y="170" width="150" height="90" rx="30" fill="#4ade80" opacity="0.14" stroke="none" />
+    <path d="M 1038 170 Q 1085 168, 1132 170 Q 1162 170, 1160 215 Q 1162 260, 1132 260 Q 1085 262, 1038 260 Q 1008 260, 1010 215 Q 1008 170, 1038 170 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+    <path d="M 1040 168 Q 1087 172, 1130 171 Q 1158 171, 1159 215 Q 1158 258, 1130 259 Q 1087 258, 1040 261 Q 1012 258, 1011 215 Q 1012 171, 1040 168 Z" fill="none" stroke="#4ade80" stroke-width="1.8" />
+  </g>
+  <text x="1085" y="205" text-anchor="middle" fill="#86efac" class="node-title">64-Bit BigInt</text>
+  <text x="1085" y="235" text-anchor="middle" fill="#e2e8f0" class="node-sub">Native uint64</text>
+
+  <!-- Node 8: JSON Safe String -->
+  <g filter="url(#hand-drawn)">
+    <rect x="1010" y="295" width="150" height="90" rx="30" fill="#94a3b8" opacity="0.14" stroke="none" />
+    <path d="M 1038 295 Q 1085 293, 1132 295 Q 1162 295, 1160 340 Q 1162 385, 1132 385 Q 1085 387, 1038 385 Q 1008 385, 1010 340 Q 1008 295, 1038 295 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+    <path d="M 1040 293 Q 1087 297, 1130 296 Q 1158 296, 1159 340 Q 1158 383, 1130 384 Q 1087 383, 1040 386 Q 1012 383, 1011 340 Q 1012 296, 1040 293 Z" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+  </g>
+  <text x="1085" y="330" text-anchor="middle" fill="#cbd5e1" class="node-title">JSON String</text>
+  <text x="1085" y="360" text-anchor="middle" fill="#e2e8f0" class="node-sub">id.toString()</text>
+
+  <!-- ==================== CONNECTORS & ARROWHEADS ==================== -->
+  <!-- Date.now -> ClockDriftDetector -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 270 122 Q 315 122, 315 170 Q 315 170, 355 170" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 346 165 L 357 170 L 346 175" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="315" y="142" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Wall Base</text>
+
+  <!-- hrtime -> ClockDriftDetector -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 270 262 Q 315 262, 315 220 Q 315 220, 355 220" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 346 215 L 357 220 L 346 225" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="315" y="248" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Ticks</text>
+
+  <!-- ClockDriftDetector -> Epoch Offset -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 485 260 L 485 315" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 480 306 L 485 317 L 490 306" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="485" y="292" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Safe ms</text>
+
+  <!-- Epoch Offset -> BitTwiddler -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 610 367 Q 660 367, 660 265 Q 660 265, 705 265" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 696 260 L 707 265 L 696 270" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="660" y="320" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Timestamp</text>
+
+  <!-- Worker ID -> BitTwiddler -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 270 402 Q 660 402, 660 330 Q 660 330, 705 330" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 696 325 L 707 330 L 696 335" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="485" y="445" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">Worker (10b) &amp; Sequence (12b)</text>
+
+  <!-- BitTwiddler -> 64-Bit BigInt -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 940 215 L 1005 215" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 996 210 L 1007 215 L 996 220" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="975" y="205" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">packed</text>
+
+  <!-- 64-Bit BigInt -> JSON String -->
+  <g filter="url(#hand-drawn)">
+    <path d="M 1085 260 L 1085 290" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+    <path d="M 1080 281 L 1085 292 L 1090 281" fill="none" stroke="#a1a1aa" stroke-width="1.6" />
+  </g>
+  <text x="1085" y="278" text-anchor="middle" class="edge-text" paint-order="stroke" stroke="#121212" stroke-width="5px" stroke-linejoin="round">serialize</text>
+</svg>
